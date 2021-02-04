@@ -1,0 +1,147 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+
+<svg width="550" height="567" view_box="0 0 550 567"
+xmlns="http://www.w3.org/2000/svg"
+xmlns:link="http://www.w3.org/1999/xlink">\n\n<desc>Généré par Mocodo 2.3.7 le Thu, 04 Feb 2021 04:43:01</desc>
+
+<rect id="frame" x="0" y="0" width="550" height="567" fill="#f5f5f5" stroke="none" stroke-width="0"/>
+
+<!-- Association UTILISE_PION -->
+<line x1="207" y1="221" x2="73" y2="221" stroke="#35978f" stroke-width="2"/>
+<text x="129" y="213.0" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-UTILISE_PION">
+	<path d="M 110 187 a 14 14 90 0 1 14 14 V 212 h -102 V 201 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 124 212.0 v 29 a 14 14 90 0 1 -14 14 H 36 a 14 14 90 0 1 -14 -14 V 212.0 H 102" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="22" y="187" width="102" height="68" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="22" y1="212" x2="124" y2="212" stroke="#35978f" stroke-width="1"/>
+	<text x="29" y="204.7" fill="#000000" font-family="Verdana" font-size="12">UTILISE_PION</text>
+	<text x="29" y="229.8" fill="#000000" font-family="Verdana" font-size="12">nomPion</text>
+	<text x="29" y="246.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+</g>
+
+<!-- Association DIFFICULTE_TROPHEE -->
+<line x1="207" y1="516" x2="349" y2="516" stroke="#35978f" stroke-width="2"/>
+<text x="246" y="533.0" fill="#8c510a" font-family="Verdana" font-size="12">1,1</text>
+<line x1="499" y1="516" x2="349" y2="516" stroke="#35978f" stroke-width="2"/>
+<text x="430" y="533.0" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-DIFFICULTE_TROPHEE">
+	<path d="M 411 491 a 14 14 90 0 1 14 14 V 516 h -152 V 505 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 425 516.0 v 11 a 14 14 90 0 1 -14 14 H 287 a 14 14 90 0 1 -14 -14 V 516.0 H 152" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="273" y="491" width="152" height="50" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="273" y1="516" x2="425" y2="516" stroke="#35978f" stroke-width="1"/>
+	<text x="280" y="508.7" fill="#000000" font-family="Verdana" font-size="12">DIFFICULTE_TROPHEE</text>
+</g>
+
+<!-- Association ACHETE_CASE -->
+<line x1="207" y1="221" x2="207" y2="43" stroke="#35978f" stroke-width="2"/>
+<text x="212.0" y="94" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-ACHETE_CASE">
+	<path d="M 245 9 a 14 14 90 0 1 14 14 V 34 h -104 V 23 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 259 34.0 v 29 a 14 14 90 0 1 -14 14 H 169 a 14 14 90 0 1 -14 -14 V 34.0 H 104" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="155" y="9" width="104" height="68" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="155" y1="34" x2="259" y2="34" stroke="#35978f" stroke-width="1"/>
+	<text x="162" y="26.7" fill="#000000" font-family="Verdana" font-size="12">ACHETE_CASE</text>
+	<text x="162" y="51.8" fill="#000000" font-family="Verdana" font-size="12">nomCase</text>
+	<text x="162" y="68.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+</g>
+
+<!-- Association OPPOSITION -->
+<path d="M207 221 C 249.666666667 334.333333333 249.666666667 396.333333333 207 407" fill="none" stroke="#35978f" stroke-width="2"/>
+<text x="211.0" y="357" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<path d="M207 221 C 164.333333333 334.333333333 164.333333333 396.333333333 207 407" fill="none" stroke="#35978f" stroke-width="2"/>
+<text x="181.0" y="357" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<path d="M 175.520718098 340.010107718 L 180.552087464 352.447363135 L 174.887513649 347.985009105 L 168.589735384 351.497556461 Z" fill="#35978f" stroke-width="0"/>
+<g id="association-OPPOSITION">
+	<path d="M 240 365 a 14 14 90 0 1 14 14 V 390 h -94 V 379 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 254 390.0 v 45 a 14 14 90 0 1 -14 14 H 174 a 14 14 90 0 1 -14 -14 V 390.0 H 94" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="160" y="365" width="94" height="84" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="160" y1="390" x2="254" y2="390" stroke="#35978f" stroke-width="1"/>
+	<text x="167" y="382.7" fill="#000000" font-family="Verdana" font-size="12">OPPOSITION</text>
+	<text x="167" y="407.8" fill="#000000" font-family="Verdana" font-size="12">ecart</text>
+	<text x="167" y="424.8" fill="#000000" font-family="Verdana" font-size="12">echangé</text>
+	<text x="167" y="441.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+</g>
+
+<!-- Association TROPHEE_JOUEUR -->
+<path d="M207 221 C 136.083415805 281.674569684 91.4167491379 380.007903017 73 516" fill="none" stroke="#35978f" stroke-width="2"/>
+<text x="129" y="345.442592251" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<line x1="207" y1="516" x2="73" y2="516" stroke="#35978f" stroke-width="2"/>
+<text x="146" y="533.0" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<g id="association-TROPHEE_JOUEUR">
+	<path d="M 123 491 a 14 14 90 0 1 14 14 V 516 h -128 V 505 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 137 516.0 v 11 a 14 14 90 0 1 -14 14 H 23 a 14 14 90 0 1 -14 -14 V 516.0 H 128" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="9" y="491" width="128" height="50" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="9" y1="516" x2="137" y2="516" stroke="#35978f" stroke-width="1"/>
+	<text x="16" y="508.7" fill="#000000" font-family="Verdana" font-size="12">TROPHEE_JOUEUR</text>
+</g>
+
+<!-- Association AMIS -->
+<path d="M207 221 C 249.0 187.666666667 296.333333333 187.666666667 349 221" fill="none" stroke="#35978f" stroke-width="2"/>
+<text x="263" y="214.0" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<path d="M207 221 C 249.0 254.333333333 296.333333333 254.333333333 349 221" fill="none" stroke="#35978f" stroke-width="2"/>
+<text x="263" y="237.0" fill="#8c510a" font-family="Verdana" font-size="12">0,N</text>
+<path d="M 257.99271208 244.695909604 L 270.809759914 240.730649861 L 265.885873523 245.99898383 L 268.855148576 252.570392025 Z" fill="#35978f" stroke-width="0"/>
+<g id="association-AMIS">
+	<path d="M 359 196 a 14 14 90 0 1 14 14 V 221 h -48 V 210 a 14 14 90 0 1 14 -14" fill="#80cdc1" stroke="#80cdc1" stroke-width="0"/>
+	<path d="M 373 221.0 v 11 a 14 14 90 0 1 -14 14 H 339 a 14 14 90 0 1 -14 -14 V 221.0 H 48" fill="#c7eae5" stroke="#c7eae5" stroke-width="0"/>
+	<rect x="325" y="196" width="48" height="50" fill="none" rx="14" stroke="#35978f" stroke-width="2"/>
+	<line x1="325" y1="221" x2="373" y2="221" stroke="#35978f" stroke-width="1"/>
+	<text x="332" y="213.7" fill="#000000" font-family="Verdana" font-size="12">AMIS</text>
+	<text x="332" y="238.8" fill="#000000" font-family="Verdana" font-size="12">date</text>
+</g>
+
+<!-- Entity UTILISATEUR -->
+<g id="entity-UTILISATEUR">
+	<g id="frame-UTILISATEUR">
+		<rect x="156" y="102" width="102" height="25" fill="#dfc27d" stroke="#dfc27d" stroke-width="0"/>
+		<rect x="156" y="127.0" width="102" height="213" fill="#f6e8c3" stroke="#f6e8c3" stroke-width="0"/>
+		<rect x="156" y="102" width="102" height="238" fill="none" stroke="#bf812d" stroke-width="2"/>
+		<line x1="156" y1="127" x2="258" y2="127" stroke="#bf812d" stroke-width="1"/>
+	</g>
+	<text x="165" y="119.7" fill="#000000" font-family="Verdana" font-size="12">UTILISATEUR</text>
+	<text x="161" y="144.7" fill="#000000" font-family="Verdana" font-size="12">idU</text>
+	<line x1="161" y1="147" x2="182" y2="147" stroke="#000000" stroke-width="1"/>
+	<text x="161" y="161.7" fill="#000000" font-family="Verdana" font-size="12">username</text>
+	<text x="161" y="178.7" fill="#000000" font-family="Verdana" font-size="12">password</text>
+	<text x="161" y="195.7" fill="#000000" font-family="Verdana" font-size="12">email</text>
+	<text x="161" y="212.7" fill="#000000" font-family="Verdana" font-size="12">pays</text>
+	<text x="161" y="229.8" fill="#000000" font-family="Verdana" font-size="12">tempsJeu</text>
+	<text x="161" y="246.8" fill="#000000" font-family="Verdana" font-size="12">nbWin</text>
+	<text x="161" y="263.8" fill="#000000" font-family="Verdana" font-size="12">nbLose</text>
+	<text x="161" y="280.8" fill="#000000" font-family="Verdana" font-size="12">argentGagne</text>
+	<text x="161" y="297.8" fill="#000000" font-family="Verdana" font-size="12">argentDepense</text>
+	<text x="161" y="314.8" fill="#000000" font-family="Verdana" font-size="12">dateInscr</text>
+	<text x="161" y="331.8" fill="#000000" font-family="Verdana" font-size="12">derniereCo</text>
+</g>
+
+<!-- Entity TROPHEE -->
+<g id="entity-TROPHEE">
+	<g id="frame-TROPHEE">
+		<rect x="173" y="474" width="68" height="25" fill="#dfc27d" stroke="#dfc27d" stroke-width="0"/>
+		<rect x="173" y="499.0" width="68" height="59" fill="#f6e8c3" stroke="#f6e8c3" stroke-width="0"/>
+		<rect x="173" y="474" width="68" height="84" fill="none" stroke="#bf812d" stroke-width="2"/>
+		<line x1="173" y1="499" x2="241" y2="499" stroke="#bf812d" stroke-width="1"/>
+	</g>
+	<text x="178" y="491.7" fill="#000000" font-family="Verdana" font-size="12">TROPHEE</text>
+	<text x="178" y="516.8" fill="#000000" font-family="Verdana" font-size="12">idT</text>
+	<line x1="178" y1="519" x2="197" y2="519" stroke="#000000" stroke-width="1"/>
+	<text x="178" y="533.8" fill="#000000" font-family="Verdana" font-size="12">nomT</text>
+	<text x="178" y="550.8" fill="#000000" font-family="Verdana" font-size="12">descrT</text>
+</g>
+
+<!-- Entity DIFFICULTE -->
+<g id="entity-DIFFICULTE">
+	<g id="frame-DIFFICULTE">
+		<rect x="457" y="482" width="84" height="25" fill="#dfc27d" stroke="#dfc27d" stroke-width="0"/>
+		<rect x="457" y="507.0" width="84" height="43" fill="#f6e8c3" stroke="#f6e8c3" stroke-width="0"/>
+		<rect x="457" y="482" width="84" height="68" fill="none" stroke="#bf812d" stroke-width="2"/>
+		<line x1="457" y1="507" x2="541" y2="507" stroke="#bf812d" stroke-width="1"/>
+	</g>
+	<text x="462" y="499.7" fill="#000000" font-family="Verdana" font-size="12">DIFFICULTE</text>
+	<text x="462" y="524.8" fill="#000000" font-family="Verdana" font-size="12">idD</text>
+	<line x1="462" y1="527" x2="483" y2="527" stroke="#000000" stroke-width="1"/>
+	<text x="462" y="541.8" fill="#000000" font-family="Verdana" font-size="12">nomD</text>
+</g>
+</svg>
