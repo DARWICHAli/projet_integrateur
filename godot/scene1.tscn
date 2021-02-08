@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://sprites/parking_gratuit3.png" type="Texture" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
@@ -11,6 +11,12 @@
 [ext_resource path="res://sprites/prison.png" type="Texture" id=9]
 [ext_resource path="res://sprites/pion2.png" type="Texture" id=10]
 [ext_resource path="res://sprites/pion1.png" type="Texture" id=11]
+[ext_resource path="res://GFX/background_acceuil(2).jpg" type="Texture" id=12]
+[ext_resource path="res://GFX/start_pressed.png" type="Texture" id=13]
+[ext_resource path="res://GFX/start_not_pressed.png" type="Texture" id=14]
+[ext_resource path="res://GFX/setting_not_pressed.png" type="Texture" id=15]
+[ext_resource path="res://GFX/setting_pressed.png" type="Texture" id=16]
+[ext_resource path="res://GFX/logo.png" type="Texture" id=17]
 
 [sub_resource type="TileSet" id=1]
 1/name = "parking_gratuit3.png 1"
@@ -212,3 +218,60 @@ tile_set = SubResource( 1 )
 cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( 262158, 1, 0, 262174, 1610612742, 0, 262184, 14, 0, 1310734, -1610612731, 0, 1310750, 15, 0, 1310760, -1073741822, 0, 1966094, 7, 0, 1966110, 4, 0, 1966120, 8, 0 )
+
+[node name="Acceuil" type="Node2D" parent="."]
+
+[node name="Background" type="TextureRect" parent="Acceuil"]
+margin_right = 1024.0
+margin_bottom = 600.0
+texture = ExtResource( 12 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Acceuil"]
+margin_right = 1024.0
+margin_bottom = 673.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Acceuil/VBoxContainer"]
+margin_top = 2.0
+margin_right = 1024.0
+margin_bottom = 271.0
+alignment = 1
+
+[node name="Logo" type="TextureRect" parent="Acceuil/VBoxContainer/HBoxContainer2"]
+margin_left = 334.0
+margin_right = 690.0
+margin_bottom = 269.0
+texture = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Acceuil/VBoxContainer"]
+margin_top = 275.0
+margin_right = 1024.0
+margin_bottom = 675.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="TextureButton" parent="Acceuil/VBoxContainer/HBoxContainer"]
+margin_left = 110.0
+margin_right = 510.0
+margin_bottom = 400.0
+texture_normal = ExtResource( 14 )
+texture_pressed = ExtResource( 13 )
+
+[node name="SettingsButton" type="TextureButton" parent="Acceuil/VBoxContainer/HBoxContainer"]
+margin_left = 514.0
+margin_right = 914.0
+margin_bottom = 400.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 16 )
