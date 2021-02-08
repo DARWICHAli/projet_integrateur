@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://sprites/parking_gratuit3.png" type="Texture" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
@@ -17,6 +17,8 @@
 [ext_resource path="res://GFX/setting_not_pressed.png" type="Texture" id=15]
 [ext_resource path="res://GFX/setting_pressed.png" type="Texture" id=16]
 [ext_resource path="res://GFX/logo.png" type="Texture" id=17]
+[ext_resource path="res://GFX/rules_pressed.png" type="Texture" id=18]
+[ext_resource path="res://GFX/rules_not_pressed.png" type="Texture" id=19]
 
 [sub_resource type="TileSet" id=1]
 1/name = "parking_gratuit3.png 1"
@@ -232,16 +234,13 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Acceuil"]
 margin_right = 1024.0
-margin_bottom = 673.0
-alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Acceuil/VBoxContainer"]
-margin_top = 2.0
 margin_right = 1024.0
-margin_bottom = 271.0
+margin_bottom = 269.0
 alignment = 1
 
 [node name="Logo" type="TextureRect" parent="Acceuil/VBoxContainer/HBoxContainer2"]
@@ -254,9 +253,9 @@ __meta__ = {
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Acceuil/VBoxContainer"]
-margin_top = 275.0
+margin_top = 273.0
 margin_right = 1024.0
-margin_bottom = 675.0
+margin_bottom = 673.0
 alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
@@ -275,3 +274,10 @@ margin_right = 914.0
 margin_bottom = 400.0
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 16 )
+
+[node name="RulesButton" type="TextureButton" parent="Acceuil/VBoxContainer"]
+margin_top = 677.0
+margin_right = 1024.0
+margin_bottom = 1077.0
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 18 )
