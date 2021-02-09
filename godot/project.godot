@@ -9,10 +9,10 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node2D",
-"class": "Jeu",
+"base": "RigidBody2D",
+"class": "Pion",
 "language": "GDScript",
-"path": "res://Scripts/Jeu.gd"
+"path": "res://Scripts/Pion.gd"
 }, {
 "base": "TileMap",
 "class": "Plateau",
@@ -25,7 +25,7 @@ _global_script_classes=[ {
 "path": "res://Scripts/AllerPrison.gd"
 } ]
 _global_script_class_icons={
-"Jeu": "",
+"Pion": "",
 "Plateau": "",
 "allerprison": ""
 }
@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Godot"
-run/main_scene="res://Jeu.tscn"
+run/main_scene="res://scene1.tscn"
 config/icon="res://icon.png"
 
 [rendering]
