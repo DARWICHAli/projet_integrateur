@@ -16,8 +16,16 @@ _global_script_class_icons={
 [application]
 
 config/name="server"
-run/main_scene="res://MainServer/MainServer.tscn"
+run/main_scene="res://Server.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Server="*res://Server.gd"
+
+[mono]
+
+debugger_agent/port=23699
 
 [rendering]
 
