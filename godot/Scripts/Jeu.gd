@@ -1,6 +1,9 @@
 extends Node2D
 
 class_name Jeu
+export (PackedScene) var Pion
 
 func _ready():
-	pass # Replace with function body.
+	var pion = Pion.instance()
+	add_child(pion)
+	pass 
