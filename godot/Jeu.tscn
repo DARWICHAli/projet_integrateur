@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
@@ -212,6 +212,8 @@
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 63.5441, 61.4319 )
 
+[sub_resource type="RectangleShape2D" id=3]
+
 [node name="Jeu" type="Node2D"]
 script = ExtResource( 1 )
 
@@ -249,5 +251,11 @@ position = Vector2( 176.787, 303.153 )
 shape = SubResource( 2 )
 
 [node name="Pion" parent="." instance=ExtResource( 15 )]
-position = Vector2( 0, -1 )
+position = Vector2( 414.578, 297.795 )
+scale = Vector2( 0.400001, 0.48 )
+
+[node name="TEST" type="Node2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TEST"]
+shape = SubResource( 3 )
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
