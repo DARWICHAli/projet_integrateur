@@ -258,4 +258,8 @@ scale = Vector2( 0.400001, 0.48 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TEST"]
 shape = SubResource( 3 )
+
+[node name="TEST 2" type="Node2D" parent="."]
+
+[node name="KinematicBody2D" type="KinematicBody2D" parent="TEST 2"]
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
