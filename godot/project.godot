@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "RigidBody2D",
 "class": "Pion",
 "language": "GDScript",
-"path": "res://Pion.gd"
+"path": "res://Scripts/Pion.gd"
 }, {
 "base": "TileMap",
 "class": "Plateau",
