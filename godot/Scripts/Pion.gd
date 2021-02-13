@@ -16,10 +16,6 @@ func _ready():
 	#game_size.y = side
 	game_size = get_viewport_rect().size
 	print(lancer_de())
-	var timer = Timer.new()
-	timer.set_one_shot(false)
-	timer.set_wait_time(0.25)
-	add_child(timer)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
