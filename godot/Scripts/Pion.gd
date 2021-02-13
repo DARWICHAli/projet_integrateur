@@ -43,3 +43,8 @@ func _process(delta):
 	position.x=clamp(position.x, 0, game_size.x)
 	position.y=clamp(position.y, 0, game_size.y)
 
+func lancer_de():
+	var rand = RandomNumberGenerator.new()
+	rand.randomize()
+	var deplacement = rand.randi_range(1, 6)
+	return deplacement
