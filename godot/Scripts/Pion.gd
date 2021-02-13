@@ -3,17 +3,24 @@ extends KinematicBody2D
 export (int) var SPEED
 var side = 30
 var velocity = Vector2()
-var game_size = Vector2()
+var game_size #= Vector2()
 var x_counter = 0
 var y_counter = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var initialPosition = Vector2(382.912,254.332)
-	position = initialPosition
-	game_size.x = side # Taille de l'écran,à changer par taille du plateau
-	game_size.y = side
-	lancer_de()
+	#var initialPosition = Vector2(387.823,255.953)
+	#position = initialPosition
+	position = Vector2(387.823,255.953)
+	#game_size.x = side # Taille de l'écran,à changer par taille du plateau
+	#game_size.y = side
+	game_size = get_viewport_rect().size
+	print(lancer_de())
+	var timer = Timer.new()
+	timer.set_one_shot(false)
+	timer.set_wait_time(0.25)
+	add_child(timer)
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	velocity = Vector2()
@@ -40,6 +47,6 @@ func lancer_de():
 	var rand = RandomNumberGenerator.new()
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
-	print(deplacement)
-	pass
+	return deplacement
+
 	
