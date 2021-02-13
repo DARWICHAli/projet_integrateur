@@ -301,11 +301,10 @@ position = Vector2( 119.518, 69.0964 )
 polygon = PoolVector2Array( -3.3196, -1.50504, -3.13431, 122.638, 1.91772, 123.323, 120.823, 122.453, 121.009, 94.1037, 25.7706, 94.4742, 25.2148, -2.24619 )
 
 [node name="Pion" parent="." instance=ExtResource( 15 )]
-position = Vector2( 387.823, 255.953 )
 scale = Vector2( 0.400001, 0.48 )
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
-[connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Start" to="." method="_on_Start_body_entered"]
+[connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Park" to="Plateau/Park" method="_on_Park_body_entered"]
 [connection signal="body_entered" from="Plateau/Prison" to="Plateau/Prison" method="_on_Prison_body_entered"]
 [connection signal="body_entered" from="Plateau/Rouge" to="Plateau/Rouge" method="_on_Rouge_body_entered"]
