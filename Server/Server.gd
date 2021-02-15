@@ -12,7 +12,7 @@ var rng = RandomNumberGenerator.new()
 # Permet d'attendre le thread créant le port
 var sem = Semaphore.new()
 # Serveurs des parties de jeu
-var serveur_parties = []
+const serveurs_partie = []
 
 func _ready():
 	# Connect base signals to get notified of new client connections,
@@ -58,22 +58,22 @@ func _on_data_lobby (id_client : int):
 
 	if obj.type == Structure.PacketType.INSCRIPTION_PARTIE:
 		print('client %d veut rejoindre la partie %d' % [id_client, obj.data])
-		if !code_existe(obj.data):
+		if trouver_partie(obj.data) == -1:
 			print("Le client crée une partie")
-			serveur_parties.append(Serveur_partie.new());
-			serveur_parties.back().thread.start(self, "thread_function", [])
-			serveur_parties.back().code = obj.data
+			serveurs_partie.append(Serveur_partie.new());
+			serveurs_partie.back().thread.start(self, "thread_function", [])
+			serveurs_partie.back().code = obj.data
 			sem.wait()
 
 			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveur_parties.back().port)
+			structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port)
 
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		else:
 			print("Le client rejoint une partie")
-			var id_serveur_partie = find_code_index(obj.data)
+			var id_serveur_partie = trouver_partie(obj.data)
 			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveur_parties[id_serveur_partie].port)
+			structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port)
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 			
 	else:
@@ -104,7 +104,7 @@ func thread_function (args):
 			set_process(false)
 		else:
 			print("Serveur de partie démarré avec port: " + String(port_serveur_jeu))
-			serveur_parties.back().port = port_serveur_jeu
+			serveurs_partie.back().port = port_serveur_jeu
 			find = true
 
 	sem.post()
@@ -157,20 +157,9 @@ func envoyer_message (server : WebSocketServer, bytes : PoolByteArray, client_id
 func recevoir_message (server : WebSocketServer, id_client : int) -> PoolByteArray:
 	return server.get_peer(id_client).get_packet()
 
-# Renvoie un booléen si le code existe dans le tableau serveur_parties
-func code_existe(code):
-	var resultat = false
-	for partie in serveur_parties:
-		if partie.code == code:
-			resultat = true
-	return resultat
-
-# Renvoie l'index de la position du code dans le tableau serveur_parties
-# Attention : pas de détection si le code existe bien
-func find_code_index(code):
-	var resultat = 0
-	for partie in serveur_parties:
-		if partie.code != code:
-			resultat += 1
-		else:
-			return resultat
+# Renvoie l'index de la position du code dans le tableau serveur_parties s'il existe, sinon il renvoie -1
+func trouver_partie(code : int) :
+	for index in range(0, len(serveurs_partie)):
+		 if serveurs_partie[index].code == code:
+			 return index
+	return -1

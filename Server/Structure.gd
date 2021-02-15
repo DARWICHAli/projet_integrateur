@@ -2,7 +2,7 @@ extends Node
 
 class_name Structure
 
-enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, JOIN_PARTIE}
+enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU}
 
 var type
 var data
