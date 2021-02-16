@@ -23,6 +23,5 @@ func _on_StartButton_pressed():
 
 
 func _on_TextureButton_pressed():
-	init_game()
 	$"Acceuil".show()
 	
