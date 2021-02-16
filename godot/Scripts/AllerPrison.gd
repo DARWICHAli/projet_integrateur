@@ -15,4 +15,5 @@ func _on_AllerPrison_body_entered(body):
 	t_detect.start()
 	yield(t_detect, "timeout")
 	if overlaps_body(body):
+		get_node("../../Pion").position = get_node("../Prison/CollisionShape2D").position
 		print("VA EN PRISON !")
