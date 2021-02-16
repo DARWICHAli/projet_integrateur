@@ -4,6 +4,8 @@ func _ready():
 	pass 
 
 func _on_Start_body_entered(body):
+	get_node("../..").coin = 0
+	get_node("../..").move()
 	var t_detect = Timer.new()
 	t_detect.set_wait_time(2)
 	t_detect.set_one_shot(true)

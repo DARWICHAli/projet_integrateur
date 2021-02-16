@@ -6,6 +6,8 @@ func _ready():
 	pass
 
 func _on_AllerPrison_body_entered(body):
+	get_node("../..").coin = 3
+	get_node("../..").move()
 	var t_detect = Timer.new()
 	t_detect.set_wait_time(2)
 	t_detect.set_one_shot(true)
