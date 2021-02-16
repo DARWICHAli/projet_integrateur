@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
@@ -23,6 +23,8 @@
 [ext_resource path="res://Scripts/Vert.gd" type="Script" id=21]
 [ext_resource path="res://Scripts/Violet.gd" type="Script" id=22]
 [ext_resource path="res://Scripts/Bleu.gd" type="Script" id=23]
+[ext_resource path="res://GFX/godot_GFX_dés_not_pressed.png" type="Texture" id=24]
+[ext_resource path="res://GFX/godot_GFX_dés_pressed.png" type="Texture" id=25]
 
 [sub_resource type="TileSet" id=1]
 1/name = "parking_gratuit3.png 1"
@@ -304,9 +306,21 @@ polygon = PoolVector2Array( -3.3196, -1.50504, -3.13431, 122.638, 1.91772, 123.3
 position = Vector2( 387.202, 294.449 )
 scale = Vector2( 0.400001, 0.48 )
 SPEED = 200
+
+[node name="Lancer" type="TextureButton" parent="."]
+margin_left = 550.921
+margin_top = 171.633
+margin_right = 950.921
+margin_bottom = 571.633
+rect_scale = Vector2( 0.7, 0.7 )
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
-[connection signal="body_entered" from="Plateau/Start" to="." method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
+[connection signal="body_entered" from="Plateau/Start" to="." method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Park" to="Plateau/Park" method="_on_Park_body_entered"]
 [connection signal="body_entered" from="Plateau/Prison" to="Plateau/Prison" method="_on_Prison_body_entered"]
 [connection signal="body_entered" from="Plateau/Rouge" to="Plateau/Rouge" method="_on_Rouge_body_entered"]
@@ -314,3 +328,4 @@ SPEED = 200
 [connection signal="body_entered" from="Plateau/Bleu" to="Plateau/Bleu" method="_on_Bleu_body_entered"]
 [connection signal="body_entered" from="Plateau/Violet" to="Plateau/Violet" method="_on_Violet_body_entered"]
 [connection signal="body_entered" from="Plateau/VisitePrison" to="Plateau/VisitePrison" method="_on_VisitePrison_body_entered"]
+[connection signal="pressed" from="Lancer" to="Pion" method="_on_Lancer_pressed"]

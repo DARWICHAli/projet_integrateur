@@ -19,7 +19,7 @@ var y_counter = 0
 func _ready():
 	position = Vector2(387.202,294.449)
 	game_size = get_viewport_rect().size # Taille de l'écran,à changer par taille du plateau
-	get_node("..").dep_cases = get_node("..").lancer_de()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -53,3 +53,7 @@ func _process(delta):
 	position += velocity * delta
 	position.x=clamp(position.x, 0, game_size.x)
 	position.y=clamp(position.y, 0, game_size.y)
+
+
+func _on_Lancer_pressed():
+	get_node("..").dep_cases = get_node("..").lancer_de()
