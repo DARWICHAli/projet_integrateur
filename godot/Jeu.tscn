@@ -218,10 +218,10 @@
 17/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 48.2872, 47.344 )
+extents = Vector2( 32.1061, 41.0426 )
 
 [sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 58.5643, 32.9419 )
+extents = Vector2( 58.5643, 27.7292 )
 
 [node name="Jeu" type="Node2D"]
 script = ExtResource( 1 )
@@ -238,28 +238,28 @@ script = ExtResource( 7 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/AllerPrison"]
-position = Vector2( 383.454, 97.7309 )
+position = Vector2( 370.415, 105.803 )
 shape = SubResource( 2 )
 
 [node name="Start" type="Area2D" parent="Plateau"]
 script = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Start"]
-position = Vector2( 383.454, 303.153 )
+position = Vector2( 376.624, 296.944 )
 shape = SubResource( 2 )
 
 [node name="Park" type="Area2D" parent="Plateau"]
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Park"]
-position = Vector2( 176.165, 95.8651 )
+position = Vector2( 191.687, 105.799 )
 shape = SubResource( 2 )
 
 [node name="Prison" type="Area2D" parent="Plateau"]
 script = ExtResource( 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Prison"]
-position = Vector2( 192.346, 287.594 )
+position = Vector2( 191.725, 286.973 )
 shape = SubResource( 2 )
 
 [node name="Rouge" type="Area2D" parent="Plateau"]
@@ -301,6 +301,7 @@ position = Vector2( 119.518, 69.0964 )
 polygon = PoolVector2Array( -3.3196, -1.50504, -3.13431, 122.638, 1.91772, 123.323, 120.823, 122.453, 121.009, 94.1037, 25.7706, 94.4742, 25.2148, -2.24619 )
 
 [node name="Pion" parent="." instance=ExtResource( 15 )]
+position = Vector2( 387.202, 294.449 )
 scale = Vector2( 0.400001, 0.48 )
 SPEED = 200
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]

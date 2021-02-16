@@ -3,29 +3,28 @@ class_name Pion
 
 export (int) var SPEED = 5
 
-var nb_cases  = 3 # Par côté
+var nb_cases = 3 # Par côté
 var case_side = 12
 
 
 var side = 30
 
-var velocity = Vector2()
+#var velocity = Vector2()
 var game_size
 var x_counter = side
 var y_counter = 0
 
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	position = Vector2(387.823,255.953)
+	position = Vector2(387.202,294.449)
 	game_size = get_viewport_rect().size # Taille de l'écran,à changer par taille du plateau
-
+	get_node("..").dep_cases = get_node("..").lancer_de()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	velocity = Vector2()
-	print(get_node("..").dep_cases)
+	var velocity = Vector2()
+	#print(get_node("..").dep_cases)
 	if get_node("..").dep_cases > 0:
 		#if Input.is_mouse_button_pressed( 1 ):
 #		if ((x_counter == 0) && (y_counter >= 0) && (y_counter < side)):
@@ -48,14 +47,9 @@ func _process(delta):
 			velocity.x+=1
 		elif get_node("..").coin == 3:
 			velocity.y+=1
+		#print(get_node("..").coin)
 	if velocity.length() > 0:
 		velocity = velocity.normalized() * SPEED
 	position += velocity * delta
 	position.x=clamp(position.x, 0, game_size.x)
 	position.y=clamp(position.y, 0, game_size.y)
-
-func lancer_de():
-	var rand = RandomNumberGenerator.new()
-	rand.randomize()
-	var deplacement = rand.randi_range(1, 6)
-	return deplacement

@@ -4,6 +4,9 @@ func _ready():
 	pass 
 
 func _on_Start_body_entered(body):
+	if get_node("../..").debut == 0:
+		get_node("../..").dep_cases+=1
+		get_node("../..").debut+=1
 	get_node("../..").coin = 0
 	get_node("../..").move()
 	var t_detect = Timer.new()
