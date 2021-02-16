@@ -13,6 +13,8 @@ var rng = RandomNumberGenerator.new()
 var sem = Semaphore.new()
 # Serveurs des parties de jeu
 const serveurs_partie = []
+#tableau de stockage des clients qui se connectent sur le lobby
+var list_clients=[]
 
 func _ready():
 	# Connect base signals to get notified of new client connections,
@@ -34,22 +36,34 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
+# warning-ignore:unused_argument
 func _connected_lobby (id, proto):
 	var client_IP   = serveur_lobby.get_peer_address(id)
 	var client_port = serveur_lobby.get_peer_port(id)
+	#tableau de stockage des clients qui se connecte sur le lobby 
+	if list_clients.has(id):
+		print("le client est déjà present")
+	else:
+		list_clients.append(id)	
+		print('Un client est ajouté')
 	print('client connecté au lobby, numéro %d, adresse : %s:%d' % [id, client_IP, client_port])
 
 func _close_request_lobby (id, code, reason):
 	# This is called when a client notifies that it wishes to close the connection,
 	# providing a reason string and close code.
 	print("Client %d disconnecting from lobby with code: %d with reason : %s" % [id, code, reason])
+	#supprimer son id après deconnection du client sur le lobby (si necessaire)
+	if list_clients.has(id):
+		list_clients.erase(id)
 
 func _disconnected_lobby (id, was_clean = false):
 	# This is called when a client disconnects, "id" will be the one of the
 	# disconnecting client, "was_clean" will tell you if the disconnection
 	# was correctly notified by the remote peer before closing the socket.
 	print("Client %d disconnected from lobby , clean: %s" % [id, str(was_clean)])
-
+	#vider le tableau apres la deconnection du lobby 
+	for id in list_clients:
+		list_clients.erase(id)
 # Lancement d'un nouveau thread, puis envoie du nouveau ip et port
 func _on_data_lobby (id_client : int):
 	var paquet = recevoir_message(serveur_lobby, id_client)
@@ -79,6 +93,7 @@ func _on_data_lobby (id_client : int):
 	else:
 		print('autre type de paquet reçu')
 
+# warning-ignore:unused_argument
 func _process(delta):
 	# Call this in _process or _physics_process.
 	# Data transfer, and signals emission will only happen when calling this function.
@@ -113,17 +128,22 @@ func thread_function (args):
 
 
 
+# warning-ignore:unused_argument
 func _connected_jeu (id, proto, serveur_jeu):
 	var client_IP   = serveur_jeu.socket.get_peer_address(id)
 	var client_port = serveur_jeu.socket.get_peer_port(id)
+	#ajout de l'id du joueurs dans le tableau list_joueurs
+	if serveur_jeu.list_joueurs.has(id):
+		print('le id joueur est déja present')
+	else :
+		serveur_jeu.list_joueurs.append(id)	
+		print('un id de joueur est ajouté ')
 	print('SERVEUR PARTIE : client connecté avec IP depuis %d:%d' % [client_IP, client_port])
 
 func _close_request_jeu (id, code, reason):
-
 	print("SERVEUR PARTIE : Client %d disconnecting with code: %d, reason: %s" % [id, code, reason])
-
+	
 func _disconnected_jeu (id, was_clean = false):
-
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
 
 func _on_data_jeu(id_client, serveur_jeu):
@@ -152,6 +172,7 @@ func _on_data_jeu(id_client, serveur_jeu):
 
 #envoie les octets au client identifié par client_id
 func envoyer_message (server : WebSocketServer, bytes : PoolByteArray, client_id : int):
+# warning-ignore:return_value_discarded
 	server.get_peer(client_id).put_packet(bytes)
 
 func recevoir_message (server : WebSocketServer, id_client : int) -> PoolByteArray:

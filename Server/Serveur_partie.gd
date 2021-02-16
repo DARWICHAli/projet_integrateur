@@ -10,3 +10,5 @@ var socket = WebSocketServer.new()
 var port
 # Code utile pour rejoindre le thread
 var code
+#tableau de stockage des joueurs 
+var list_joueurs=[]
