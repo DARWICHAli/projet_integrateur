@@ -61,7 +61,7 @@ func _on_data_lobby (id_client : int):
 		if trouver_partie(obj.data) == -1:
 			print("Le client crée une partie")
 			serveurs_partie.append(Serveur_partie.new());
-			serveurs_partie.back().thread.start(self, "thread_function", [])
+			serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back()])
 			serveurs_partie.back().code = obj.data
 			sem.wait()
 
@@ -87,35 +87,35 @@ func _process(delta):
 
 # Fonction d'intialisaion des threads
 func thread_function (args):
-	var serveur_jeu = WebSocketServer.new()
+	var serveur_jeu = args[0]
 
-	serveur_jeu.connect("client_connected", self, "_connected_jeu", [serveur_jeu])
-	serveur_jeu.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
-	serveur_jeu.connect("client_close_request", self, "_close_request_jeu", [serveur_jeu])
-	serveur_jeu.connect("data_received", self, "_on_data_jeu", [serveur_jeu])
+	serveur_jeu.socket.connect("client_connected", self, "_connected_jeu", [serveur_jeu])
+	serveur_jeu.socket.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
+	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu", [serveur_jeu])
+	serveur_jeu.socket.connect("data_received", self, "_on_data_jeu", [serveur_jeu])
 
 	var find = false
 	var port_serveur_jeu
 	while !find:
 		port_serveur_jeu = rng.randi_range(5001, 65353)
-		var err = serveur_jeu.listen(port_serveur_jeu)
+		var err = serveur_jeu.socket.listen(port_serveur_jeu)
 		if err != OK:
 			print("Unable to start server")
 			set_process(false)
 		else:
 			print("Serveur de partie démarré avec port: " + String(port_serveur_jeu))
-			serveurs_partie.back().port = port_serveur_jeu
+			serveur_jeu.port = port_serveur_jeu
 			find = true
 
 	sem.post()
 	while true: # écoute infinie
-		serveur_jeu.poll()
+		serveur_jeu.socket.poll()
 
 
 
 func _connected_jeu (id, proto, serveur_jeu):
-	var client_IP   = serveur_jeu.get_peer_address(id)
-	var client_port = serveur_jeu.get_peer_port(id)
+	var client_IP   = serveur_jeu.socket.get_peer_address(id)
+	var client_port = serveur_jeu.socket.get_peer_port(id)
 	print('SERVEUR PARTIE : client connecté avec IP depuis %d:%d' % [client_IP, client_port])
 
 func _close_request_jeu (id, code, reason):
@@ -128,7 +128,7 @@ func _disconnected_jeu (id, was_clean = false):
 
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le jeu a reçu des données')
-	var packet = serveur_jeu.get_peer(id_client).get_packet()
+	var packet = serveur_jeu.socket.get_peer(id_client).get_packet()
 
 	var structure = Structure.new()
 
