@@ -220,7 +220,7 @@
 17/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.1061, 41.0426 )
+extents = Vector2( 45.7396, 46.2308 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 58.5643, 27.7292 )
@@ -261,7 +261,7 @@ shape = SubResource( 2 )
 script = ExtResource( 18 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Prison"]
-position = Vector2( 191.725, 286.973 )
+position = Vector2( 191.725, 288.032 )
 shape = SubResource( 2 )
 
 [node name="Rouge" type="Area2D" parent="Plateau"]
@@ -307,11 +307,22 @@ position = Vector2( 387.202, 294.449 )
 scale = Vector2( 0.400001, 0.48 )
 SPEED = 200
 
+[node name="nb" type="Label" parent="."]
+margin_left = 601.0
+margin_top = 117.0
+margin_right = 816.0
+margin_bottom = 230.0
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Lancer" type="TextureButton" parent="."]
-margin_left = 550.921
-margin_top = 171.633
-margin_right = 950.921
-margin_bottom = 571.633
+margin_left = 524.435
+margin_top = 159.979
+margin_right = 924.435
+margin_bottom = 559.979
 rect_scale = Vector2( 0.7, 0.7 )
 texture_normal = ExtResource( 24 )
 texture_pressed = ExtResource( 25 )
@@ -328,4 +339,5 @@ __meta__ = {
 [connection signal="body_entered" from="Plateau/Bleu" to="Plateau/Bleu" method="_on_Bleu_body_entered"]
 [connection signal="body_entered" from="Plateau/Violet" to="Plateau/Violet" method="_on_Violet_body_entered"]
 [connection signal="body_entered" from="Plateau/VisitePrison" to="Plateau/VisitePrison" method="_on_VisitePrison_body_entered"]
+[connection signal="pressed" from="Lancer" to="." method="_on_Lancer_pressed"]
 [connection signal="pressed" from="Lancer" to="Pion" method="_on_Lancer_pressed"]
