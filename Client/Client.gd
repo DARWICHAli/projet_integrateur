@@ -3,6 +3,7 @@ extends Node
 var ip = "127.0.0.1"
 var port = "5000"
 
+var mon_nom = "Client 1"
 
 # Our WebSocketClient instance
 var client_lobby  = WebSocketClient.new()
@@ -75,10 +76,10 @@ func _connected_partie (proto = ""):
 	var structure = Structure.new()
 
 	print('envoi message chat')
-	structure.set_chat_message('message chat')
+	structure.set_chat_message(mon_nom + " : " + "Bonjour")
 	envoyer_message(client_partie, structure.to_bytes())
 
-	print('envoi message chat')
+	print('envoi message jeu')
 	structure.set_plateau([555, 666, 777])
 	envoyer_message(client_partie, structure.to_bytes())
 
@@ -93,20 +94,15 @@ func _on_data_partie ():
 
 	match obj.type:
 		Structure.PacketType.CHAT:
-			print('message de chat reçu')
+			print(obj.data)
 		_:
 			print('autre paquet reçu')
-
 
 func _process (delta):
 	# Call this in _process or _physics_process. Data transfer, and signals
 	# emission will only happen when calling this function.
 	client_lobby.poll()
 	client_partie.poll()
-
-
-
-
 
 #envoie de données au serveur
 func envoyer_message (client : WebSocketClient, bytes : PoolByteArray):
@@ -121,7 +117,7 @@ func recevoir_message (client : WebSocketClient) -> PoolByteArray:
 
 # Connexion au serveur de partie
 func rejoindre_partie (URL : String):
-	client_lobby.disconnect_from_host(0, "Pas de problème")
+	#client_lobby.disconnect_from_host(0, "Pas de problème")
 	var parts = URL.rsplit(':')
 	ip = parts[0]
 	port = parts[1]

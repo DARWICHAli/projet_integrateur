@@ -64,6 +64,7 @@ func _disconnected_lobby (id, was_clean = false):
 	#vider le tableau apres la deconnection du lobby 
 	for id in list_clients:
 		list_clients.erase(id)
+
 # Lancement d'un nouveau thread, puis envoie du nouveau ip et port
 func _on_data_lobby (id_client : int):
 	var paquet = recevoir_message(serveur_lobby, id_client)
@@ -89,7 +90,6 @@ func _on_data_lobby (id_client : int):
 			var structure = Structure.new()
 			structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port)
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
-			
 	else:
 		print('autre type de paquet reçu')
 
@@ -106,7 +106,7 @@ func thread_function (args):
 
 	serveur_jeu.socket.connect("client_connected", self, "_connected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
-	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu", [serveur_jeu])
+	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu")
 	serveur_jeu.socket.connect("data_received", self, "_on_data_jeu", [serveur_jeu])
 
 	var find = false
@@ -143,25 +143,27 @@ func _connected_jeu (id, proto, serveur_jeu):
 func _close_request_jeu (id, code, reason):
 	print("SERVEUR PARTIE : Client %d disconnecting with code: %d, reason: %s" % [id, code, reason])
 	
-func _disconnected_jeu (id, was_clean = false):
+func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
+	serveur_jeu.list_joueurs.erase(id)
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
 
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le jeu a reçu des données')
-	var packet = recevoir_message(serveur_jeu, id_client)
-
+	var packet = recevoir_message(serveur_jeu.socket, id_client)
+	
 	var structure = Structure.new()
-
+	
 	var obj = structure.from_bytes(packet)
-
+	
 	var type = obj.type
 	var data = obj.data
 
-
 	match type:
 		Structure.PacketType.CHAT:
-			print('message de chat reçu:')
-			print(var2str(data))
+			print('message de chat reçu: %s' % var2str(data))
+			structure.set_chat_message(var2str(data))
+			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		Structure.PacketType.JEU:
 			print('message de jeu reçu')
 			print(var2str(data))
