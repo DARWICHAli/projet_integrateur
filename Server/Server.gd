@@ -148,7 +148,7 @@ func _disconnected_jeu (id, was_clean = false):
 
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le jeu a reçu des données')
-	var packet = recevoir_message(serveur_jeu, id_client)
+	var packet = recevoir_message(serveur_jeu.socket, id_client)
 
 	var structure = Structure.new()
 
