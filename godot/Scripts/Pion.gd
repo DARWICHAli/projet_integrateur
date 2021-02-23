@@ -6,8 +6,10 @@ export (int) var SPEED = 5
 var nb_cases = 3 # Par côté
 var case_side = 12
 
-
+var prison = 0
+var argent = 0
 var side = 30
+var nb_tours = 1
 
 #var velocity = Vector2()
 var game_size
@@ -56,5 +58,9 @@ func _process(delta):
 
 
 func _on_Lancer_pressed():
+<<<<<<< HEAD
 	get_node("..").dep_cases = get_node("..").lancer_de()
 	
+=======
+	get_node("..").dep_cases = 2#get_node("..").lancer_de()
+>>>>>>> 0da132e06f3bc814c9c1f505bf57cff454c4ac52

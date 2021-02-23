@@ -1,20 +1,7 @@
 extends Area2D
 
-
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
+	pass 
 
 func _on_Vert_body_entered(body):
 	get_node("../..").move()
@@ -25,4 +12,9 @@ func _on_Vert_body_entered(body):
 	t_detect.start()
 	yield(t_detect, "timeout")
 	if overlaps_body(body):
-		print("VERT")
+		print("BIENVENUE A L'IFSI : PAYEZ 100 ECTS !")
+		body.argent-=100
+		print("Solde : " + str(body.argent))
+		if body.argent <= 0:
+			print("VOUS ETES FAUCHES, C'EST PERDU !")
+			get_tree().quit()
