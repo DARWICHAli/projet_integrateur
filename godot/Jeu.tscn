@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
@@ -220,7 +220,10 @@
 17/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32.1061, 41.0426 )
+extents = Vector2( 43.3821, 41.0426 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 59.4828, 30.1219 )
 
 [sub_resource type="RectangleShape2D" id=3]
 extents = Vector2( 58.5643, 27.7292 )
@@ -240,22 +243,22 @@ script = ExtResource( 7 )
 script = ExtResource( 6 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/AllerPrison"]
-position = Vector2( 370.415, 105.803 )
+position = Vector2( 367.517, 115.657 )
 shape = SubResource( 2 )
 
 [node name="Start" type="Area2D" parent="Plateau"]
 script = ExtResource( 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Start"]
-position = Vector2( 376.624, 296.944 )
+position = Vector2( 367.35, 298.103 )
 shape = SubResource( 2 )
 
 [node name="Park" type="Area2D" parent="Plateau"]
 script = ExtResource( 17 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Park"]
-position = Vector2( 191.687, 105.799 )
-shape = SubResource( 2 )
+position = Vector2( 177.363, 125.197 )
+shape = SubResource( 4 )
 
 [node name="Prison" type="Area2D" parent="Plateau"]
 script = ExtResource( 18 )
@@ -299,11 +302,11 @@ position = Vector2( -1.86747, 173.675 )
 script = ExtResource( 19 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Plateau/VisitePrison"]
-position = Vector2( 119.518, 69.0964 )
+position = Vector2( 119.518, 68.5168 )
 polygon = PoolVector2Array( -3.3196, -1.50504, -3.13431, 122.638, 1.91772, 123.323, 120.823, 122.453, 121.009, 94.1037, 25.7706, 94.4742, 25.2148, -2.24619 )
 
 [node name="Pion" parent="." instance=ExtResource( 15 )]
-position = Vector2( 387.202, 294.449 )
+position = Vector2( 387.202, 295.029 )
 scale = Vector2( 0.400001, 0.48 )
 SPEED = 200
 
@@ -319,8 +322,8 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
-[connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Start" to="." method="_on_Start_body_entered"]
+[connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/Park" to="Plateau/Park" method="_on_Park_body_entered"]
 [connection signal="body_entered" from="Plateau/Prison" to="Plateau/Prison" method="_on_Prison_body_entered"]
 [connection signal="body_entered" from="Plateau/Rouge" to="Plateau/Rouge" method="_on_Rouge_body_entered"]
