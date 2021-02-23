@@ -58,4 +58,4 @@ func _process(delta):
 
 
 func _on_Lancer_pressed():
-	get_node("..").dep_cases = 2#get_node("..").lancer_de()
+	get_node("..").dep_cases = get_node("..").lancer_de()
