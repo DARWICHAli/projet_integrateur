@@ -1,7 +1,10 @@
-[gd_scene load_steps=16 format=2]
 
-[ext_resource path="res://sprites/parking_gratuit3.png" type="Texture" id=1]
+[gd_scene load_steps=30 format=2]
+
+
+[ext_resource path="res://Scripts/Jeu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
+<<<<<<< HEAD:godot/scene1.tscn
 [ext_resource path="res://sprites/pixil-frame_bleu.png" type="Texture" id=3]
 [ext_resource path="res://sprites/pixil-frame_rouge.png" type="Texture" id=4]
 [ext_resource path="res://sprites/start.png" type="Texture" id=5]
@@ -13,10 +16,35 @@
 [ext_resource path="res://sprites/pion1.png" type="Texture" id=11]
 [ext_resource path="res://Scripts/Plateau.gd" type="Script" id=12]
 [ext_resource path="res://Pion.gd" type="Script" id=13]
+=======
+[ext_resource path="res://sprites/pixil-frame_rouge.png" type="Texture" id=3]
+[ext_resource path="res://sprites/pixil-frame_bleu.png" type="Texture" id=4]
+[ext_resource path="res://sprites/prison.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Plateau.gd" type="Script" id=7]
+[ext_resource path="res://sprites/parking_gratuit3.png" type="Texture" id=8]
+[ext_resource path="res://sprites/start.png" type="Texture" id=9]
+[ext_resource path="res://sprites/middle_small.png" type="Texture" id=10]
+[ext_resource path="res://sprites/pixil-frame_vert.png" type="Texture" id=11]
+[ext_resource path="res://sprites/gotoprison.png" type="Texture" id=12]
+[ext_resource path="res://sprites/pion2.png" type="Texture" id=13]
+[ext_resource path="res://sprites/pion1.png" type="Texture" id=14]
+[ext_resource path="res://Pion.tscn" type="PackedScene" id=15]
+[ext_resource path="res://Scripts/Start.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/Park.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/Prison.gd" type="Script" id=18]
+[ext_resource path="res://Scripts/VisitePrison.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/Rouge.gd" type="Script" id=20]
+[ext_resource path="res://Scripts/Vert.gd" type="Script" id=21]
+[ext_resource path="res://Scripts/Violet.gd" type="Script" id=22]
+[ext_resource path="res://Scripts/Bleu.gd" type="Script" id=23]
+[ext_resource path="res://GFX/godot_GFX_dés_not_pressed.png" type="Texture" id=24]
+[ext_resource path="res://GFX/godot_GFX_dés_pressed.png" type="Texture" id=25]
+>>>>>>> fonctionnel:godot/Jeu.tscn
 
 [sub_resource type="TileSet" id=1]
 1/name = "parking_gratuit3.png 1"
-1/texture = ExtResource( 1 )
+1/texture = ExtResource( 8 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 0, 0, 128, 128 )
@@ -67,7 +95,7 @@
 3/shapes = [  ]
 3/z_index = 0
 4/name = "pixil-frame_bleu.png 4"
-4/texture = ExtResource( 3 )
+4/texture = ExtResource( 4 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 24, 0, 80, 128 )
@@ -81,7 +109,7 @@
 4/shapes = [  ]
 4/z_index = 0
 5/name = "pixil-frame_rouge.png 5"
-5/texture = ExtResource( 4 )
+5/texture = ExtResource( 3 )
 5/tex_offset = Vector2( 0, 0 )
 5/modulate = Color( 1, 1, 1, 1 )
 5/region = Rect2( 24, 0, 80, 128 )
@@ -95,7 +123,7 @@
 5/shapes = [  ]
 5/z_index = 0
 6/name = "pixil-frame_vert.png 6"
-6/texture = ExtResource( 7 )
+6/texture = ExtResource( 11 )
 6/tex_offset = Vector2( 0, 0 )
 6/modulate = Color( 1, 1, 1, 1 )
 6/region = Rect2( 24, 0, 80, 128 )
@@ -109,7 +137,7 @@
 6/shapes = [  ]
 6/z_index = 0
 7/name = "prison.png 7"
-7/texture = ExtResource( 9 )
+7/texture = ExtResource( 5 )
 7/tex_offset = Vector2( 0, 0 )
 7/modulate = Color( 1, 1, 1, 1 )
 7/region = Rect2( 0, 0, 128, 128 )
@@ -123,7 +151,7 @@
 7/shapes = [  ]
 7/z_index = 0
 8/name = "start.png 8"
-8/texture = ExtResource( 5 )
+8/texture = ExtResource( 9 )
 8/tex_offset = Vector2( 0, 0 )
 8/modulate = Color( 1, 1, 1, 1 )
 8/region = Rect2( 0, 0, 128, 128 )
@@ -137,7 +165,7 @@
 8/shapes = [  ]
 8/z_index = 0
 10/name = "parking_gratuit3.png 10"
-10/texture = ExtResource( 1 )
+10/texture = ExtResource( 8 )
 10/tex_offset = Vector2( 0, 0 )
 10/modulate = Color( 1, 1, 1, 1 )
 10/region = Rect2( 16, 16, 8, 8 )
@@ -151,7 +179,7 @@
 10/shapes = [  ]
 10/z_index = 0
 14/name = "gotoprison.png 14"
-14/texture = ExtResource( 8 )
+14/texture = ExtResource( 12 )
 14/tex_offset = Vector2( 0, 0 )
 14/modulate = Color( 1, 1, 1, 1 )
 14/region = Rect2( 0, 0, 128, 128 )
@@ -165,7 +193,7 @@
 14/shapes = [  ]
 14/z_index = 0
 15/name = "middle_small.png 15"
-15/texture = ExtResource( 6 )
+15/texture = ExtResource( 10 )
 15/tex_offset = Vector2( 0, 0 )
 15/modulate = Color( 1, 1, 1, 1 )
 15/region = Rect2( 0, 0, 80, 80 )
@@ -179,7 +207,7 @@
 15/shapes = [  ]
 15/z_index = 0
 16/name = "pion2.png 16"
-16/texture = ExtResource( 10 )
+16/texture = ExtResource( 13 )
 16/tex_offset = Vector2( 0, 0 )
 16/modulate = Color( 1, 1, 1, 1 )
 16/region = Rect2( 0, 0, 8, 8 )
@@ -193,7 +221,7 @@
 16/shapes = [  ]
 16/z_index = 0
 17/name = "pion1.png 17"
-17/texture = ExtResource( 11 )
+17/texture = ExtResource( 14 )
 17/tex_offset = Vector2( 0, 0 )
 17/modulate = Color( 1, 1, 1, 1 )
 17/region = Rect2( 0, 0, 8, 8 )
@@ -208,9 +236,25 @@
 17/z_index = 0
 
 [sub_resource type="RectangleShape2D" id=2]
+<<<<<<< HEAD:godot/scene1.tscn
 extents = Vector2( 18.0135, 17.6724 )
 
 [node name="Jeu" type="Node2D"]
+=======
+
+extents = Vector2( 45.7396, 46.2308 )
+
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 59.4828, 30.1219 )
+>>>>>>> 0da132e06f3bc814c9c1f505bf57cff454c4ac52
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 58.5643, 27.7292 )
+
+[node name="Jeu" type="Node2D"]
+script = ExtResource( 1 )
+>>>>>>> fonctionnel:godot/Jeu.tscn
 
 [node name="Plateau" type="TileMap" parent="."]
 position = Vector2( 34.3332, -11.1471 )
@@ -218,6 +262,7 @@ tile_set = SubResource( 1 )
 cell_size = Vector2( 8, 8 )
 format = 1
 tile_data = PoolIntArray( 262158, 1, 0, 262174, 1610612742, 0, 262184, 14, 0, 1310734, -1610612731, 0, 1310750, 15, 0, 1310760, -1073741822, 0, 1703976, 10, 0, 1966094, 7, 0, 1966110, 4, 0, 1966120, 8, 0 )
+<<<<<<< HEAD:godot/scene1.tscn
 script = ExtResource( 12 )
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
@@ -232,3 +277,112 @@ shape = SubResource( 2 )
 position = Vector2( 383.179, 303.186 )
 scale = Vector2( 4.51135, 5.12444 )
 texture = ExtResource( 11 )
+=======
+script = ExtResource( 7 )
+
+[node name="AllerPrison" type="Area2D" parent="Plateau"]
+script = ExtResource( 6 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/AllerPrison"]
+position = Vector2( 367.517, 115.657 )
+shape = SubResource( 2 )
+
+[node name="Start" type="Area2D" parent="Plateau"]
+script = ExtResource( 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Start"]
+position = Vector2( 367.35, 298.103 )
+shape = SubResource( 2 )
+
+[node name="Park" type="Area2D" parent="Plateau"]
+script = ExtResource( 17 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Park"]
+position = Vector2( 177.363, 125.197 )
+shape = SubResource( 4 )
+
+[node name="Prison" type="Area2D" parent="Plateau"]
+script = ExtResource( 18 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Prison"]
+position = Vector2( 191.725, 288.032 )
+shape = SubResource( 2 )
+
+[node name="Rouge" type="Area2D" parent="Plateau"]
+script = ExtResource( 20 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Rouge"]
+position = Vector2( 177.41, 199.819 )
+shape = SubResource( 3 )
+
+[node name="Vert" type="Area2D" parent="Plateau"]
+script = ExtResource( 21 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Plateau/Vert"]
+position = Vector2( 280.743, 95.8634 )
+rotation = -1.57244
+shape = SubResource( 3 )
+
+[node name="Bleu" type="Area2D" parent="Plateau"]
+script = ExtResource( 23 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Plateau/Bleu"]
+position = Vector2( 280.12, 303.775 )
+rotation = -1.57244
+shape = SubResource( 3 )
+
+[node name="Violet" type="Area2D" parent="Plateau"]
+script = ExtResource( 22 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Plateau/Violet"]
+position = Vector2( 384.076, 199.197 )
+shape = SubResource( 3 )
+
+[node name="VisitePrison" type="Area2D" parent="Plateau"]
+position = Vector2( -1.86747, 173.675 )
+script = ExtResource( 19 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Plateau/VisitePrison"]
+position = Vector2( 119.518, 68.5168 )
+polygon = PoolVector2Array( -3.3196, -1.50504, -3.13431, 122.638, 1.91772, 123.323, 120.823, 122.453, 121.009, 94.1037, 25.7706, 94.4742, 25.2148, -2.24619 )
+
+[node name="Pion" parent="." instance=ExtResource( 15 )]
+position = Vector2( 387.202, 295.029 )
+scale = Vector2( 0.400001, 0.48 )
+SPEED = 200
+
+[node name="nb" type="Label" parent="."]
+margin_left = 601.0
+margin_top = 117.0
+margin_right = 816.0
+margin_bottom = 230.0
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Lancer" type="TextureButton" parent="."]
+margin_left = 524.435
+margin_top = 159.979
+margin_right = 924.435
+margin_bottom = 559.979
+rect_scale = Vector2( 0.7, 0.7 )
+texture_normal = ExtResource( 24 )
+texture_pressed = ExtResource( 25 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="body_entered" from="Plateau/AllerPrison" to="Plateau/AllerPrison" method="_on_AllerPrison_body_entered"]
+[connection signal="body_entered" from="Plateau/Start" to="." method="_on_Start_body_entered"]
+[connection signal="body_entered" from="Plateau/Start" to="Plateau/Start" method="_on_Start_body_entered"]
+[connection signal="body_entered" from="Plateau/Park" to="Plateau/Park" method="_on_Park_body_entered"]
+[connection signal="body_entered" from="Plateau/Prison" to="Plateau/Prison" method="_on_Prison_body_entered"]
+[connection signal="body_entered" from="Plateau/Rouge" to="Plateau/Rouge" method="_on_Rouge_body_entered"]
+[connection signal="body_entered" from="Plateau/Vert" to="Plateau/Vert" method="_on_Vert_body_entered"]
+[connection signal="body_entered" from="Plateau/Bleu" to="Plateau/Bleu" method="_on_Bleu_body_entered"]
+[connection signal="body_entered" from="Plateau/Violet" to="Plateau/Violet" method="_on_Violet_body_entered"]
+[connection signal="body_entered" from="Plateau/VisitePrison" to="Plateau/VisitePrison" method="_on_VisitePrison_body_entered"]
+[connection signal="pressed" from="Lancer" to="." method="_on_Lancer_pressed"]
+[connection signal="pressed" from="Lancer" to="Pion" method="_on_Lancer_pressed"]
+>>>>>>> fonctionnel:godot/Jeu.tscn

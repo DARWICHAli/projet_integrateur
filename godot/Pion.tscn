@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Scripts/Pion.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/pion1.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4.00372, 4.05184 )
+
+[node name="Pion" type="KinematicBody2D"]
+position = Vector2( 387.823, 255.953 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+SPEED = 400
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 1.12891, -1.33203 )
+scale = Vector2( 11.5823, 7.38052 )
+texture = ExtResource( 2 )
