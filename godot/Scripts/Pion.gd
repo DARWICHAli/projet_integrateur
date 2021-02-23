@@ -58,9 +58,4 @@ func _process(delta):
 
 
 func _on_Lancer_pressed():
-<<<<<<< HEAD
-	get_node("..").dep_cases = get_node("..").lancer_de()
-	
-=======
 	get_node("..").dep_cases = 2#get_node("..").lancer_de()
->>>>>>> 0da132e06f3bc814c9c1f505bf57cff454c4ac52

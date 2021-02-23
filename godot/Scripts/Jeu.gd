@@ -10,7 +10,6 @@ func lancer_de():
 	var rand = RandomNumberGenerator.new()
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
-	$nb.text = String(deplacement)
 	return deplacement
 
 func move():
@@ -19,6 +18,3 @@ func move():
 
 func _ready():
 	pass 
-
-
-

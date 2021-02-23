@@ -5,10 +5,7 @@ var nb_joueurs
 var cases = []
 var coord #Vector2
 var soldeCagnotte
-<<<<<<< HEAD
-=======
 var dep_cases
->>>>>>> fonctionnel
 
 func _init():
 	nb_joueurs = 0 #temp
