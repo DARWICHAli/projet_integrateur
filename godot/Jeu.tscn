@@ -4,19 +4,7 @@
 
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=1]
 [ext_resource path="res://sprites/pixil-frame_rose.png" type="Texture" id=2]
-<<<<<<< HEAD:godot/scene1.tscn
-[ext_resource path="res://sprites/pixil-frame_bleu.png" type="Texture" id=3]
-[ext_resource path="res://sprites/pixil-frame_rouge.png" type="Texture" id=4]
-[ext_resource path="res://sprites/start.png" type="Texture" id=5]
-[ext_resource path="res://sprites/middle_small.png" type="Texture" id=6]
-[ext_resource path="res://sprites/pixil-frame_vert.png" type="Texture" id=7]
-[ext_resource path="res://sprites/gotoprison.png" type="Texture" id=8]
-[ext_resource path="res://sprites/prison.png" type="Texture" id=9]
-[ext_resource path="res://sprites/pion2.png" type="Texture" id=10]
-[ext_resource path="res://sprites/pion1.png" type="Texture" id=11]
-[ext_resource path="res://Scripts/Plateau.gd" type="Script" id=12]
-[ext_resource path="res://Pion.gd" type="Script" id=13]
-=======
+
 [ext_resource path="res://sprites/pixil-frame_rouge.png" type="Texture" id=3]
 [ext_resource path="res://sprites/pixil-frame_bleu.png" type="Texture" id=4]
 [ext_resource path="res://sprites/prison.png" type="Texture" id=5]
@@ -40,7 +28,7 @@
 [ext_resource path="res://Scripts/Bleu.gd" type="Script" id=23]
 [ext_resource path="res://GFX/godot_GFX_dés_not_pressed.png" type="Texture" id=24]
 [ext_resource path="res://GFX/godot_GFX_dés_pressed.png" type="Texture" id=25]
->>>>>>> fonctionnel:godot/Jeu.tscn
+
 
 [sub_resource type="TileSet" id=1]
 1/name = "parking_gratuit3.png 1"
