@@ -13,4 +13,4 @@ func _on_Park_body_entered(body):
 	t_detect.start()
 	yield(t_detect, "timeout")
 	if overlaps_body(body):
-		print("RAFLEZ LA MISE !")
+		print("REPOS !")
