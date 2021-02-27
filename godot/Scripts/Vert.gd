@@ -12,8 +12,8 @@ func _on_Vert_body_entered(body):
 	t_detect.start()
 	yield(t_detect, "timeout")
 	if overlaps_body(body):
-		print("BIENVENUE A L'IFSI : PAYEZ 100 ECTS !")
-		body.argent-=100
+		print("BIENVENUE A L'IFSI : PAYEZ 500 ECTS !")
+		body.argent-=500
 		print("Solde : " + str(body.argent))
 		if body.argent <= 0:
 			print("VOUS ETES FAUCHES, C'EST PERDU !")
