@@ -6,7 +6,7 @@ Projet intégrateur L3IS6 2021, équipe DF.
 
 ## Play the game
 
-unzip the files in the desired directory  
+unzip the files of the "proto1.zip" archive in the desired directory  
 launch a console  
 get into the directory with the console (`cd` command)  
 type  
