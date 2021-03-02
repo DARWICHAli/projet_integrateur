@@ -23,34 +23,24 @@ _global_script_classes=[ {
 "class": "Plateau",
 "language": "GDScript",
 "path": "res://Scripts/Plateau.gd"
+}, {
+"base": "Area2D",
+"class": "allerprison",
+"language": "GDScript",
+"path": "res://Scripts/AllerPrison.gd"
 } ]
 _global_script_class_icons={
 "Jeu": "",
 "Pion": "",
-"Plateau": ""
+"Plateau": "",
+"allerprison": ""
 }
 
 [application]
 
 config/name="Godot"
-run/main_scene="res://Scenes/jeu2.tscn"
+run/main_scene="res://Jeu.tscn"
 config/icon="res://icon.png"
-
-[display]
-
-window/size/width=3840
-window/size/height=2160
-window/size/fullscreen=true
-window/stretch/mode="viewport"
-window/stretch/aspect="expand"
-
-[input]
-
-ui_button_left={
-"deadzone": 0.5,
-"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
- ]
-}
 
 [rendering]
 
