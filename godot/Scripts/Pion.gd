@@ -1,61 +1,64 @@
 extends KinematicBody2D
 class_name Pion
 
-export (int) var SPEED = 5
-
-var nb_cases = 3 # Par côté
-var case_side = 12
-
-var prison = 0
+var id = 0  	#premier joueur
+var case = null 	#prendra la node case dessous
+var vect_direction = Vector2(-1,0)	#
+export (int) var SPEED = 400
 var argent = 0
-var side = 30
-var nb_tours = 1
+var dep_cases = 0
+var prisonnier = false
+var new_pos
 
-#var velocity = Vector2()
-var game_size
-var x_counter = side
-var y_counter = 0
-
-
-# Called when the node enters the scene tree for the first time.
+#============== Routines =================
 func _ready():
-	position = Vector2(387.202,294.449)
-	game_size = get_viewport_rect().size # Taille de l'écran,à changer par taille du plateau
-	
+	var true_pos = self.id+1
+	position = get_node("../Plateau/cases/cote_bas/Start/Pos/Position2D"+str(true_pos)).get_global_position()
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	var velocity = Vector2()
-	#print(get_node("..").dep_cases)
-	if get_node("..").dep_cases > 0:
-		#if Input.is_mouse_button_pressed( 1 ):
-#		if ((x_counter == 0) && (y_counter >= 0) && (y_counter < side)):
-#			y_counter+=1
-#			velocity.y-=1
-#		elif ((x_counter >= 0) && (x_counter < side) && (y_counter == side)):
-#			x_counter+=1
-#			velocity.x+=1
-#		elif ((x_counter == side) && (y_counter <= 100) && (y_counter > 0)):
-#			y_counter-=1
-#			velocity.y+=1
-#		elif ((x_counter <= side) && (x_counter > 0) && (y_counter == 0)) :
-#			x_counter-=1
-#			velocity.x-=1
-		if get_node("..").coin == 0:
-			velocity.x-=1
-		elif get_node("..").coin == 1:
-			velocity.y-=1
-		elif get_node("..").coin == 2:
-			velocity.x+=1
-		elif get_node("..").coin == 3:
-			velocity.y+=1
-		#print(get_node("..").coin)
-	if velocity.length() > 0:
-		velocity = velocity.normalized() * SPEED
-	position += velocity * delta
-	position.x=clamp(position.x, 0, game_size.x)
-	position.y=clamp(position.y, 0, game_size.y)
+	if Input.is_action_just_released("ui_button_left"):
+		move(get_parent().lancer_de())
+#	if Input.is_action_just_released("ui_accept"):
+#		case.affiche_nom() 	 #probablement a changer par case.name
+	
+	if (dep_cases != 0):
+		var velocity = Vector2(0,0)
+		var cur_pos = self.get_global_position()
+		
+		#2*delta*SPEED c'est l'erreur sur la position acceptee
+		if (cur_pos.x > new_pos.x+2*delta*SPEED):
+			velocity.x = -1
+		elif (cur_pos.x < new_pos.x-2*delta*SPEED):
+			velocity.x = 1
+		if (cur_pos.y > new_pos.y+2*delta*SPEED):
+			velocity.y = -1
+		elif (cur_pos.y < new_pos.y-2*delta*SPEED):
+			velocity.y = 1
+		
+		position += velocity*delta*SPEED
+		if ((abs(cur_pos.x-new_pos.x) < 2*delta*SPEED) && (abs(cur_pos.y-new_pos.y) < 2*delta*SPEED)):
+			move(dep_cases-1)	#on change la position2D target
+	
+	
+#============== Signaux ================
 
 
-func _on_Lancer_pressed():
-	get_node("..").dep_cases = get_node("..").lancer_de()
+#============== Fonctions =================
+func pos_suivante():
+	return get_parent().cases[(case.id+1)%40].get_node("Pos").get_child(self.id).get_global_position()
+
+func move(steps):
+	dep_cases = steps;
+	if (steps <= 0):
+		return
+	
+	new_pos = pos_suivante()
+
+
+
+
+#yield(get_tree().create_timer(0.75), "timeout")
+
+#============== Setters/Getters =================
+func mettre_case(Case):
+	case = Case
