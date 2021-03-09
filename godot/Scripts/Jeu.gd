@@ -29,5 +29,5 @@ func lancer_de():
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
 	deplacement += rand.randi_range(1, 6)
-	return deplacement
-
+#	return deplacement
+	return 1
