@@ -12,6 +12,26 @@ var new_pos
 
 #============== Routines =================
 func _ready():
+	if name == "Pion":
+		self.id=0
+		print(self.id)
+	elif name == "Pion2":
+		self.id=1
+		print(self.id)
+	elif name == "Pion3":
+		self.id=2
+	elif name == "Pion4":
+		self.id=3
+	elif name == "Pion5":
+		self.id=4
+	elif name == "Pion6":
+		self.id=5
+	elif name == "Pion7":
+		self.id=6
+	elif name == "Pion8":
+		self.id=7
+	self.hide()
+	print("hide "+str(id))
 	var true_pos = self.id+1
 	position = get_node("../Plateau/cases/cote_bas/Start/Pos/Position2D"+str(true_pos)).get_global_position()
 
@@ -19,7 +39,17 @@ signal signal_clic_gauche
 
 func _process(delta):
 	if Input.is_action_just_released("ui_button_left"):
-		emit_signal('signal_clic_gauche')
+		if (id == 0):
+			move(get_node("../Plateau").lancer_de())
+	if Input.is_action_just_released("ui_button_right"):
+		if (id == 1):
+			move(get_node("../..").lancer_de())
+	if Input.is_action_just_released("ui_left"):
+		if (id == 0):
+			case.acheter(self)      #probablement a changer par case.name
+	if Input.is_action_just_released("ui_right"):
+		if (id == 1):
+			case.acheter(self)
 
 #	if Input.is_action_just_released("ui_accept"):
 #		case.affiche_nom() 	 #probablement a changer par case.name

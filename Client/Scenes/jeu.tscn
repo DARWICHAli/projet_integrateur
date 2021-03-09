@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -9,6 +9,8 @@
 [ext_resource path="res://Scenes/grosse_case.tscn" type="PackedScene" id=7]
 [ext_resource path="res://GFX/fond.png" type="Texture" id=8]
 [ext_resource path="res://GFX/case_millieu.png" type="Texture" id=9]
+[ext_resource path="res://GFX/pion1_normal.png" type="Texture" id=10]
+[ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=11]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -172,9 +174,57 @@ scale = Vector2( 0.9875, 0.988186 )
 texture = ExtResource( 9 )
 
 [node name="Pion" parent="." instance=ExtResource( 5 )]
-position = Vector2( 2808, 1936 )
+position = Vector2( 2806.89, 1927.87 )
+
+[node name="Sprite2" type="Sprite" parent="Pion"]
+position = Vector2( 0, 0.5 )
+scale = Vector2( 0.325, 0.325 )
+texture = ExtResource( 10 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Pion2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2952.91, 1934.94 )
+
+[node name="Sprite2" type="Sprite" parent="Pion2"]
+position = Vector2( 0.354004, -0.560303 )
+scale = Vector2( 0.325, 0.325 )
+texture = ExtResource( 11 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Pion3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2908.5, 1870 )
+
+[node name="Sprite" type="Sprite" parent="Pion3"]
+scale = Vector2( 0.325, 0.325 )
+texture = ExtResource( 11 )
+
+[node name="Pion4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2911, 1936 )
+
+[node name="Pion5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2908, 1987.5 )
+
+[node name="Pion6" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2852.5, 2007 )
+
+[node name="Pion7" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2777, 2007 )
+
+[node name="Pion8" parent="." instance=ExtResource( 5 )]
+position = Vector2( 2951, 1865 )
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de" binds= [ 0 ]]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Start" to="Plateau/cases/cote_bas/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_haut/Parking" to="Plateau/cases/cote_haut/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Goto_prison" to="Plateau/cases/cote_droit/Goto_prison" method="_on_Goto_prison_body_entered"]
 [connection signal="signal_clic_gauche" from="Pion" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion2" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion3" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion4" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion5" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion6" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion7" to="." method="_on_Pion_signal_clic_gauche"]
+[connection signal="signal_clic_gauche" from="Pion8" to="." method="_on_Pion_signal_clic_gauche"]

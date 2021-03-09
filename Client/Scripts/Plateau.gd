@@ -1,7 +1,7 @@
 extends TileMap
 class_name Plateau
 
-var nb_joueurs
+#var nb_joueurs
 var tour = 0;	#a qui c'est de jouer
 var pion = []
 var cases = []
@@ -11,7 +11,7 @@ var soldeCagnotte
 
 #============== Routines =================
 func _init():
-	nb_joueurs = 0 #temp
+	#nb_joueurs = 0 #temp
 	pass
 
 func _ready():

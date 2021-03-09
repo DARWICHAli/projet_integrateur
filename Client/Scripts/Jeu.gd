@@ -6,7 +6,7 @@ var dep_cases = 0
 var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
-
+var nb_joueurs
 
 # ============= Client ==================== #
 
@@ -33,6 +33,13 @@ func _ready():
 	for i in range(10):
 		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[30+i].setId(30+i)
+	# Choix du nombre de joueur
+	nb_joueurs=3
+	for i in nb_joueurs:
+		if i==0:
+			get_node("Pion").show()
+		else:
+			get_node("Pion"+str(i+1)).show()
 
 	print('ready')
 
