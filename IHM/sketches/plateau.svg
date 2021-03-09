@@ -16,7 +16,10 @@
    version="1.1"
    id="svg4501"
    inkscape:version="0.92.5 (2060ec1f9f, 2020-04-08)"
-   sodipodi:docname="plateau.svg">
+   sodipodi:docname="plateau.svg"
+   inkscape:export-filename="/home/afrozilla/Documents/L3/pi/proj/projet_integrateur_df/godot/GFX/plateau.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
   <defs
      id="defs4495" />
   <sodipodi:namedview
@@ -27,7 +30,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="528.25855"
+     inkscape:cx="693.97283"
      inkscape:cy="957.22339"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
