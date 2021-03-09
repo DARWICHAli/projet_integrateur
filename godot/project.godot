@@ -8,9 +8,26 @@
 
 config_version=4
 
-_global_script_classes=[  ]
+_global_script_classes=[ {
+"base": "Node2D",
+"class": "Jeu",
+"language": "GDScript",
+"path": "res://Scripts/Jeu.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Pion",
+"language": "GDScript",
+"path": "res://Scripts/Pion.gd"
+}, {
+"base": "TileMap",
+"class": "Plateau",
+"language": "GDScript",
+"path": "res://Scripts/Plateau.gd"
+} ]
 _global_script_class_icons={
-
+"Jeu": "",
+"Pion": "",
+"Plateau": ""
 }
 
 [application]
