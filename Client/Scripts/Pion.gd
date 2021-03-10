@@ -5,7 +5,7 @@ var id = 0  	#premier joueur
 var case = null 	#prendra la node case dessous
 var vect_direction = Vector2(-1,0)	#
 export (int) var SPEED = 400
-var argent = 0
+var argent = 1000
 var dep_cases = 0
 var prisonnier = false
 var new_pos
@@ -38,19 +38,19 @@ func _ready():
 signal signal_clic_gauche
 
 func _process(delta):
+		 
 	if Input.is_action_just_released("ui_button_left"):
 		if (id == 0):
-			move(get_node("../Plateau").lancer_de())
+			emit_signal('signal_clic_gauche')
 	if Input.is_action_just_released("ui_button_right"):
 		if (id == 1):
-			move(get_node("../..").lancer_de())
+			emit_signal('signal_clic_gauche')
 	if Input.is_action_just_released("ui_left"):
 		if (id == 0):
 			case.acheter(self)      #probablement a changer par case.name
 	if Input.is_action_just_released("ui_right"):
 		if (id == 1):
 			case.acheter(self)
-
 #	if Input.is_action_just_released("ui_accept"):
 #		case.affiche_nom() 	 #probablement a changer par case.name
 	
@@ -87,14 +87,22 @@ func move(steps):
 	
 	new_pos = pos_suivante()
 
-
+func payer(prix):
+	#print("prix , argent "+ str(prix)+ str(argent))
+	if (prix > argent):
+		return false
+	else :
+		argent -= prix
+		return true
 #yield(get_tree().create_timer(0.75), "timeout")
 
 #============== Setters/Getters =================
 func mettre_case(Case):
 	case = Case
 
-
+func encaisser(Argent):
+	argent += Argent
+	
 # je ne sais pas pourquoi, mais cette fonction doit prendre un 2ème argument, sinon erreur
 func _on_jeu_signal_resultat_lancer_de(resultat : int, debug):
 	move(resultat)
