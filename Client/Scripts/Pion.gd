@@ -81,7 +81,7 @@ func pos_suivante():
 	return get_parent().cases[(case.id+1)%40].get_node("Pos").get_child(self.id).get_global_position()
 
 func move(steps):
-	dep_cases = steps;
+	self.dep_cases = steps;
 	if (steps <= 0):
 		return
 	
@@ -104,5 +104,33 @@ func encaisser(Argent):
 	argent += Argent
 	
 # je ne sais pas pourquoi, mais cette fonction doit prendre un 2ème argument, sinon erreur
-func _on_jeu_signal_resultat_lancer_de(resultat : int, debug):
+func _on_jeu_signal_resultat_lancer_de(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de2(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de3(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de4(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de5(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de6(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de7(resultat : int):
+	move(resultat)
+
+
+func _on_jeu_signal_resultat_lancer_de8(resultat : int):
 	move(resultat)

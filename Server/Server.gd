@@ -108,7 +108,6 @@ func thread_function (args):
 	serveur_jeu.socket.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu")
 	serveur_jeu.socket.connect("data_received", self, "_on_data_jeu", [serveur_jeu])
-
 	var find = false
 	var port_serveur_jeu
 	while !find:
@@ -123,10 +122,10 @@ func thread_function (args):
 			find = true
 
 	sem.post()
-	while true: # écoute infinie
+	while serveur_jeu.list_joueurs.size() < 2: # Attente de 3 joueur (temporaire)
 		serveur_jeu.socket.poll()
-
-
+	serveur_jeu.init_partie()
+	partie(serveur_jeu)
 
 # warning-ignore:unused_argument
 func _connected_jeu (id, proto, serveur_jeu):
@@ -165,12 +164,14 @@ func _on_data_jeu(id_client, serveur_jeu):
 			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		Structure.PacketType.JEU:
-			print('message de jeu reçu')
-			print(var2str(data))
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_jeu == type):
+				print('message de jeu reçu')
+				print(var2str(data))
+				
 		Structure.PacketType.REQUETE_LANCER_DE:
-			print('requête de dé reçue')
-			structure.set_resultat_lancer_de(lancer_de())
-			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+				print('requête de dé reçue')
+				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
 		_:
@@ -191,10 +192,30 @@ func trouver_partie(code : int) :
 			 return index
 	return -1
 
-
 func lancer_de():
 	var rand = RandomNumberGenerator.new()
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
 	deplacement += rand.randi_range(1, 6)
 	return deplacement
+
+func partie(serveur_jeu : Serveur_partie):
+	print("Partie Démarré")
+	var joueur = -1
+	var structure = Structure.new()
+	while joueur != serveur_jeu.attente_joueur:
+		# Attente d'une demande de dée
+		serveur_jeu.reponse_joueur = false
+		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
+		while !serveur_jeu.reponse_joueur:
+			serveur_jeu.socket.poll()
+		# Réponse du dée
+		structure.set_resultat_lancer_de(lancer_de(), serveur_jeu.attente_joueur)
+		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+		# Passage au prochain joueur
+		joueur = serveur_jeu.attente_joueur
+		serveur_jeu.next_player()
+		print(joueur)
+		print(serveur_jeu.attente_joueur)
+	print("Player %d win" % joueur)

@@ -10,6 +10,11 @@ config_version=4
 
 _global_script_classes=[ {
 "base": "Node",
+"class": "Cases",
+"language": "GDScript",
+"path": "res://Cases.gd"
+}, {
+"base": "Node",
 "class": "Serveur_partie",
 "language": "GDScript",
 "path": "res://Serveur_partie.gd"
@@ -20,6 +25,7 @@ _global_script_classes=[ {
 "path": "res://Structure.gd"
 } ]
 _global_script_class_icons={
+"Cases": "",
 "Serveur_partie": "",
 "Structure": ""
 }

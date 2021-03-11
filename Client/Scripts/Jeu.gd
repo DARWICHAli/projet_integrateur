@@ -116,6 +116,13 @@ func _connected_partie (proto = ""):
 #	envoyer_message(client_partie, structure.to_bytes())
 
 signal signal_resultat_lancer_de(resultat)
+signal signal_resultat_lancer_de2(resultat)
+signal signal_resultat_lancer_de3(resultat)
+signal signal_resultat_lancer_de4(resultat)
+signal signal_resultat_lancer_de5(resultat)
+signal signal_resultat_lancer_de6(resultat)
+signal signal_resultat_lancer_de7(resultat)
+signal signal_resultat_lancer_de8(resultat)
 
 # Fonction de recu de paquet et connexion au nouveau si c'est une ip qu'il recoit
 func _on_data_partie ():
@@ -129,8 +136,24 @@ func _on_data_partie ():
 		Structure.PacketType.CHAT:
 			print(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
-			print('reçu résultat lancer dé : ' + str(int(obj.data)))
-			emit_signal('signal_resultat_lancer_de', int(obj.data))
+			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
+			match int(obj.client):
+				0:
+					emit_signal("signal_resultat_lancer_de", int(obj.data))
+				1:
+					emit_signal("signal_resultat_lancer_de2", int(obj.data))
+				2:
+					emit_signal("signal_resultat_lancer_de3", int(obj.data))
+				3:
+					emit_signal("signal_resultat_lancer_de4", int(obj.data))
+				4:
+					emit_signal("signal_resultat_lancer_de5", int(obj.data))
+				5:
+					emit_signal("signal_resultat_lancer_de6", int(obj.data))
+				6:
+					emit_signal("signal_resultat_lancer_de7", int(obj.data))
+				7:
+					emit_signal("signal_resultat_lancer_de8", int(obj.data))
 		_:
 			print('autre paquet reçu')
 
