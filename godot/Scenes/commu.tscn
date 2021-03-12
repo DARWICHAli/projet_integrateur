@@ -1,12 +1,13 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Propriete.gd" type="Script" id=1]
+[ext_resource path="res://GFX/case_communauté.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 79.0032, 128 )
 
 [node name="case basique" type="Area2D"]
-position = Vector2( 480, 288 )
+position = Vector2( 509.589, 259.726 )
 collision_layer = 2
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,6 +15,9 @@ __meta__ = {
 }
 
 [node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -1.31506, -1.31506 )
+rotation = 3.13917
+texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
