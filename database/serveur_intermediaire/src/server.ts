@@ -3,40 +3,31 @@ import WebSocketClient from 'ws';
 import express from 'express';
 import http from  'http';
 
-/**
- * function randomPosition() 
- * 
- * returns 2 random values, each one between -10 and 10, into an array of numbers.
- * 
- * @returns {Array<number>}
- */
-function randomPosition ():Array<number> {
-    var x = Math.random() * (10 - (-10)) -10; 
-    var y = Math.random() * (10 - (-10)) -10;
-    return [x,y];
-}
 
 export default class Server {
 
     readonly port:number;
-
     constructor(port:number) {
         this.port=port;
     }
 
-    start():void {
+    start(receiveFunction:(query:string) => string):void {
         const app = express();
         const serveur = http.createServer(app);
-        const webSocket = new WebSocket.Server({server:serveur});
+        const webSocketServer = new WebSocket.Server({server:serveur});
 
-        webSocket.on("connection", function connection(client:WebSocketClient):void{
+        webSocketServer.on("connection", function connection(client:WebSocketClient):void{
             console.log("Connection established");
-
-            client.send("Bonjour");
-
-            webSocket.on("message", function message():void {
+            client.on("message", function message(msg:string):void {
                 console.log("Message received");
+                var response :string = receiveFunction(msg);
+                console.log(response);
+                client.send(response);
             });
+        });
+
+        webSocketServer.on("closedconnection", function(id) {
+            console.log("Connection " + id + " a quitté le serveur");
         });
 
         serveur.listen(this.port, function():void {
