@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=2]
+[gd_scene load_steps=45 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://Scenes/Pion.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/prison.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/grosse_case.tscn" type="PackedScene" id=7]
-[ext_resource path="res://GFX/fond.png" type="Texture" id=8]
 [ext_resource path="res://GFX/case_millieu.png" type="Texture" id=9]
 [ext_resource path="res://GFX/case_rouge_insa.png" type="Texture" id=10]
 [ext_resource path="res://GFX/case_vert_histo.png" type="Texture" id=11]
@@ -31,8 +30,6 @@
 [ext_resource path="res://GFX/case_rouge_bio.png" type="Texture" id=29]
 [ext_resource path="res://GFX/case_jaune_parlement.png" type="Texture" id=30]
 [ext_resource path="res://GFX/case_brun_suaps.png" type="Texture" id=31]
-[ext_resource path="res://GFX/pion2_normal.png" type="Texture" id=32]
-[ext_resource path="res://GFX/pion1_normal.png" type="Texture" id=33]
 [ext_resource path="res://GFX/des_not_pressed.png" type="Texture" id=34]
 [ext_resource path="res://GFX/des_pressed.png" type="Texture" id=35]
 [ext_resource path="res://Scenes/commu.tscn" type="PackedScene" id=36]
@@ -55,7 +52,6 @@ script = ExtResource( 2 )
 visible = false
 position = Vector2( 1925, 1071 )
 scale = Vector2( 2.09844, 2.16852 )
-texture = ExtResource( 8 )
 
 [node name="Plateau" type="Node2D" parent="."]
 position = Vector2( 1401, 1157 )
@@ -348,7 +344,6 @@ position = Vector2( 1001, 1845 )
 [node name="Sprite" type="Sprite" parent="Pion"]
 position = Vector2( -2.38419e-07, -8.79765e-05 )
 scale = Vector2( 0.344828, 0.4 )
-texture = ExtResource( 33 )
 
 [node name="Pion2" parent="." instance=ExtResource( 5 )]
 position = Vector2( 988, 1946 )
@@ -356,7 +351,6 @@ position = Vector2( 988, 1946 )
 [node name="Sprite" type="Sprite" parent="Pion2"]
 position = Vector2( 3.8147e-05, -8.79765e-05 )
 scale = Vector2( 0.285714, 0.4 )
-texture = ExtResource( 32 )
 
 [node name="TextureButton" type="TextureButton" parent="."]
 margin_left = 3071.09
