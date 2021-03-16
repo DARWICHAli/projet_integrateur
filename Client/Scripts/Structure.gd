@@ -2,11 +2,18 @@ extends Node
 
 class_name Structure
 
-enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, REQUETE_LANCER_DE}
+enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
+RESULTAT_LANCER_DE, REQUETE_LANCER_DE, FIN_TOUR, ACHAT}
 
 var type
 var data
 var client
+
+func set_requete_acheter():
+	self.type = PacketType.ACHAT
+
+func set_requete_fin_de_tour():
+	self.type = PacketType.FIN_TOUR
 
 func set_requete_lancer_de ():
 	self.type = PacketType.REQUETE_LANCER_DE
@@ -31,17 +38,16 @@ func set_adresse_serveur_jeu (ip, port):
 	self.type = PacketType.ADRESSE_SERVEUR_JEU
 	self.data = str(ip) + ':' + str(port)
 
-func set_resultat_lancer_de (resultat : int, client : int):
+func set_resultat_lancer_de (Resultat : int, Client : int):
 	self.type = PacketType.RESULTAT_LANCER_DE
-	self.data = resultat
-	self.client = client
+	self.data = Resultat
+	self.client = Client
 
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'client' : self.client}
 	var string = var2str(obj)
 	var bytes = string.to_utf8()
 	return bytes
-
 
 static func from_bytes (bytes : PoolByteArray) -> Object:
 	var string = bytes.get_string_from_utf8()

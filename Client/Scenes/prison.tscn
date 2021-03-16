@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://GFX/case_grande.png" type="Texture" id=1]
+[ext_resource path="res://GFX/case_prison.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Prison.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -18,54 +18,60 @@ texture = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Pos" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Position2D" type="Position2D" parent="Pos"]
-position = Vector2( -104.5, -31.5 )
+position = Vector2( -108, -15 )
 
 [node name="Position2D2" type="Position2D" parent="Pos"]
-position = Vector2( -99.5, 11 )
+position = Vector2( -108, 35 )
 
 [node name="Position2D3" type="Position2D" parent="Pos"]
-position = Vector2( -99, 51.5 )
+position = Vector2( -108, 85 )
 
 [node name="Position2D4" type="Position2D" parent="Pos"]
-position = Vector2( -97.5, 101 )
+position = Vector2( -108, -65 )
 
 [node name="Position2D5" type="Position2D" parent="Pos"]
-position = Vector2( -54.5, 100 )
+position = Vector2( -65, -108 )
 
 [node name="Position2D6" type="Position2D" parent="Pos"]
-position = Vector2( -3.5, 97 )
+position = Vector2( -15, -108 )
 
 [node name="Position2D7" type="Position2D" parent="Pos"]
-position = Vector2( 41.5, 98.5 )
+position = Vector2( 35, -108 )
 
 [node name="Position2D8" type="Position2D" parent="Pos"]
-position = Vector2( 99, 101 )
+position = Vector2( 85, -108 )
 
 [node name="Pos_prison" type="Node2D" parent="."]
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Position2D" type="Position2D" parent="Pos_prison"]
-position = Vector2( 96, -33.5 )
+position = Vector2( 77, 82 )
 
 [node name="Position2D2" type="Position2D" parent="Pos_prison"]
-position = Vector2( 47.5, -37.5 )
+position = Vector2( 18, 82 )
 
 [node name="Position2D3" type="Position2D" parent="Pos_prison"]
-position = Vector2( 11.5, -70 )
+position = Vector2( -41, 82 )
 
 [node name="Position2D4" type="Position2D" parent="Pos_prison"]
-position = Vector2( 47.5, -71 )
+position = Vector2( -9, 18 )
 
 [node name="Position2D5" type="Position2D" parent="Pos_prison"]
-position = Vector2( 94, -69.5 )
+position = Vector2( 45, 18 )
 
 [node name="Position2D6" type="Position2D" parent="Pos_prison"]
-position = Vector2( 3.5, -105.5 )
+position = Vector2( -41, -46 )
 
 [node name="Position2D7" type="Position2D" parent="Pos_prison"]
-position = Vector2( 48, -109.5 )
+position = Vector2( 18, -46 )
 
 [node name="Position2D8" type="Position2D" parent="Pos_prison"]
-position = Vector2( 101.5, -110 )
+position = Vector2( 77, -46 )
 [connection signal="body_entered" from="." to="." method="_on_Prison_body_entered"]

@@ -33,12 +33,11 @@ func _ready():
 	self.hide()
 	print("hide "+str(id))
 	var true_pos = self.id+1
-	position = get_node("../Plateau/cases/cote_bas/Start/Pos/Position2D"+str(true_pos)).get_global_position()
+	position = get_node("../Plateau/cases/cote_gauche/Start/Pos/Position2D"+str(true_pos)).get_global_position()
 
 signal signal_clic_gauche
 
 func _process(delta):
-		 
 	if Input.is_action_just_released("ui_button_left"):
 		if (id == 0):
 			emit_signal('signal_clic_gauche')
@@ -75,6 +74,23 @@ func _process(delta):
 	
 #============== Signaux ================
 
+func _on_jeu_signal_resultat_lancer_de(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de2(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de3(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de4(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de5(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de6(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de7(resultat : int):
+	move(resultat)
+func _on_jeu_signal_resultat_lancer_de8(resultat : int):
+	move(resultat)
+	
 
 #============== Fonctions =================
 func pos_suivante():
@@ -103,34 +119,4 @@ func mettre_case(Case):
 func encaisser(Argent):
 	argent += Argent
 	
-# je ne sais pas pourquoi, mais cette fonction doit prendre un 2ème argument, sinon erreur
-func _on_jeu_signal_resultat_lancer_de(resultat : int):
-	move(resultat)
 
-
-func _on_jeu_signal_resultat_lancer_de2(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de3(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de4(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de5(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de6(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de7(resultat : int):
-	move(resultat)
-
-
-func _on_jeu_signal_resultat_lancer_de8(resultat : int):
-	move(resultat)

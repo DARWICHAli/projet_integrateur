@@ -19,13 +19,17 @@ func _ready():
 #============== Signaux =================
 func _on_case_basique_body_entered(body):
 	body.mettre_case(self)
+	if (proprio != null && proprio != body):
+		var string = "%s est sur la case %s possedee par %s"
+		string = string % [body.name, self.name, proprio.name]
+		print(string)
+		rente(body)
 
 
 #============== Fonctions =================
 func affiche_nom(): 	#Probablement inutile maintenant avec case.name
 	print(self.name)
 
-##################
 func acheter(pion):
 	if (proprio != null):
 		print("La propriete est deja possedee par %s" % proprio.name)
