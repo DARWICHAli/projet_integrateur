@@ -1,3 +1,220 @@
-[gd_scene format=2]
+[gd_scene load_steps=23 format=2]
 
-[node name="Node2D" type="Node2D"]
+[ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=1]
+[ext_resource path="res://Bouton/bouton_des_normal.png" type="Texture" id=2]
+[ext_resource path="res://GFX/plateau.png" type="Texture" id=3]
+[ext_resource path="res://Bouton/bouton_des_pressed.png" type="Texture" id=4]
+[ext_resource path="res://Bouton/bouton_fin_tour_pressed.png" type="Texture" id=5]
+[ext_resource path="res://Bouton/bouton_fin_tour_normal.png" type="Texture" id=6]
+[ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=7]
+[ext_resource path="res://Bouton/bouton_acheter_normal.png" type="Texture" id=8]
+[ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=9]
+[ext_resource path="res://Bouton/bouton_acheter_pressed.png" type="Texture" id=10]
+[ext_resource path="res://Bouton/bouton_abandonner_pressed.png" type="Texture" id=11]
+[ext_resource path="res://Bouton/bouton_hypotheque_pressed.png" type="Texture" id=12]
+[ext_resource path="res://Bouton/bouton_abandonner_normal.png" type="Texture" id=13]
+[ext_resource path="res://Bouton/bouton_construire_pressed.png" type="Texture" id=14]
+[ext_resource path="res://Bouton/bouton_construire_normal.png" type="Texture" id=15]
+[ext_resource path="res://Bouton/bouton_hypotheque_normal.png" type="Texture" id=16]
+[ext_resource path="res://Bouton/bouton_reclammer_pressed.png" type="Texture" id=17]
+[ext_resource path="res://Bouton/bouton_reclamer_normal.png" type="Texture" id=18]
+[ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=19]
+[ext_resource path="res://Acceuil/acceuil.png" type="Texture" id=20]
+[ext_resource path="res://Bouton/bouton_start_normal.png" type="Texture" id=21]
+[ext_resource path="res://Bouton/bouton_start_pressed.png" type="Texture" id=22]
+
+[node name="Acceuil" type="Node2D"]
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 1600.0
+margin_bottom = 1000.0
+texture = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_right = 1600.0
+margin_bottom = 1000.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+margin_top = 470.0
+margin_right = 1600.0
+margin_bottom = 530.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+margin_left = 608.0
+margin_right = 798.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 21 )
+texture_pressed = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Join" type="TextureButton" parent="VBoxContainer/HBoxContainer"]
+margin_left = 802.0
+margin_right = 992.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 21 )
+texture_pressed = ExtResource( 22 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Jeu" type="Node2D" parent="."]
+visible = false
+
+[node name="Plateau" type="TextureRect" parent="Jeu"]
+margin_left = 550.892
+margin_top = 132.052
+margin_right = 2502.9
+margin_bottom = 2084.05
+rect_scale = Vector2( 1.25, 1.25 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fond boutons" type="TextureRect" parent="Jeu"]
+margin_right = 3000.0
+margin_bottom = 120.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Jeu/Fond boutons"]
+margin_right = 500.0
+margin_bottom = 120.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Jeu/Fond boutons/VBoxContainer"]
+margin_top = 30.0
+margin_right = 500.0
+margin_bottom = 90.0
+mouse_default_cursor_shape = 2
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Des" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer/HBoxContainer"]
+margin_left = 58.0
+margin_right = 248.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 4 )
+
+[node name="Fin_tour" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer/HBoxContainer"]
+margin_left = 252.0
+margin_right = 442.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 5 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Jeu/Fond boutons"]
+margin_left = 560.0
+margin_right = 3000.0
+margin_bottom = 120.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Jeu/Fond boutons/VBoxContainer2"]
+margin_top = 30.0
+margin_right = 2440.0
+margin_bottom = 90.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Acheter " type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 640.0
+margin_right = 830.0
+margin_bottom = 60.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 8 )
+texture_pressed = ExtResource( 10 )
+
+[node name="Vendre" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 834.0
+margin_right = 1024.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 9 )
+
+[node name="Reclamer" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 1028.0
+margin_right = 1218.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 18 )
+texture_pressed = ExtResource( 17 )
+
+[node name="Construire" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 1222.0
+margin_right = 1412.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 14 )
+
+[node name="Hypothequer" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 1416.0
+margin_right = 1606.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 12 )
+
+[node name="Abandonner" type="TextureButton" parent="Jeu/Fond boutons/VBoxContainer2/HBoxContainer"]
+margin_left = 1610.0
+margin_right = 1800.0
+margin_bottom = 60.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 11 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Jeu"]
+margin_left = 3000.0
+margin_right = 4760.01
+margin_bottom = 2327.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infos" type="TextureRect" parent="Jeu/VBoxContainer"]
+margin_right = 1760.0
+margin_bottom = 773.0
+texture = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infos2" type="TextureRect" parent="Jeu/VBoxContainer"]
+margin_top = 777.0
+margin_right = 1760.0
+margin_bottom = 1550.0
+texture = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Infos3" type="TextureRect" parent="Jeu/VBoxContainer"]
+margin_top = 1554.0
+margin_right = 1760.0
+margin_bottom = 2327.0
+texture = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
