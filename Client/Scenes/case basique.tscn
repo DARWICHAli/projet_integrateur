@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/Propriete.gd" type="Script" id=1]
-[ext_resource path="res://GFX/case_vert_histo.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 79.0032, 128 )
@@ -14,32 +13,33 @@ script = ExtResource( 1 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
-
 [node name="Pos" type="Node2D" parent="."]
+position = Vector2( 2, 42 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Position2D" type="Position2D" parent="Pos"]
-position = Vector2( -45.6378, -61.9086 )
+position = Vector2( -35, -84 )
 
 [node name="Position2D2" type="Position2D" parent="Pos"]
-position = Vector2( 43.6536, -61.1149 )
+position = Vector2( 35, -84 )
 
 [node name="Position2D3" type="Position2D" parent="Pos"]
-position = Vector2( -34.1291, -10.3181 )
+position = Vector2( -35, -42 )
 
 [node name="Position2D4" type="Position2D" parent="Pos"]
-position = Vector2( 44.8441, -10.7149 )
+position = Vector2( 35, -42 )
 
 [node name="Position2D5" type="Position2D" parent="Pos"]
-position = Vector2( -42.0661, 37.7008 )
+position = Vector2( -35, 0 )
 
 [node name="Position2D6" type="Position2D" parent="Pos"]
-position = Vector2( 44.0504, 36.9071 )
+position = Vector2( 35, 0 )
 
 [node name="Position2D7" type="Position2D" parent="Pos"]
-position = Vector2( -35.3196, 85.7197 )
+position = Vector2( -35, 42 )
 
 [node name="Position2D8" type="Position2D" parent="Pos"]
-position = Vector2( 44.8441, 88.1007 )
+position = Vector2( 35, 42 )
 [connection signal="body_entered" from="." to="." method="_on_case_basique_body_entered"]

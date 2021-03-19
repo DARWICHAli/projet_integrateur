@@ -18,6 +18,7 @@ func _ready():
 	pass 
 
 #============== Signaux =================
+#deprecated
 func _on_Lancer_pressed(): #[TODO] signal
 	pion[tour].move(get_node("..").lancer_de());
 

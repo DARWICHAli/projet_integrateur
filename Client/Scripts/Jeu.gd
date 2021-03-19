@@ -7,9 +7,6 @@ var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
 var nb_joueurs
-
-# ============= Client ==================== #
-
 var ip = "127.0.0.1"
 var port = "5000"
 
@@ -18,6 +15,9 @@ var mon_nom = "Client 1"
 # Our WebSocketClient instance
 var client_lobby  = WebSocketClient.new()
 var client_partie = WebSocketClient.new()
+
+
+#============== Routines =================
 
 func _ready():
 
@@ -34,7 +34,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	nb_joueurs=3
+	nb_joueurs=2
 	for i in nb_joueurs:
 		if i==0:
 			get_node("Pion").show()
@@ -42,7 +42,12 @@ func _ready():
 			get_node("Pion"+str(i+1)).show()
 
 	print('ready')
+	ready_connection()
 
+
+# ============= Client ==================== #
+
+func ready_connection():
 	# signaux client lobby
 	client_lobby.connect("connection_closed", self, "_closed_lobby")
 	client_lobby.connect("connection_error", self, "_closed_lobby")
@@ -62,7 +67,6 @@ func _ready():
 		set_process(false)
 
 
-
 # Fonction de fermeture de connexion
 func _closed_lobby (was_clean = false):
 	print("déconnexion du lobby, clean: ", was_clean)
@@ -70,7 +74,7 @@ func _closed_lobby (was_clean = false):
 
 
 # Fonction d'ouverture de connexion
-func _connected_lobby (proto = ""):
+func _connected_lobby (_proto = ""):
 	print("connecté au serveur lobby à l'adresse %s:%s" % [str(ip), str(port)])
 
 	var structure = Structure.new()
@@ -78,6 +82,7 @@ func _connected_lobby (proto = ""):
 	structure.set_inscription_partie(444)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
+
 
 # Fonction de recu de paquet et connexion au nouveau si c'est une ip qu'il recoit
 func _on_data_lobby ():
@@ -102,7 +107,7 @@ func _closed_partie (was_clean = false):
 
 
 # Fonction d'ouverture de connexion
-func _connected_partie (proto = ""):
+func _connected_partie (_proto = ""):
 	print("connecté au serveur de partie à l'adresse %s:%s" % [str(ip), str(port)])
 
 #	var structure = Structure.new()
@@ -124,18 +129,19 @@ signal signal_resultat_lancer_de6(resultat)
 signal signal_resultat_lancer_de7(resultat)
 signal signal_resultat_lancer_de8(resultat)
 
+
 # Fonction de recu de paquet et connexion au nouveau si c'est une ip qu'il recoit
 func _on_data_partie ():
 	print ('données reçues (socket partie)')
 	var structure = Structure.new()
 	var data_bytes = recevoir_message(client_partie)
-
-	var obj = Structure.from_bytes(data_bytes)
+	#change tous les Structure en structure
+	var obj = structure.from_bytes(data_bytes)
 
 	match obj.type:
-		Structure.PacketType.CHAT:
+		structure.PacketType.CHAT:
 			print(obj.data)
-		Structure.PacketType.RESULTAT_LANCER_DE:
+		structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
 				0:
@@ -157,19 +163,21 @@ func _on_data_partie ():
 		_:
 			print('autre paquet reçu')
 
-func _process (delta):
+
+func _process (_delta):
 	client_lobby.poll()
 	client_partie.poll()
+
 
 #envoie de données au serveur
 func envoyer_message (client : WebSocketClient, bytes : PoolByteArray):
 		client.get_peer(1).put_packet(bytes)
+		#put_packet return mais on utilise pas le retour
+
 
 #reception de données depuis le serveur
 func recevoir_message (client : WebSocketClient) -> PoolByteArray:
 	return  client.get_peer(1).get_packet()
-
-
 
 
 # Connexion au serveur de partie
@@ -186,8 +194,20 @@ func rejoindre_partie (URL : String):
 		set_process(false)
 
 
-func _on_Pion_signal_clic_gauche():
-	print('clic gauche détecté, envoi requête dé')
+func _on_lancer_des_pressed():
+	print('envoi requête dé')
 	var structure = Structure.new()
 	structure.set_requete_lancer_de()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_fin_de_tour_pressed():
+	print('envoi requête fin de tour')
+	var structure = Structure.new()
+	structure.set_requete_fin_de_tour()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_acheter_pressed():
+	print('envoi requête acheter')
+	var structure = Structure.new()
+	structure.set_requete_on_acheter()
 	envoyer_message(client_partie, structure.to_bytes())

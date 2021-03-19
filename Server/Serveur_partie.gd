@@ -16,6 +16,8 @@ var list_joueurs=[]
 var reponse_joueur
 # Packet attendu
 var packet_attendu
+# Packet recu
+var packet_recu
 # Numéro du joueur en attente de réponse
 var attente_joueur = 0
 # Numéro de cases des joueurs
@@ -59,20 +61,42 @@ func init_plateau():
 	# Case de départ 0
 	plateau.append(Cases.new().set_depart(0))
 	# Propriété
-	for i in range (1,9):
+	for _i in range (1,9):
 		plateau.append(Cases.new().set_propriete(0))
 	# Visite prison
 	plateau.append(Cases.new().set_autre())
 	# Propriété
-	for i in range (1,9):
+	for _i in range (1,9):
 		plateau.append(Cases.new().set_propriete(0))
 	# Parking
 	plateau.append(Cases.new().set_autre())
 	# Propriété
-	for i in range (1,9):
+	for _i in range (1,9):
 		plateau.append(Cases.new().set_propriete(0))
 	# Prison
 	plateau.append(Cases.new().set_prison(10))
 	# Propriété
-	for i in range (1,9):
+	for _i in range (1,9):
 		plateau.append(Cases.new().set_propriete(0))
+
+func acheter(id):
+	var case = plateau[position_joueur[id]] 
+	var exception = 0
+	if (case.type != Cases.CasesTypes.PROPRIETE):
+		print("La case n'est pas de type propriete")
+		exception = 1
+	if (case.proprio != -1):
+		print("La case est deja achetee")
+		exception = 2
+	if (argent_joueur[id] < case.prix):
+		print("Le joueur n'a pas assez d'argent pour acheter la case")
+		exception = 3
+	
+	if (exception != 0):
+		#signal vers le joueur pour lui dire que c'est pas achete
+		return
+	
+	argent_joueur[id] -= case.prix
+	case.proprio = id
+	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
+	#signal vers le joueur pour lui dire que c'est achete
