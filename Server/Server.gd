@@ -211,11 +211,8 @@ func lancer_de():
 
 func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
-<<<<<<< HEAD
 	var time_attente =serveur_jeu.create_timer()#timer sans instancier de noeud 
-=======
 	var tmp
->>>>>>> 79eda819e9e2c978b38c47470bf0000f4499a9f3
 	var joueur = -1
 	var structure = Structure.new()
 	while joueur != serveur_jeu.attente_joueur : 
