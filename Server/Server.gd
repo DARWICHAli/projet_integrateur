@@ -201,14 +201,20 @@ func lancer_de():
 
 func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
+	var time_attente =serveur_jeu.create_timer()#timer sans instancier de noeud 
 	var joueur = -1
 	var structure = Structure.new()
-	while joueur != serveur_jeu.attente_joueur:
+	while joueur != serveur_jeu.attente_joueur : 
 		# Attente d'une demande de dée
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
-		while !serveur_jeu.reponse_joueur:
+		time_attente.start()
+		print("depart de timer")
+		while !serveur_jeu.reponse_joueur and time_attente.set_wait_time(10) :
 			serveur_jeu.socket.poll()
+		#Affichage de la liste des joureur au debut de la partie ; A discuter pour sa place 
+		for client in serveur_jeu.list_joueurs:
+			print("les joueurs pour la partie :", serveur_jeu.list_joueurs[client])
 		# Réponse du dée
 		structure.set_resultat_lancer_de(lancer_de(), serveur_jeu.attente_joueur)
 		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
