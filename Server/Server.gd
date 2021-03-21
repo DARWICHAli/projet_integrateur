@@ -223,6 +223,10 @@ func _on_data_jeu(id_client, serveur_jeu):
 			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
 				print('requête achat')
 				serveur_jeu.reponse_joueur = true
+		Structure.PacketType.CONSTRUCTION:
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+				print('requête construction')
+				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
 		Structure.PacketType.FIN_DE_TOUR:
@@ -320,6 +324,9 @@ func partie(serveur_jeu : Serveur_partie):
 			serveur_jeu.socket.poll()
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
 				serveur_jeu.acheter(serveur_jeu.attente_joueur)
+				serveur_jeu.reponse_joueur = false
+			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
+				serveur_jeu.upgrade(serveur_jeu.attente_joueur)
 				serveur_jeu.reponse_joueur = false
 			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
 				break

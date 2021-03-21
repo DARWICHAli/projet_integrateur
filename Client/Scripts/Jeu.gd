@@ -40,6 +40,9 @@ func _ready():
 			get_node("Pion").show()
 		else:
 			get_node("Pion"+str(i+1)).show()
+	
+	# Cacher les boutons qui ne sont pas encore disponibles
+	get_node("construire").hide()
 
 	print('ready')
 	ready_connection()
@@ -210,4 +213,10 @@ func _on_acheter_pressed():
 	print('envoi requête acheter')
 	var structure = Structure.new()
 	structure.set_requete_acheter()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_construire_pressed():
+	print('envoi requête de construction')
+	var structure = Structure.new()
+	structure.set_requete_construire()
 	envoyer_message(client_partie, structure.to_bytes())

@@ -371,10 +371,10 @@ scale = Vector2( 0.285714, 0.4 )
 texture = ExtResource( 32 )
 
 [node name="lancer_de" type="TextureButton" parent="."]
-margin_left = 1736.01
-margin_top = 18.4549
-margin_right = 1926.01
-margin_bottom = 78.4549
+margin_left = 1917.55
+margin_top = 34.473
+margin_right = 2107.55
+margin_bottom = 94.473
 rect_clip_content = true
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -460,3 +460,4 @@ __meta__ = {
 [connection signal="pressed" from="lancer_de" to="." method="_on_lancer_des_pressed"]
 [connection signal="pressed" from="fin_de_tour" to="." method="_on_fin_de_tour_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
+[connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]

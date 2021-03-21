@@ -10,6 +10,11 @@ var type
 var prix
 var case_goto
 
+
+var prix_maison = 100
+var prix_hotel = 200
+var niveau_case = 0 # 0 = pas construit, 5 = hotel construit
+
 func set_depart(gains : int):
 	type = CasesTypes.DEPART
 	prix = gains

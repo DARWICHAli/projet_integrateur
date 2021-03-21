@@ -11,6 +11,9 @@ var client
 
 func set_requete_acheter():
 	self.type = PacketType.ACHAT
+	
+func set_requete_construire():
+	self.type = PacketType.CONSTRUCTION
 
 func set_requete_fin_de_tour():
 	self.type = PacketType.FIN_DE_TOUR

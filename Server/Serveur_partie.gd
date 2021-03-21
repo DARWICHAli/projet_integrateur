@@ -100,3 +100,26 @@ func acheter(id):
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
 	#signal vers le joueur pour lui dire que c'est achete
+
+func upgrade(id):
+	var case = plateau[position_joueur[id]]
+	if (case.type != Cases.CasesTypes.PROPRIETE):
+		print("La case n'est pas de type proprieté")
+	elif (case.proprio != id):
+		print("Le joueur ne peut pas construire sur une case qui ne vous appartient pas")
+	elif (case.niveau != 5):
+		match case.niveau:
+			(0 or 1 or 2 or 3):
+				if(case.prix_maison > argent_joueur[id]):
+					print("Le joueur n'a pas assez d'argent pour une maison.")
+				else :
+					argent_joueur[id] -= case.prix_maison
+					
+			4:
+				if(case.prix_hotel > argent_joueur[id]):
+					print("Le joueur n'a pas assez d'argent pour un hotel.")
+				else:
+					argent_joueur[id] -= case.prix_hotel
+	else:
+		print("La case est à son niveau maximum.")
+		
