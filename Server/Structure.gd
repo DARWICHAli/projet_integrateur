@@ -3,7 +3,7 @@ extends Node
 class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
-RESULTAT_LANCER_DE, REQUETE_LANCER_DE, FIN_TOUR, ACHAT}
+RESULTAT_LANCER_DE, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT}
 
 var type
 var data
@@ -13,7 +13,7 @@ func set_requete_acheter ():
 	self.type = PacketType.ACHAT
 
 func set_requete_fin_de_tour ():
-	self.type = PacketType.FIN_TOUR
+	self.type = PacketType.FIN_DE_TOUR
 
 func set_requete_lancer_de ():
 	self.type = PacketType.REQUETE_LANCER_DE

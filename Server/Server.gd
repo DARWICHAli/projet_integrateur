@@ -147,18 +147,64 @@ func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
 	serveur_jeu.list_joueurs.erase(id)
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
 
+#func _on_data_jeu(id_client, serveur_jeu):
+#	print('le serveur de partie a reçu des données')
+#	var packet = recevoir_message(serveur_jeu.socket, id_client)
+#
+#	var structure = Structure.new()
+#
+#	var obj = Structure.from_bytes(packet)
+#
+#	var type = obj.type
+#	var data = obj.data
+#	serveur_jeu.packet_recu = type
+#
+#	print(type)
+#	print(Structure.PacketType.REQUETE_LANCER_DE)
+#	match type:
+#		Structure.PacketType.CHAT:
+#			print('message de chat reçu: %s' % var2str(data))
+#			structure.set_chat_message(var2str(data))
+#			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+#				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+#		Structure.PacketType.JEU:
+#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_jeu == type):
+#				print('message de jeu reçu')
+#				print(var2str(data))
+#		Structure.PacketType.REQUETE_ACHAT:
+#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+#				print('requête de fin de tour')
+#				serveur_jeu.reponse_joueur = true
+#		Structure.PacketType.REQUETE_FIN_TOUR:
+#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and
+#			(serveur_jeu.packet_attendu == type or serveur_jeu.packet_attendu != Structure.PacketType.REQUETE_LANCER_DE)):
+#				print('requête de fin de tour')
+#				serveur_jeu.reponse_joueur = true
+#		Structure.PacketType.REQUETE_LANCER_DE:
+#			print("TESTTTT")
+#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+#				print('requête de dé reçue')
+#				serveur_jeu.reponse_joueur = true
+#		Structure.PacketType.BDD:
+#			print('requête BDD reçue')
+#		_:
+#			print("type de données inconnu")
+#
+#	print('le serveur de partie a reçu des données')
+
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le serveur de partie a reçu des données')
 	var packet = recevoir_message(serveur_jeu.socket, id_client)
-	
+
 	var structure = Structure.new()
 	
 	var obj = Structure.from_bytes(packet)
 	
 	var type = obj.type
 	var data = obj.data
-	serveur_jeu.packet_recu = type
 	
+	serveur_jeu.packet_recu = type
+
 	match type:
 		Structure.PacketType.CHAT:
 			print('message de chat reçu: %s' % var2str(data))
@@ -169,23 +215,22 @@ func _on_data_jeu(id_client, serveur_jeu):
 			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_jeu == type):
 				print('message de jeu reçu')
 				print(var2str(data))
-		Structure.PacketType.REQUETE_ACHAT:
-			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
-				print('requête de fin de tour')
-				serveur_jeu.reponse_joueur = true
-		Structure.PacketType.REQUETE_FIN_TOUR:
-			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and
-			(serveur_jeu.packet_attendu == type or serveur_jeu.packet_attendu != Structure.PacketType.REQUETE_LANCER_DE)):
-				print('requête de fin de tour')
-				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.REQUETE_LANCER_DE:
 			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
 				print('requête de dé reçue')
 				serveur_jeu.reponse_joueur = true
+		Structure.PacketType.ACHAT:
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+				print('requête achat')
+				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
+		Structure.PacketType.FIN_DE_TOUR:
+			print('requête fin de tour reçue')
 		_:
 			print("type de données inconnu")
+
+
 
 #envoie les octets au client identifié par client_id
 func envoyer_message (server : WebSocketServer, bytes : PoolByteArray, client_id : int):
@@ -209,41 +254,76 @@ func lancer_de():
 	deplacement += rand.randi_range(1, 6)
 	return deplacement
 
+#func partie(serveur_jeu : Serveur_partie):
+#	print("Partie Démarré")
+#	#var time_attente =serveur_jeu.create_timer()#timer sans instancier de noeud 
+#	var tmp
+#	var joueur = -1
+#	var structure = Structure.new()
+#	while joueur != serveur_jeu.attente_joueur : 
+#		# Attente d'une demande de dée
+#		serveur_jeu.reponse_joueur = false
+#		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
+#		#time_attente.start()
+#		print("depart de timer")
+#		while !serveur_jeu.reponse_joueur: #and time_attente.set_wait_time(10) :
+#			serveur_jeu.socket.poll()
+#		print("OKKKKK")
+#		#Affichage de la liste des joureur au debut de la partie ; A discuter pour sa place 
+#		for client in serveur_jeu.list_joueurs:
+#			print("les joueurs pour la partie :", serveur_jeu.list_joueurs[client])
+#		# Réponse du dée
+#		tmp = lancer_de()
+#		serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, tmp)
+#		structure.set_resultat_lancer_de(tmp, serveur_jeu.attente_joueur)
+#		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+#				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+#
+#		serveur_jeu.reponse_joueur = false
+#		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_ACHAT
+#		while (!serveur_jeu.reponse_joueur | serveur_jeu.packet_recu != Structure.PacketType.REQUETE_FIN_DE_TOUR):
+#			serveur_jeu.socket.poll()
+#			#On verifie si le joueur veut acheter
+#			if (serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.REQUETE_ACHAT):
+#				serveur_jeu.acheter(serveur_jeu.attente_joueur)
+#				serveur_jeu.reponse_joueur = false
+#
+#
+#
+#		# Passage au prochain joueur
+#		joueur = serveur_jeu.attente_joueur
+#		serveur_jeu.next_player()
+#		print(joueur)
+#		print(serveur_jeu.attente_joueur)
+#	print("Player %d win" % joueur)
+
 func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
-	var time_attente =serveur_jeu.create_timer()#timer sans instancier de noeud 
-	var tmp
 	var joueur = -1
 	var structure = Structure.new()
-	while joueur != serveur_jeu.attente_joueur : 
+	while joueur != serveur_jeu.attente_joueur:
 		# Attente d'une demande de dée
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
-		time_attente.start()
-		print("depart de timer")
-		while !serveur_jeu.reponse_joueur and time_attente.set_wait_time(10) :
+		while !serveur_jeu.reponse_joueur:
 			serveur_jeu.socket.poll()
-		#Affichage de la liste des joureur au debut de la partie ; A discuter pour sa place 
-		for client in serveur_jeu.list_joueurs:
-			print("les joueurs pour la partie :", serveur_jeu.list_joueurs[client])
 		# Réponse du dée
-		tmp = lancer_de()
-		serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, tmp)
-		structure.set_resultat_lancer_de(tmp, serveur_jeu.attente_joueur)
+		structure.set_resultat_lancer_de(lancer_de(), serveur_jeu.attente_joueur)
 		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
-				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		
 		serveur_jeu.reponse_joueur = false
-		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_ACHAT
-		while (!serveur_jeu.reponse_joueur | serveur_jeu.packet_recu != Structure.PacketType.REQUETE_FIN_DE_TOUR):
+		serveur_jeu.packet_attendu = Structure.PacketType.ACHAT
+		print(serveur_jeu.packet_recu)
+		print(Structure.PacketType.FIN_DE_TOUR)
+		while !serveur_jeu.reponse_joueur or serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
-			#On verifie si le joueur veut acheter
-			if (serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.REQUETE_ACHAT):
+			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
 				serveur_jeu.acheter(serveur_jeu.attente_joueur)
 				serveur_jeu.reponse_joueur = false
-			
-		
-		
+			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
+				break
+				
 		# Passage au prochain joueur
 		joueur = serveur_jeu.attente_joueur
 		serveur_jeu.next_player()

@@ -209,5 +209,5 @@ func _on_fin_de_tour_pressed():
 func _on_acheter_pressed():
 	print('envoi requête acheter')
 	var structure = Structure.new()
-	structure.set_requete_on_acheter()
+	structure.set_requete_acheter()
 	envoyer_message(client_partie, structure.to_bytes())

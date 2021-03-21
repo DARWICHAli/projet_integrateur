@@ -3,7 +3,7 @@ extends Node
 class_name Cases
 
 enum CasesTypes {DEPART, PRISON, PROPRIETE, AUTRE}
-
+ 
 
 var proprio = -1
 var type
