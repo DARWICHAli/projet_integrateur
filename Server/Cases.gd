@@ -4,6 +4,7 @@ class_name Cases
 
 enum CasesTypes {DEPART, PRISON, PROPRIETE, AUTRE}
  
+var indice
 
 var proprio = -1
 var type
@@ -21,7 +22,7 @@ func set_depart(gains : int):
 
 func set_propriete(Prix : int):
 	type = CasesTypes.PROPRIETE
-	self.prix = -Prix
+	self.prix = Prix
 
 func set_prison(case_number : int):
 	type = CasesTypes.PRISON

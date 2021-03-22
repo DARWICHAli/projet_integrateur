@@ -257,70 +257,47 @@ func lancer_de():
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
 	deplacement += rand.randi_range(1, 6)
-	return deplacement
-
-#func partie(serveur_jeu : Serveur_partie):
-#	print("Partie Démarré")
-#	#var time_attente =serveur_jeu.create_timer()#timer sans instancier de noeud 
-#	var tmp
-#	var joueur = -1
-#	var structure = Structure.new()
-#	while joueur != serveur_jeu.attente_joueur : 
-#		# Attente d'une demande de dée
-#		serveur_jeu.reponse_joueur = false
-#		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
-#		#time_attente.start()
-#		print("depart de timer")
-#		while !serveur_jeu.reponse_joueur: #and time_attente.set_wait_time(10) :
-#			serveur_jeu.socket.poll()
-#		print("OKKKKK")
-#		#Affichage de la liste des joureur au debut de la partie ; A discuter pour sa place 
-#		for client in serveur_jeu.list_joueurs:
-#			print("les joueurs pour la partie :", serveur_jeu.list_joueurs[client])
-#		# Réponse du dée
-#		tmp = lancer_de()
-#		serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, tmp)
-#		structure.set_resultat_lancer_de(tmp, serveur_jeu.attente_joueur)
-#		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
-#				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-#
-#		serveur_jeu.reponse_joueur = false
-#		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_ACHAT
-#		while (!serveur_jeu.reponse_joueur | serveur_jeu.packet_recu != Structure.PacketType.REQUETE_FIN_DE_TOUR):
-#			serveur_jeu.socket.poll()
-#			#On verifie si le joueur veut acheter
-#			if (serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.REQUETE_ACHAT):
-#				serveur_jeu.acheter(serveur_jeu.attente_joueur)
-#				serveur_jeu.reponse_joueur = false
-#
-#
-#
-#		# Passage au prochain joueur
-#		joueur = serveur_jeu.attente_joueur
-#		serveur_jeu.next_player()
-#		print(joueur)
-#		print(serveur_jeu.attente_joueur)
-#	print("Player %d win" % joueur)
+	return 1
+	#return deplacement
 
 func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
 	var joueur = -1
 	var structure = Structure.new()
 	while joueur != serveur_jeu.attente_joueur:
+		print("\n\n")
+		print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
 		# Attente d'une demande de dée
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
+		print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
+		print("Attente de lancement de dé...")
 		while !serveur_jeu.reponse_joueur:
 			serveur_jeu.socket.poll()
 		# Réponse du dée
-		structure.set_resultat_lancer_de(lancer_de(), serveur_jeu.attente_joueur)
+		var tmp = lancer_de()
+		serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, tmp)
+		structure.set_resultat_lancer_de(tmp, serveur_jeu.attente_joueur)
 		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+		####
+		
+		var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+		# current_case -> case sur laquelle le joueur en cours de traitement se trouve
+		if current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur: 
+		# si case achetee et pas self-proprio
+			serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
+			print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
+		####
+		
+		print("Attente d'action quelconque ou fin de tour...")
+		
+		####
 		
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.ACHAT
-		print(serveur_jeu.packet_recu)
-		print(Structure.PacketType.FIN_DE_TOUR)
+		#print(serveur_jeu.packet_recu)
+		#print(Structure.PacketType.FIN_DE_TOUR)
 		while !serveur_jeu.reponse_joueur or serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
@@ -330,11 +307,11 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.upgrade(serveur_jeu.attente_joueur)
 				serveur_jeu.reponse_joueur = false
 			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
-				break
-				
+				break	
+		print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
 		# Passage au prochain joueur
 		joueur = serveur_jeu.attente_joueur
 		serveur_jeu.next_player()
-		print(joueur)
-		print(serveur_jeu.attente_joueur)
+		#print(joueur)
+		#print(serveur_jeu.attente_joueur)
 	print("Player %d win" % joueur)
