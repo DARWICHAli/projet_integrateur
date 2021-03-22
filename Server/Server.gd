@@ -76,19 +76,19 @@ func _on_data_lobby (id_client : int):
 		if trouver_partie(obj.data) == -1:
 			print("Le client crée une partie")
 			serveurs_partie.append(Serveur_partie.new());
-			serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back()])
+			serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back(), obj.client])
 			serveurs_partie.back().code = obj.data
 			sem.wait()
 
 			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port)
+			structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port, serveurs_partie.back().nb_joueurs)
 
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		else:
 			print("Le client rejoint une partie")
 			var id_serveur_partie = trouver_partie(obj.data)
 			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port)
+			structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs)
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 	else:
 		print('autre type de paquet reçu')
@@ -103,7 +103,7 @@ func _process(delta):
 # Fonction d'intialisaion des threads
 func thread_function (args):
 	var serveur_jeu = args[0]
-
+	serveur_jeu.nb_joueurs = args[1]
 	serveur_jeu.socket.connect("client_connected", self, "_connected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu")
@@ -122,8 +122,9 @@ func thread_function (args):
 			find = true
 
 	sem.post()
-	while serveur_jeu.list_joueurs.size() < 2: # Attente de 3 joueur (temporaire)
+	while serveur_jeu.list_joueurs.size() < serveur_jeu.nb_joueurs:
 		serveur_jeu.socket.poll()
+	serveur_jeu.socket.disconnect("client_connected", self, "_connected_jeu") # Ne détecte plus de nouveau client
 	serveur_jeu.init_partie()
 	partie(serveur_jeu)
 

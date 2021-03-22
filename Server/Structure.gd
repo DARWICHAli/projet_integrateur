@@ -18,9 +18,10 @@ func set_requete_fin_de_tour ():
 func set_requete_lancer_de ():
 	self.type = PacketType.REQUETE_LANCER_DE
 
-func set_inscription_partie (code_partie : int = 0):
+func set_inscription_partie (code_partie : int = 0, nb_joueurs : int = 1):
 	self.type = PacketType.INSCRIPTION_PARTIE
 	self.data = code_partie
+	self.client = nb_joueurs
 
 func set_plateau (plateau : Array):
 	self.type = PacketType.JEU
@@ -34,9 +35,10 @@ func set_requete_BDD (requete_BDD : String):
 	self.type = PacketType.BDD
 	self.data = requete_BDD
 
-func set_adresse_serveur_jeu (ip, port):
+func set_adresse_serveur_jeu (ip, port, nb_joueurs):
 	self.type = PacketType.ADRESSE_SERVEUR_JEU
 	self.data = str(ip) + ':' + str(port)
+	self.client = nb_joueurs
 
 func set_resultat_lancer_de (Resultat : int, Client : int):
 	self.type = PacketType.RESULTAT_LANCER_DE
