@@ -37,6 +37,7 @@ func upgrade(joueur):
 		return false
 	if (hotel):
 		print ("la propriete n'est plus upgradable")
+		return false
 	else:
 		if (nbMaison < 4):
 			if (proprio.argent >= prixMaison):
@@ -48,6 +49,7 @@ func upgrade(joueur):
 				proprio.argent -= prixHotel
 #				[TODO] update prixHotel
 				hotel = true
+	return true
 
 func downgrade(joueur):
 	if (joueur != self.proprio):

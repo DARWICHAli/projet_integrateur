@@ -42,7 +42,7 @@ func _ready():
 			get_node("Pion"+str(i+1)).show()
 	
 	# Cacher les boutons qui ne sont pas encore disponibles
-	get_node("construire").hide()
+	#get_node("construire").hide()
 
 	print('ready')
 	ready_connection()

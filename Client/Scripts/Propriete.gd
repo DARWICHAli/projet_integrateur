@@ -24,9 +24,17 @@ func _on_case_basique_body_entered(body):
 		string = string % [body.name, self.name, proprio.name]
 		print(string)
 		rente(body)
+	elif (proprio == body):
+		if(self.upgrade(body) == true ):
+			print("Proprieté upgradée")
+		else:
+			print("Vous ne pouvez pas construire ici")
 
 
 #============== Fonctions =================
+func upgrade(joueur):
+	return false
+	
 func affiche_nom(): 	#Probablement inutile maintenant avec case.name
 	print(self.name)
 
