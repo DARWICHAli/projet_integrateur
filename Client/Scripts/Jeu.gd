@@ -35,11 +35,6 @@ func _ready():
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	nb_joueurs=2
-	for i in nb_joueurs:
-		if i==0:
-			get_node("Pion").show()
-		else:
-			get_node("Pion"+str(i+1)).show()
 	
 	# Cacher les boutons qui ne sont pas encore disponibles
 	#get_node("construire").hide()
@@ -82,7 +77,7 @@ func _connected_lobby (_proto = ""):
 
 	var structure = Structure.new()
 	# une fois connecté au lobby on demande un serveur de jeu
-	structure.set_inscription_partie(444)
+	structure.set_inscription_partie(444, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
 
@@ -99,6 +94,8 @@ func _on_data_lobby ():
 		Structure.PacketType.ADRESSE_SERVEUR_JEU:
 			print('reçu adresse du serveur de jeu: ', obj.data)
 			rejoindre_partie(obj.data)
+			nb_joueurs = obj.client
+			affiche_joueur(nb_joueurs)
 		_:
 			print('autre paquet reçu')
 
@@ -196,6 +193,12 @@ func rejoindre_partie (URL : String):
 		print('la connexion au serveur de partie a échoué')
 		set_process(false)
 
+func affiche_joueur(nb_joueurs):
+	for i in nb_joueurs:
+		if i==0:
+			get_node("Pion").show()
+		else:
+			get_node("Pion"+str(i+1)).show()
 
 func _on_lancer_des_pressed():
 	print('envoi requête dé')
