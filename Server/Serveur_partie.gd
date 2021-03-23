@@ -25,10 +25,8 @@ var attente_joueur = 0
 # Numéro de cases des joueurs
 const position_joueur = []
 # Argent des joueurs
-const argent_joueur = []#[500, 500, 500, 500, 500, 500, 500, 500]
+const argent_joueur = []
 # Tableau représentant les cases du jeu
-#const plateau = []
-
 var plateau = [
 Cases.new(), Cases.new(), 
 Cases.new(), Cases.new(), 
@@ -51,10 +49,11 @@ Cases.new(), Cases.new(),
 Cases.new(), Cases.new(), 
 Cases.new(), Cases.new()
 ]
+# Variable contenant les codes d'erreurs (0 si rien)
+var exception = 0
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
-	#var case = Cases.new()
 	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
 		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
 		payer_joueur(id_joueur, plateau[0].get_prix())
@@ -83,26 +82,6 @@ func init_partie():
 	self.attente_joueur = 0
 
 func init_plateau():
-#	# Case de départ 0
-#	plateau.append(Cases.new().set_depart(0))
-#	# Propriété
-#	for _i in range (1,9):
-#		plateau.append(Cases.new().set_propriete(0))
-#	# Visite prison
-#	plateau.append(Cases.new().set_autre())
-#	# Propriété
-#	for _i in range (1,9):
-#		plateau.append(Cases.new().set_propriete(0))
-#	# Parking
-#	plateau.append(Cases.new().set_autre())
-#	# Propriété
-#	for _i in range (1,9):
-#		plateau.append(Cases.new().set_propriete(0))
-#	# Prison
-#	plateau.append(Cases.new().set_prison(10))
-#	# Propriété
-#	for _i in range (1,9):
-#		plateau.append(Cases.new().set_propriete(0))
 	for i in range(41):
 		plateau[i].indice = i
 		if i == 0:
@@ -116,7 +95,7 @@ func init_plateau():
 
 func acheter(id):
 	var case = plateau[position_joueur[id]]
-	var exception = 0
+
 	if case.type != Cases.CasesTypes.PROPRIETE:
 		print("La case n'est pas de type propriete")
 		exception = 1
@@ -128,21 +107,28 @@ func acheter(id):
 		exception = 3
 	if (exception != 0):
 		#signal vers le joueur pour lui dire que c'est pas achete
-		return
+		#structure.set_requete_erreur(exception)
+		#server.envoyer_message(socket, structure.to_bytes(), id)
+		return exception
 	for i in position_joueur:
 		print(i)
 	print(case.indice)
 	argent_joueur[id] -= case.prix
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
-	#signal vers le joueur pour lui dire que c'est achete
+	return 0
+	#signal vers le joueur pour lui dire que c'est achetes
 
 func rente(case, joueur):
 	argent_joueur[case.proprio] += case.prix
 	argent_joueur[joueur] -= case.prix
 	print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [case.proprio, case.prix, joueur])
 	if argent_joueur[joueur] < 0:
-		print("Vous avez perdu !")
+		return -1
+	return 0
+		# if(!liquidation(joueur))
+		#print("Vous avez perdu !")
+		# perdu(joueur)
 		# TODO : DESACTIVER JOUEUR (hide, effacement du tour, ...)
 
 func upgrade(id):

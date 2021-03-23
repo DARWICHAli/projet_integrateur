@@ -3,7 +3,7 @@ extends Node2D
 class_name Jeu
 
 var dep_cases = 0
-var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
+#var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
 var nb_joueurs
@@ -139,9 +139,27 @@ func _on_data_partie ():
 	var obj = structure.from_bytes(data_bytes)
 
 	match obj.type:
-		structure.PacketType.CHAT:
+		Structure.PacketType.ERREUR:
+			match obj.data:
+				1:
+					print("La case n'est pas de type propriete")
+				2:
+					print("La case est deja achetee")
+				3:
+					print("Le joueur n'a pas assez d'argent pour acheter la case")
+				_:
+					print("Erreur inconnue !")
+		Structure.PacketType.MAJ_ARGENT:
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+		Structure.PacketType.MAJ_ACHAT:
+			print("ACHAT REUSSI !")
+			print("La propriete %d est achetee par le joueur %d" % [obj.data2, obj.client])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+		Structure.PacketType.RENTE:
+			print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
+		Structure.PacketType.CHAT:
 			print(obj.data)
-		structure.PacketType.RESULTAT_LANCER_DE:
+		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
 				0:
@@ -223,7 +241,6 @@ func _on_construire_pressed():
 	var structure = Structure.new()
 	structure.set_requete_construire()
 	envoyer_message(client_partie, structure.to_bytes())
-
 
 func _on_start_pressed():
 	print('ready')

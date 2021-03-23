@@ -14,10 +14,8 @@ var new_pos
 func _ready():
 	if name == "Pion":
 		self.id=0
-		print(self.id)
 	elif name == "Pion2":
 		self.id=1
-		print(self.id)
 	elif name == "Pion3":
 		self.id=2
 	elif name == "Pion4":
@@ -31,27 +29,24 @@ func _ready():
 	elif name == "Pion8":
 		self.id=7
 	self.hide()
-	print("hide "+str(id))
 	var true_pos = self.id+1
 	position = get_node("../Plateau/cases/cote_gauche/Start/Pos/Position2D"+str(true_pos)).get_global_position()
 
-signal signal_clic_gauche
+#signal signal_clic_gauche
 
 func _process(delta):
-	if Input.is_action_just_released("ui_button_left"):
-		if (id == 0):
-			emit_signal('signal_clic_gauche')
-	if Input.is_action_just_released("ui_button_right"):
-		if (id == 1):
-			emit_signal('signal_clic_gauche')
-	if Input.is_action_just_released("ui_left"):
-		if (id == 0):
-			case.acheter(self)      #probablement a changer par case.name
-	if Input.is_action_just_released("ui_right"):
-		if (id == 1):
-			case.acheter(self)
-#	if Input.is_action_just_released("ui_accept"):
-#		case.affiche_nom() 	 #probablement a changer par case.name
+#	if Input.is_action_just_released("ui_button_left"):
+#		if (id == 0):
+#			emit_signal('signal_clic_gauche')
+#	if Input.is_action_just_released("ui_button_right"):
+#		if (id == 1):
+#			emit_signal('signal_clic_gauche')
+#	if Input.is_action_just_released("ui_left"):
+#		if (id == 0):
+#			case.acheter(self)      #probablement a changer par case.name
+#	if Input.is_action_just_released("ui_right"):
+#		if (id == 1):
+#			case.acheter(self)
 	
 	if (dep_cases != 0):
 		var velocity = Vector2(0,0)
@@ -103,20 +98,20 @@ func move(steps):
 	
 	new_pos = pos_suivante()
 
-func payer(prix):
-	#print("prix , argent "+ str(prix)+ str(argent))
-	if (prix > argent):
-		return false
-	else :
-		argent -= prix
-		return true
-#yield(get_tree().create_timer(0.75), "timeout")
+#func payer(prix):
+#	#print("prix , argent "+ str(prix)+ str(argent))
+#	if (prix > argent):
+#		return false
+#	else :
+#		argent -= prix
+#		return true
+##yield(get_tree().create_timer(0.75), "timeout")
 
 #============== Setters/Getters =================
 func mettre_case(Case):
 	case = Case
 
-func encaisser(Argent):
-	argent += Argent
+#func encaisser(Argent):
+#	argent += Argent
 	
 

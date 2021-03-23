@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -62,6 +62,10 @@
 [ext_resource path="res://Bouton/bouton_start_pressed.png" type="Texture" id=60]
 [ext_resource path="res://Bouton/bouton_start_normal.png" type="Texture" id=61]
 [ext_resource path="res://GFX/acceuil.png" type="Texture" id=62]
+[ext_resource path="res://GFX/pion5_normal.png" type="Texture" id=63]
+[ext_resource path="res://GFX/pion4_normal.png" type="Texture" id=64]
+[ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
+[ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -373,6 +377,54 @@ position = Vector2( 3.8147e-05, -8.79765e-05 )
 scale = Vector2( 0.285714, 0.4 )
 texture = ExtResource( 32 )
 
+[node name="Pion3" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion3"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 65 )
+
+[node name="Pion4" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion4"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 64 )
+
+[node name="Pion5" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion5"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 63 )
+
+[node name="Pion6" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion6"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 66 )
+
+[node name="Pion7" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion7"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 32 )
+
+[node name="Pion8" parent="." instance=ExtResource( 5 )]
+position = Vector2( 988, 1946 )
+
+[node name="Sprite" type="Sprite" parent="Pion8"]
+position = Vector2( 3.8147e-05, -8.79765e-05 )
+scale = Vector2( 0.285714, 0.4 )
+texture = ExtResource( 32 )
+
 [node name="lancer_de" type="TextureButton" parent="."]
 margin_left = 1867.86
 margin_top = 53.9151
@@ -480,6 +532,12 @@ __meta__ = {
 }
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
+[connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
+[connection signal="signal_resultat_lancer_de4" from="." to="Pion4" method="_on_jeu_signal_resultat_lancer_de4"]
+[connection signal="signal_resultat_lancer_de5" from="." to="Pion5" method="_on_jeu_signal_resultat_lancer_de5"]
+[connection signal="signal_resultat_lancer_de6" from="." to="Pion6" method="_on_jeu_signal_resultat_lancer_de6"]
+[connection signal="signal_resultat_lancer_de7" from="." to="Pion7" method="_on_jeu_signal_resultat_lancer_de7"]
+[connection signal="signal_resultat_lancer_de8" from="." to="Pion8" method="_on_jeu_signal_resultat_lancer_de8"]
 [connection signal="body_entered" from="Plateau/cases/cote_gauche/Start" to="Plateau/cases/cote_gauche/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Parking" to="Plateau/cases/cote_droit/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]

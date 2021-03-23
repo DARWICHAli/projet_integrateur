@@ -15,7 +15,6 @@ func _ready():
 #============== Signaux =================
 func _on_Goto_prison_body_entered(body):
 	body.mettre_case(self)
-#	print("VA EN PRISON !")
 
 
 #============== Fonctions =================

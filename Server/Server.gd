@@ -148,51 +148,6 @@ func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
 	serveur_jeu.list_joueurs.erase(id)
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
 
-#func _on_data_jeu(id_client, serveur_jeu):
-#	print('le serveur de partie a reçu des données')
-#	var packet = recevoir_message(serveur_jeu.socket, id_client)
-#
-#	var structure = Structure.new()
-#
-#	var obj = Structure.from_bytes(packet)
-#
-#	var type = obj.type
-#	var data = obj.data
-#	serveur_jeu.packet_recu = type
-#
-#	print(type)
-#	print(Structure.PacketType.REQUETE_LANCER_DE)
-#	match type:
-#		Structure.PacketType.CHAT:
-#			print('message de chat reçu: %s' % var2str(data))
-#			structure.set_chat_message(var2str(data))
-#			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
-#				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-#		Structure.PacketType.JEU:
-#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_jeu == type):
-#				print('message de jeu reçu')
-#				print(var2str(data))
-#		Structure.PacketType.REQUETE_ACHAT:
-#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
-#				print('requête de fin de tour')
-#				serveur_jeu.reponse_joueur = true
-#		Structure.PacketType.REQUETE_FIN_TOUR:
-#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and
-#			(serveur_jeu.packet_attendu == type or serveur_jeu.packet_attendu != Structure.PacketType.REQUETE_LANCER_DE)):
-#				print('requête de fin de tour')
-#				serveur_jeu.reponse_joueur = true
-#		Structure.PacketType.REQUETE_LANCER_DE:
-#			print("TESTTTT")
-#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
-#				print('requête de dé reçue')
-#				serveur_jeu.reponse_joueur = true
-#		Structure.PacketType.BDD:
-#			print('requête BDD reçue')
-#		_:
-#			print("type de données inconnu")
-#
-#	print('le serveur de partie a reçu des données')
-
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le serveur de partie a reçu des données')
 	var packet = recevoir_message(serveur_jeu.socket, id_client)
@@ -271,7 +226,12 @@ func partie(serveur_jeu : Serveur_partie):
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
 		print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
+		structure.set_requete_maj_argent(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
+		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+		
 		print("Attente de lancement de dé...")
+		
 		while !serveur_jeu.reponse_joueur:
 			serveur_jeu.socket.poll()
 		# Réponse du dée
@@ -280,38 +240,46 @@ func partie(serveur_jeu : Serveur_partie):
 		structure.set_resultat_lancer_de(tmp, serveur_jeu.attente_joueur)
 		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-		####
 		
 		var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 		# current_case -> case sur laquelle le joueur en cours de traitement se trouve
 		if current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur: 
 		# si case achetee et pas self-proprio
-			serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
-			print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
-		####
+			var status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
+			if(status == 0):
+				structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
+				for client in serveur_jeu.list_joueurs:
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+			else:
+				# TODO joueur perdu
+				pass
+			# TODO Rente reseau
+			#print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
 		
 		print("Attente d'action quelconque ou fin de tour...")
 		
-		####
-		
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.ACHAT
-		#print(serveur_jeu.packet_recu)
-		#print(Structure.PacketType.FIN_DE_TOUR)
 		while !serveur_jeu.reponse_joueur or serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
-				serveur_jeu.acheter(serveur_jeu.attente_joueur)
+				var exception = serveur_jeu.acheter(serveur_jeu.attente_joueur)
+				if(exception == 0):
+					structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur])
+					for client in serveur_jeu.list_joueurs:
+						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				else:
+					structure.set_requete_erreur(exception)
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 				serveur_jeu.reponse_joueur = false
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
 				serveur_jeu.upgrade(serveur_jeu.attente_joueur)
 				serveur_jeu.reponse_joueur = false
 			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
-				break	
+				break
 		print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
+		
 		# Passage au prochain joueur
 		joueur = serveur_jeu.attente_joueur
 		serveur_jeu.next_player()
-		#print(joueur)
-		#print(serveur_jeu.attente_joueur)
 	print("Player %d win" % joueur)
