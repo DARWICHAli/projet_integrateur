@@ -39,8 +39,8 @@ func _ready():
 	# Cacher les boutons qui ne sont pas encore disponibles
 	#get_node("construire").hide()
 
-	print('ready')
-	ready_connection()
+	#print('ready')
+	#ready_connection()
 
 
 # ============= Client ==================== #
@@ -223,3 +223,10 @@ func _on_construire_pressed():
 	var structure = Structure.new()
 	structure.set_requete_construire()
 	envoyer_message(client_partie, structure.to_bytes())
+
+
+func _on_start_pressed():
+	print('ready')
+	ready_connection()
+	$menu.hide()
+	
