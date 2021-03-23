@@ -25,17 +25,19 @@ export default class dbConnection {
             if (err) {
               return console.error('Erreur: ' + err.message);
             }
-          
             console.log('Connecté au serveur MySQL.');
         });
     }
 
-    query(query:string):string {
-        var response:string="No response";
-        this.connection.query(query, function (err:string, result:string) {
-            if (err) result=err;
-            response=result;
-        });
-        return response;
+    query(query:string){
+        var response = "No response ...";
+        var sendrequest = (query:string):Promise<string> => {
+            return new Promise( (resolve,reject) => {
+                this.connection.query(query,  (err:string, result:string) => {
+                    if (err) { reject(err); } else { resolve(result); }
+                });
+            });
+        }
+        return sendrequest;
     }
 }

@@ -21,7 +21,7 @@ export default class Server {
             client.on("message", function message(msg:string):void {
                 console.log("Message received");
                 var response :string = receiveFunction(msg);
-                console.log(response);
+                console.log("Sending to client :" + response);
                 client.send(response);
             });
         });
