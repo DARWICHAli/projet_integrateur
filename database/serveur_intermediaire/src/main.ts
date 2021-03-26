@@ -1,7 +1,6 @@
 import Server from './server'
 import dbConnection from './db'
-import { Subscription } from 'rxjs';
-import promises from 'fs';
+import WebSocketClient from 'ws';
 
 const port = 1234;
 
@@ -9,20 +8,17 @@ const port = 1234;
 const link = new dbConnection('localhost','root','root','monopunistra');
 link.connect();
 
+const server = new Server(port);
+server.start(queryDb);
 
-// function queryDb(query:string):string {
-//     link.query(query).then();
-// }
-var whateverImDoing = async() => {
-    const result = await link.query("SELECT * FROM pions");
-    // Do your thing with the result
-    return result;
+function queryDb(query:string,client:WebSocketClient):void{
+    link.query(query).then((response) => {
+        console.log(response);
+        server.send(response,client);
+    });
 }
 
-console.log(whateverImDoing());
 
-// const server = new Server(port);
-// server.start(queryDb);
 
 /* TODO */
 // Résoudre problème de réponse de base de données

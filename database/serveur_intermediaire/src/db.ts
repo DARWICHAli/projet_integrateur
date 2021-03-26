@@ -29,15 +29,16 @@ export default class dbConnection {
         });
     }
 
-    query(query:string){
-        var response = "No response ...";
-        var sendrequest = (query:string):Promise<string> => {
-            return new Promise( (resolve,reject) => {
-                this.connection.query(query,  (err:string, result:string) => {
-                    if (err) { reject(err); } else { resolve(result); }
-                });
-            });
-        }
-        return sendrequest;
+    close():void {
+        this.connection.end();
+    }
+
+    query(query:string):Promise<string> {
+       return  new Promise<string>((resolve,reject) => {
+         this.connection.query(query, (err,result)=>{
+            if(err) reject(err);
+            resolve(result);
+         });
+       })
     }
 }

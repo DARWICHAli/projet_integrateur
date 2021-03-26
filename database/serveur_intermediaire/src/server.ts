@@ -11,7 +11,7 @@ export default class Server {
         this.port=port;
     }
 
-    start(receiveFunction:(query:string) => string):void {
+    start(messageTreatment:(query:string,client:WebSocketClient) => any):void {
         const app = express();
         const serveur = http.createServer(app);
         const webSocketServer = new WebSocket.Server({server:serveur});
@@ -19,10 +19,8 @@ export default class Server {
         webSocketServer.on("connection", function connection(client:WebSocketClient):void{
             console.log("Connection established");
             client.on("message", function message(msg:string):void {
-                console.log("Message received");
-                var response :string = receiveFunction(msg);
-                console.log("Sending to client :" + response);
-                client.send(response);
+                console.log("Message received, treatment of it.");
+                messageTreatment(msg,client);
             });
         });
 
@@ -33,5 +31,10 @@ export default class Server {
         serveur.listen(this.port, function():void {
             console.log("En attente de connection");
         });
+    }
+
+    send(message:string,client:WebSocketClient):void {
+        client.send (message);
+        console.log(message + " sent to client");
     }
 }
