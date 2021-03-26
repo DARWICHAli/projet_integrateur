@@ -13,8 +13,9 @@ server.start(queryDb);
 
 function queryDb(query:string,client:WebSocketClient):void{
     link.query(query).then((response) => {
-        console.log(response);
-        server.send(response,client);
+        console.log(JSON.stringify(response));
+        server.send(JSON.stringify(response),client);
+        server.finish();
     });
 }
 
