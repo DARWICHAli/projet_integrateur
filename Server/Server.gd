@@ -1,7 +1,7 @@
 extends Node
 
 const port = 5000
-const ip = "127.0.0.1"
+const ip = "localhost"
 
 
 # Our WebSocketServer instance
@@ -16,7 +16,12 @@ const serveurs_partie = []
 #tableau de stockage des clients qui se connectent sur le lobby
 var list_clients=[]
 
+var key = load("res://unistrapoly_key.key")
+var cert = load("res://unistrapoly_certif.crt")
+
 func _ready():
+	serveur_lobby.set_private_key(key)
+	serveur_lobby.set_ssl_certificate(cert)
 	# Connect base signals to get notified of new client connections,
 	# disconnections, and disconnect requests.
 	serveur_lobby.connect("client_connected", self, "_connected_lobby")
@@ -99,11 +104,12 @@ func _process(delta):
 	# Data transfer, and signals emission will only happen when calling this function.
 	serveur_lobby.poll()
 
+signal fin_partie(code)
 
 # Fonction d'intialisaion des threads
 func thread_function (args):
 	var serveur_jeu = args[0]
-	serveur_jeu.nb_joueurs = args[1]
+	serveur_jeu.nb_joueurs = args[1]	
 	serveur_jeu.socket.connect("client_connected", self, "_connected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_disconnected", self, "_disconnected_jeu", [serveur_jeu])
 	serveur_jeu.socket.connect("client_close_request", self, "_close_request_jeu")
@@ -283,3 +289,12 @@ func partie(serveur_jeu : Serveur_partie):
 		joueur = serveur_jeu.attente_joueur
 		serveur_jeu.next_player()
 	print("Player %d win" % joueur)
+	emit_signal("fin_partie", serveur_jeu.code)
+
+
+func _on_Server_fin_partie(code):
+	for i in range(0,serveurs_partie.size()):
+		if serveurs_partie[i].code == code:
+			serveurs_partie.remove(i)
+			return
+	print("Serveur de partie non trouvé pour finir")

@@ -4,3 +4,4 @@
 
 [node name="Server" type="Node"]
 script = ExtResource( 1 )
+[connection signal="fin_partie" from="." to="." method="_on_Server_fin_partie"]

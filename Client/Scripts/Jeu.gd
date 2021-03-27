@@ -7,7 +7,7 @@ var dep_cases = 0
 var debut = 0
 var cases = []
 var nb_joueurs
-var ip = "127.0.0.1"
+var ip = "localhost"
 var port = "5000"
 
 var mon_nom = "Client 1"
@@ -16,6 +16,7 @@ var mon_nom = "Client 1"
 var client_lobby  = WebSocketClient.new()
 var client_partie = WebSocketClient.new()
 
+var cert = load("res://unistrapoly_certif.crt")
 
 #============== Routines =================
 
@@ -34,7 +35,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	nb_joueurs=2
+	nb_joueurs=1
 	
 	# Cacher les boutons qui ne sont pas encore disponibles
 	#get_node("construire").hide()
@@ -46,7 +47,9 @@ func _ready():
 # ============= Client ==================== #
 
 func ready_connection():
+	client_lobby.set_trusted_ssl_certificate(cert)
 	# signaux client lobby
+	
 	client_lobby.connect("connection_closed", self, "_closed_lobby")
 	client_lobby.connect("connection_error", self, "_closed_lobby")
 	client_lobby.connect("connection_established", self, "_connected_lobby")
@@ -59,7 +62,7 @@ func ready_connection():
 	client_partie.connect("data_received", self, "_on_data_partie")
 
 	# Initiate connection to the given URL.
-	var err = client_lobby.connect_to_url('ws://' + str(ip) + ':' + str(port))
+	var err = client_lobby.connect_to_url('wss://' + str(ip) + ':' + str(port))
 	if err != OK:
 		print("la connexion au lobby a échoué")
 		set_process(false)
