@@ -15,6 +15,6 @@ Cette commande va traduire les fichiers TypeScript contenus dans `src/`, en fich
 
 ### Lancement des programmes 
 ```
-Node dist/main.js
+node dist/main.js
 ```
 Un programme exemple client est également disponible, il effectue une simple requête de sélection dans une base de données.
