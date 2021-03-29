@@ -1,4 +1,4 @@
-[gd_scene load_steps=67 format=2]
+[gd_scene load_steps=68 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -66,6 +66,7 @@
 [ext_resource path="res://GFX/pion4_normal.png" type="Texture" id=64]
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
+[ext_resource path="res://Form.tscn" type="PackedScene" id=67]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -509,6 +510,8 @@ __meta__ = {
 }
 
 [node name="menu" type="Node2D" parent="."]
+
+[node name="Form" parent="menu" instance=ExtResource( 67 )]
 
 [node name="background" type="TextureRect" parent="menu"]
 margin_right = 3840.0
