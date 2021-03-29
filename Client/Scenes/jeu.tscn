@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=2]
+[gd_scene load_steps=67 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -66,7 +66,6 @@
 [ext_resource path="res://GFX/pion4_normal.png" type="Texture" id=64]
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
-[ext_resource path="res://Form.tscn" type="PackedScene" id=67]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -531,9 +530,6 @@ texture_pressed = ExtResource( 60 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Form" parent="menu" instance=ExtResource( 67 )]
-scale = Vector2( 1, 1.12 )
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
 [connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
