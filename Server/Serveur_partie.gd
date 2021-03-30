@@ -78,17 +78,17 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		self.argent_joueur.append(500)
+		self.argent_joueur.append(10000)
 	self.attente_joueur = 0
 
 func init_plateau():
-	for i in range(41):
+	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
 			plateau[i].set_depart(0)
-		if i == 31:
+		elif i == 30:
 			plateau[i].set_prison(10)
-		elif i == 2 or i == 4 or i == 7 or i== 10 or i == 12 or i == 17 or i == 20 or i == 22 or i == 27 or i == 32 or i == 36 or i == 38:
+		elif i == 2 or i == 4 or i == 7 or i == 10 or i == 12 or i == 17 or i == 20 or i == 22 or i == 27 or i == 32 or i == 36 or i == 38:
 			plateau[i].set_autre()
 		else:
 			plateau[i].set_propriete(100)
@@ -106,9 +106,6 @@ func acheter(id):
 		print("Le joueur n'a pas assez d'argent pour acheter la case")
 		exception = 3
 	if (exception != 0):
-		#signal vers le joueur pour lui dire que c'est pas achete
-		#structure.set_requete_erreur(exception)
-		#server.envoyer_message(socket, structure.to_bytes(), id)
 		return exception
 	for i in position_joueur:
 		print(i)
@@ -126,30 +123,84 @@ func rente(case, joueur):
 	if argent_joueur[joueur] < 0:
 		return -1
 	return 0
-		# if(!liquidation(joueur))
-		#print("Vous avez perdu !")
-		# perdu(joueur)
-		# TODO : DESACTIVER JOUEUR (hide, effacement du tour, ...)
 
 func upgrade(id):
+	print("1")
 	var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
 		print("La case n'est pas de type proprieté")
+		return 1
 	elif (case.proprio != id):
-		print("Le joueur ne peut pas construire sur une case qui ne vous appartient pas")
-	elif (case.niveau != 5):
-		match case.niveau:
-			(0 or 1 or 2 or 3):
-				if(case.prix_maison > argent_joueur[id]):
-					print("Le joueur n'a pas assez d'argent pour une maison.")
-				else :
-					argent_joueur[id] -= case.prix_maison
-					
-			4:
-				if(case.prix_hotel > argent_joueur[id]):
-					print("Le joueur n'a pas assez d'argent pour un hotel.")
-				else:
-					argent_joueur[id] -= case.prix_hotel
+		print("Cette case ne vous appartient pas")
+		return 4
+	elif (case.niveau_case != 5):
+#		match case.niveau:
+#			(0 or 1 or 2 or 3):
+#				if(case.prix_maison > argent_joueur[id]):
+#					print("Le joueur n'a pas assez d'argent pour une maison.")
+#					return 5
+#				else :
+#					argent_joueur[id] -= case.prix_maison
+#					print("Maison construite !")
+#					return -1
+#
+#			4:
+#				if(case.prix_hotel > argent_joueur[id]):
+#					print("Le joueur n'a pas assez d'argent pour un hotel.")
+#					return 6
+#				else:
+#					argent_joueur[id] -= case.prix_hotel
+#					print("Hotel construit !")
+#					return -2
+		print("2")
+		if(case.niveau_case <= 3):
+			if(case.prix_maison > argent_joueur[id]):
+				print("Le joueur n'a pas assez d'argent pour une maison.")
+				return 5
+			else:
+				argent_joueur[id] -= case.prix_maison
+				print("Maison construite !")
+				return -1
+		else:
+			if(case.prix_hotel > argent_joueur[id]):
+				print("Le joueur n'a pas assez d'argent pour un hotel.")
+				return 6
+			else:
+				argent_joueur[id] -= case.prix_hotel
+				print("Hotel construit !")
+				return -2			
 	else:
 		print("La case est à son niveau maximum.")
-		
+		return 7
+
+func vendre(id):
+	print("vendre")
+	var case = plateau[position_joueur[id]]
+	var exception = 0
+	if case.type != Cases.CasesTypes.PROPRIETE:
+		print("La case n'est pas de type propriete")
+		exception = 1
+	if case.proprio != id:
+		print("Cette case ne vous appartient pas")
+		exception = 4
+	if (exception != 0):
+		return exception
+	for i in position_joueur:
+		print(i)
+	print(case.indice)
+	argent_joueur[id] += case.prix*0.8
+	case.proprio = -1
+#	for i in range(case.niveau_case):
+#		downgrade(id)
+	case.niveau_case = 0
+	# TODO : VENDRE SELON NIVEAU CASE
+	print("La propriete %d est vendue par le joueur %d" % [position_joueur[id], id])
+	return 0
+
+#func downgrade(id):
+#	var case = plateau[position_joueur[id]]
+#	case.niveau_case -= 1
+#	argent_joueur[id] += case.prix_maison*0.8
+	
+	
+	
