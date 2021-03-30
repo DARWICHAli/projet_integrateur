@@ -69,6 +69,8 @@
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
 [ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=68]
 [ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=69]
+[ext_resource path="res://Bouton/bouton_sign_in_pressed.png" type="Texture" id=68]
+[ext_resource path="res://Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -525,6 +527,7 @@ __meta__ = {
 [node name="menu" type="Node2D" parent="."]
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
+visible = false
 
 [node name="background" type="TextureRect" parent="menu"]
 margin_right = 3840.0
@@ -536,13 +539,25 @@ __meta__ = {
 }
 
 [node name="start" type="TextureButton" parent="menu/background"]
-margin_left = 1445.0
+margin_left = 1200.0
 margin_top = 1100.0
-margin_right = 1635.0
+margin_right = 1390.0
 margin_bottom = 1160.0
-rect_scale = Vector2( 5, 5 )
+rect_scale = Vector2( 3, 3 )
 texture_normal = ExtResource( 61 )
 texture_pressed = ExtResource( 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="sign_in" type="TextureButton" parent="menu/background"]
+margin_left = 1918.0
+margin_top = 1100.0
+margin_right = 2108.0
+margin_bottom = 1160.0
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 69 )
+texture_pressed = ExtResource( 68 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -563,3 +578,4 @@ __meta__ = {
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]

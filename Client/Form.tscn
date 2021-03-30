@@ -5,8 +5,9 @@
 [ext_resource path="res://Bouton/bouton_confirmer_pressed.png" type="Texture" id=3]
 [ext_resource path="res://Bouton/bouton_confirmer_normal.png" type="Texture" id=4]
 [ext_resource path="res://GFX/Fonts/Alegreya-Black.ttf" type="DynamicFontData" id=5]
-[ext_resource path="res://Form.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/Form.gd" type="Script" id=6]
 [ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=7]
+
 
 [sub_resource type="DynamicFont" id=1]
 size = 70

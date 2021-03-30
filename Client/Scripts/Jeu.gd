@@ -275,6 +275,6 @@ func _on_start_pressed():
 	ready_connection()
 	$menu.hide()
 	
-
-
-
+func _on_sign_in_pressed():
+	$menu/background.hide()
+	$menu/Form.show()

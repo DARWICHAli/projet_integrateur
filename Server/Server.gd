@@ -3,6 +3,10 @@ extends Node
 const port = 5000
 const ip = "localhost"
 
+# Connection à la base de données
+var address = "ws://localhost:1234"
+var dbConnection = WebSocketClient.new()
+
 
 # Our WebSocketServer instance
 var serveur_lobby = WebSocketServer.new()
@@ -20,6 +24,17 @@ var key = load("res://unistrapoly_key.key")
 var cert = load("res://unistrapoly_certif.crt")
 
 func _ready():
+	# Communication avec serveur NodeJS de BDD
+	dbConnection.connect("connection_established", self, "_connection_established_BDD")
+	dbConnection.connect("connection_error",self,"_connection_error_BDD")
+	dbConnection.connect("connection_closed", self, "_connection_closed_BDD")
+	dbConnection.connect("data_received",self,"_data_received_BDD")
+	var db_err = dbConnection.connect_to_url(address)
+	if(db_err != OK):
+		print("Erreur lors de la connection au serveur de BDD")
+		set_process(false)
+
+		
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
 	# Connect base signals to get notified of new client connections,
@@ -41,6 +56,21 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
+
+func _connection_established_BDD(id, proto=""):
+	print("Serveur connecté au serveur de base de données "+str(id))
+	
+func _connection_error_BDD():
+	print("Erreur lors de la connection au serveur de base de donnée")
+	
+func _connection_closed_BDD(was_clean=false):
+	print("Fin de connection avec le serveur de BDD")
+	set_process(false)
+	
+func _data_received_BDD(data):
+	print("Données reçues depuis le serveur de BDD")
+	
+	
 # warning-ignore:unused_argument
 func _connected_lobby (id, proto):
 	var client_IP   = serveur_lobby.get_peer_address(id)
