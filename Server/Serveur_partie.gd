@@ -2,6 +2,7 @@ extends Node
 
 class_name Serveur_partie
 
+
 # Objet thread utilisé
 var thread = Thread.new()
 # Objet utilisé pour la socket
