@@ -212,12 +212,16 @@ func _on_data_jeu(id_client, serveur_jeu):
 				print('requête de dé reçue')
 				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.ACHAT:
-			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
 				print('requête achat')
 				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.CONSTRUCTION:
-			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == type):
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
 				print('requête construction')
+				serveur_jeu.reponse_joueur = true
+		Structure.PacketType.VENTE:
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
+				print('requête vente')
 				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
@@ -294,25 +298,70 @@ func partie(serveur_jeu : Serveur_partie):
 		
 		print("Attente d'action quelconque ou fin de tour...")
 		
+#		serveur_jeu.reponse_joueur = false
+#		serveur_jeu.packet_attendu = Structure.PacketType.ACHAT
+#		while !serveur_jeu.reponse_joueur or serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
+#			serveur_jeu.socket.poll()
+#			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
+#				var exception = serveur_jeu.acheter(serveur_jeu.attente_joueur)
+#				if(exception == 0):
+#					structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
+#					for client in serveur_jeu.list_joueurs:
+#						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+#				else:
+#					structure.set_requete_erreur(exception)
+#					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+#				serveur_jeu.reponse_joueur = false
+#			if serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
+#				var status = serveur_jeu.upgrade(serveur_jeu.attente_joueur)
+#				if(status < 0):
+#					structure.set_requete_construction(status, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
+#					for client in serveur_jeu.list_joueurs:
+#						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+#				else:
+#					structure.set_requete_erreur(status)
+#					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+#				serveur_jeu.reponse_joueur = false
+#			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
+#				break
+		print(current_case.proprio)
 		serveur_jeu.reponse_joueur = false
-		serveur_jeu.packet_attendu = Structure.PacketType.ACHAT
-		while !serveur_jeu.reponse_joueur or serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
+		serveur_jeu.packet_attendu = Structure.PacketType.ACTION	
+		var status
+		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
-				var exception = serveur_jeu.acheter(serveur_jeu.attente_joueur)
-				if(exception == 0):
-					structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur])
+				status = serveur_jeu.acheter(serveur_jeu.attente_joueur)
+				if(status == 0):
+					structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
 					for client in serveur_jeu.list_joueurs:
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				else:
-					structure.set_requete_erreur(exception)
-					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+					structure.set_requete_erreur(status)
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
 				serveur_jeu.reponse_joueur = false
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
-				serveur_jeu.upgrade(serveur_jeu.attente_joueur)
+				status = serveur_jeu.upgrade(serveur_jeu.attente_joueur)
+				if(status < 0):
+					structure.set_requete_maj_construire(status, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
+					for client in serveur_jeu.list_joueurs:
+						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				else:
+					structure.set_requete_erreur(status)
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 				serveur_jeu.reponse_joueur = false
-			if serveur_jeu.packet_recu == Structure.PacketType.FIN_DE_TOUR:
-				break
+			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.VENTE:
+				status = serveur_jeu.vendre(serveur_jeu.attente_joueur)
+				if(status == 0):
+					structure.set_requete_maj_vente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
+					for client in serveur_jeu.list_joueurs:
+						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				else:
+					structure.set_requete_erreur(status)
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])				
+				serveur_jeu.reponse_joueur = false
+		serveur_jeu.packet_recu = -1
+		
 		print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
 		
 		# Passage au prochain joueur

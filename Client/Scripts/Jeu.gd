@@ -35,7 +35,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	nb_joueurs=1
+	nb_joueurs=2
 	
 	# Cacher les boutons qui ne sont pas encore disponibles
 	#get_node("construire").hide()
@@ -150,16 +150,35 @@ func _on_data_partie ():
 					print("La case est deja achetee")
 				3:
 					print("Le joueur n'a pas assez d'argent pour acheter la case")
+				4:
+					print("Cette case ne vous appartient pas")
+				5:
+					print("Le joueur n'a pas assez d'argent pour une maison.")
+				6:
+					print("Le joueur n'a pas assez d'argent pour un hotel.")
+				7:
+					print("La case est à son niveau maximum.")
 				_:
 					print("Erreur inconnue !")
 		Structure.PacketType.MAJ_ARGENT:
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 		Structure.PacketType.MAJ_ACHAT:
 			print("ACHAT REUSSI !")
-			print("La propriete %d est achetee par le joueur %d" % [obj.data2, obj.client])
+			print("La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 		Structure.PacketType.RENTE:
 			print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data3])
+		Structure.PacketType.MAJ_CONSTRUCTION:
+			if(obj.data == -1):
+				print("Joueur %d construit une maison pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
+			elif(obj.data == -2):
+				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
+		Structure.PacketType.MAJ_VENTE:
+			print("VENTE REUSSITE !")
+			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 		Structure.PacketType.CHAT:
 			print(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
@@ -244,14 +263,18 @@ func _on_construire_pressed():
 	var structure = Structure.new()
 	structure.set_requete_construire()
 	envoyer_message(client_partie, structure.to_bytes())
+	
+func _on_vente_pressed():
+	print('envoi requête de vente')
+	var structure = Structure.new()
+	structure.set_requete_vendre()
+	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_start_pressed():
 	print('ready')
 	ready_connection()
 	$menu.hide()
 	
-
-
 func _on_sign_in_pressed():
 	$menu/background.hide()
 	$menu/Form.show()

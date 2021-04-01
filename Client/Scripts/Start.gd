@@ -17,7 +17,7 @@ func _ready():
 #============== Signaux =================
 func _on_Start_body_entered(body):
 	body.mettre_case(self)
-	print("RECEVEZ 200 ECTS")
+	#print("RECEVEZ 200 ECTS")
 
 
 #============== Fonctions =================
