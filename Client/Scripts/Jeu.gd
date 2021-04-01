@@ -278,3 +278,14 @@ func _on_start_pressed():
 func _on_sign_in_pressed():
 	$menu/background.hide()
 	$menu/Form.show()
+	ready_connection()
+
+
+func _on_Form_inscription():
+	var mail = $"menu/Form/formule/mail".text
+	var username = $"menu/Form/formule/username".text
+	var mdp = $"menu/Form/formule/passwd".text
+	var pays = $"menu/Form/formule/choix pays".text
+	var structure = Structure.new()
+	structure.set_requete_inscription(mail,username,mdp,pays)
+	envoyer_message(client_partie, structure.to_bytes())

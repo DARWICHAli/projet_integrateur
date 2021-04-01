@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
 RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, 
-RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, ERREUR}
+RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, ERREUR, INSCRIPTION, LOGIN}
 
 var type
 var data
@@ -92,6 +92,11 @@ func set_resultat_lancer_de (Resultat : int, Client : int):
 	self.type = PacketType.RESULTAT_LANCER_DE
 	self.data = Resultat
 	self.client = Client
+
+func set_requete_inscription(mail, username, mdp, pays):
+	self.type = PacketType.INSCRIPTION
+	self.data = "('"+username+"','"+mdp+"','"+mail+"','"+str(pays)+"')"
+	
 
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'data2' : self.data2, 'data3' : self.data3, 'data4' : self.data4, 'client' : self.client}

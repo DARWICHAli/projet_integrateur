@@ -67,8 +67,6 @@
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
-[ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=68]
-[ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=69]
 [ext_resource path="res://Bouton/bouton_sign_in_pressed.png" type="Texture" id=68]
 [ext_resource path="res://Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
 
@@ -527,7 +525,7 @@ __meta__ = {
 [node name="menu" type="Node2D" parent="."]
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-visible = false
+position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
 margin_right = 3840.0
@@ -577,5 +575,6 @@ __meta__ = {
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
+[connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]

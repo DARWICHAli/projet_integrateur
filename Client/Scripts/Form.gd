@@ -2,6 +2,7 @@ extends Node2D
 
 var dbsocket
 var client
+signal inscription
 
 func _ready():
 	var websocket_url = "ws://localhost:1234"
@@ -27,20 +28,13 @@ func json_parse(filename):
 
 	
 func _on_confirm_pressed():
-	var file = File.new()
-	var username = $formule/username.text
-	var mdp = $formule/passwd
-	var conf_mdp = $formule/confirm
-	var mail = $formule/confirm
-	var pays = $"formule/choix pays".text
+	var mdp = $"formule/passwd".text
+	var conf_mdp = $"formule/passwdconf".text	
 	if mdp != conf_mdp:
 		$formule/error_mdp.show()
-	var query = "insert into UTILISATEUR (email,username, password, pays) values ('" + str(mail) +"','"+str(username)+"','"+str(mdp)+"','"+str(pays)+"');"
-	
-	
+	else:
+		emit_signal("inscription")
 
-	var err_2 = client.put_packet(query.to_utf8())
-	print(err_2)
-	print("envoyé")
-	file.open("bdd.json", File.WRITE)
+	
+	
 	
