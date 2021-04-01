@@ -51,7 +51,7 @@ Cases.new(), Cases.new(),
 Cases.new(), Cases.new()
 ]
 # Variable contenant les codes d'erreurs (0 si rien)
-var exception = 0
+# var exception = 0
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -96,7 +96,7 @@ func init_plateau():
 
 func acheter(id):
 	var case = plateau[position_joueur[id]]
-
+	var exception = 0
 	if case.type != Cases.CasesTypes.PROPRIETE:
 		print("La case n'est pas de type propriete")
 		exception = 1
@@ -114,7 +114,7 @@ func acheter(id):
 	argent_joueur[id] -= case.prix
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
-	return 0
+	return exception
 	#signal vers le joueur pour lui dire que c'est achetes
 
 func rente(case, joueur):
@@ -126,7 +126,6 @@ func rente(case, joueur):
 	return 0
 
 func upgrade(id):
-	print("1")
 	var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
 		print("La case n'est pas de type proprieté")
@@ -135,25 +134,6 @@ func upgrade(id):
 		print("Cette case ne vous appartient pas")
 		return 4
 	elif (case.niveau_case != 5):
-#		match case.niveau:
-#			(0 or 1 or 2 or 3):
-#				if(case.prix_maison > argent_joueur[id]):
-#					print("Le joueur n'a pas assez d'argent pour une maison.")
-#					return 5
-#				else :
-#					argent_joueur[id] -= case.prix_maison
-#					print("Maison construite !")
-#					return -1
-#
-#			4:
-#				if(case.prix_hotel > argent_joueur[id]):
-#					print("Le joueur n'a pas assez d'argent pour un hotel.")
-#					return 6
-#				else:
-#					argent_joueur[id] -= case.prix_hotel
-#					print("Hotel construit !")
-#					return -2
-		print("2")
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):
 				print("Le joueur n'a pas assez d'argent pour une maison.")
