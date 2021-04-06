@@ -10,6 +10,7 @@ var nb_joueurs
 var ip = "localhost"
 var port = "5000"
 
+
 var mon_nom = "Client 1"
 
 # Our WebSocketClient instance
@@ -162,23 +163,32 @@ func _on_data_partie ():
 					print("Erreur inconnue !")
 		Structure.PacketType.MAJ_ARGENT:
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.MAJ_ACHAT:
 			print("ACHAT REUSSI !")
 			print("La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).show()
 		Structure.PacketType.RENTE:
 			print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data3])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data3)
 		Structure.PacketType.MAJ_CONSTRUCTION:
 			if(obj.data == -1):
 				print("Joueur %d construit une maison pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
+				
 			elif(obj.data == -2):
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
 		Structure.PacketType.MAJ_VENTE:
 			print("VENTE REUSSITE !")
 			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
+			
 		Structure.PacketType.GO_PRISON:
 			print("Joueur %d est deroute en prison !" % [obj.client])
 			# TODO afficher le joueur en prison
@@ -206,6 +216,9 @@ func _on_data_partie ():
 		_:
 			print('autre paquet reçu')
 
+func update_money(client, argent):
+	pass
+	
 
 func _process (_delta):
 	client_lobby.poll()
@@ -240,8 +253,12 @@ func affiche_joueur(nb_joueurs):
 	for i in nb_joueurs:
 		if i==0:
 			get_node("Pion").show()
+			$"info_joueur/ScrollContainer/VBoxContainer/infobox1".show()
+			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "10000"
 		else:
 			get_node("Pion"+str(i+1)).show()
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)).show()
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "10000"
 
 func _on_lancer_des_pressed():
 	print('envoi requête dé')
@@ -276,6 +293,7 @@ func _on_vente_pressed():
 func _on_start_pressed():
 	print('ready')
 	ready_connection()
+	
 	$menu.hide()
 	
 func _on_sign_in_pressed():

@@ -1,4 +1,4 @@
-[gd_scene load_steps=72 format=2]
+[gd_scene load_steps=74 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -71,6 +71,8 @@
 [ext_resource path="res://Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
 [ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
 [ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=71]
+[ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
+[ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -82,7 +84,7 @@ scale = Vector2( 2.09844, 2.16852 )
 texture = ExtResource( 8 )
 
 [node name="Plateau" type="Node2D" parent="."]
-position = Vector2( 1401, 1157 )
+position = Vector2( 940, 1100 )
 
 [node name="case_millieu" type="Sprite" parent="Plateau"]
 position = Vector2( 641, 0.5 )
@@ -430,11 +432,20 @@ position = Vector2( 3.8147e-05, -8.79765e-05 )
 scale = Vector2( 0.285714, 0.4 )
 texture = ExtResource( 32 )
 
+[node name="fond_bouton" type="TextureRect" parent="."]
+margin_right = 3000.0
+margin_bottom = 120.0
+rect_scale = Vector2( 0.85, 1 )
+texture = ExtResource( 74 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="lancer_de" type="TextureButton" parent="."]
-margin_left = 1867.86
-margin_top = 53.9151
-margin_right = 2057.86
-margin_bottom = 113.915
+margin_left = 50.0
+margin_top = 30.0
+margin_right = 240.0
+margin_bottom = 89.9999
 rect_clip_content = true
 size_flags_horizontal = 0
 size_flags_vertical = 0
@@ -448,10 +459,10 @@ __meta__ = {
 }
 
 [node name="fin_de_tour" type="TextureButton" parent="."]
-margin_left = 1493.57
-margin_top = 18.6083
-margin_right = 1683.57
-margin_bottom = 78.6083
+margin_left = 265.0
+margin_top = 30.0
+margin_right = 455.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 55 )
 texture_pressed = ExtResource( 56 )
 __meta__ = {
@@ -459,10 +470,10 @@ __meta__ = {
 }
 
 [node name="abandon" type="TextureButton" parent="."]
-margin_left = 1247.89
-margin_top = 23.5451
-margin_right = 1437.89
-margin_bottom = 83.5451
+margin_left = 2000.0
+margin_top = 30.0
+margin_right = 2190.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 49 )
 texture_pressed = ExtResource( 54 )
 __meta__ = {
@@ -470,10 +481,10 @@ __meta__ = {
 }
 
 [node name="acheter" type="TextureButton" parent="."]
-margin_left = 289.268
-margin_top = 23.5451
-margin_right = 479.268
-margin_bottom = 83.5451
+margin_left = 752.0
+margin_top = 30.0
+margin_right = 942.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 58 )
 texture_pressed = ExtResource( 48 )
 __meta__ = {
@@ -481,10 +492,10 @@ __meta__ = {
 }
 
 [node name="construire" type="TextureButton" parent="."]
-margin_left = 528.083
-margin_top = 26.9087
-margin_right = 718.083
-margin_bottom = 86.9087
+margin_left = 1182.0
+margin_top = 30.0
+margin_right = 1373.89
+margin_bottom = 92.4624
 texture_normal = ExtResource( 53 )
 texture_pressed = ExtResource( 52 )
 __meta__ = {
@@ -492,10 +503,10 @@ __meta__ = {
 }
 
 [node name="hypotheque" type="TextureButton" parent="."]
-margin_left = 753.443
-margin_top = 26.9087
-margin_right = 943.443
-margin_bottom = 86.9087
+margin_left = 1612.0
+margin_top = 30.0
+margin_right = 1802.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 34 )
 texture_pressed = ExtResource( 35 )
 __meta__ = {
@@ -503,10 +514,10 @@ __meta__ = {
 }
 
 [node name="reclamer" type="TextureButton" parent="."]
-margin_left = 988.894
-margin_top = 23.5451
-margin_right = 1178.89
-margin_bottom = 83.5451
+margin_left = 967.0
+margin_top = 30.0
+margin_right = 1157.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 59 )
 texture_pressed = ExtResource( 57 )
 __meta__ = {
@@ -514,15 +525,17 @@ __meta__ = {
 }
 
 [node name="vente" type="TextureButton" parent="."]
-margin_left = 461.062
-margin_top = 161.787
-margin_right = 651.062
-margin_bottom = 221.787
+margin_left = 1397.0
+margin_top = 30.0
+margin_right = 1587.0
+margin_bottom = 90.0
 texture_normal = ExtResource( 71 )
 texture_pressed = ExtResource( 70 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
 

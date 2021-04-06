@@ -268,7 +268,7 @@ func partie(serveur_jeu : Serveur_partie):
 		# Réponse du dé
 		var de_un = lancer_de()
 		var de_deux = lancer_de()
-		var res = 30#de_un + de_deux
+		var res = 1#de_un + de_deux
 		
 		var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 		# current_case -> case sur laquelle le joueur en cours de traitement se trouve
