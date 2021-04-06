@@ -99,7 +99,7 @@ func set_resultat_lancer_de (Resultat : int, Client : int):
 
 func set_requete_inscription(mail, username, mdp, pays):
 	self.type = PacketType.INSCRIPTION
-	self.data = "('"+username+"','"+mdp+"','"+mail+"','"+str(pays)+"')"
+	self.data = "('"+username+"','"+mdp+"','"+mail+"','"+pays+"');"
 	
 
 func to_bytes () -> PoolByteArray:

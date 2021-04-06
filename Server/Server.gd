@@ -20,24 +20,14 @@ var list_clients=[]
 var key = load("res://unistrapoly_key.key")
 var cert = load("res://unistrapoly_certif.crt")
 
+var db # db connection
+
 func _ready():
 	# Communication avec la base de données
-#	var db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = true
-#	db.open_db()
-#
-#	var lines = []
-#	var line:Dictionary = Dictionary()
-#	line["username"] = "'bbb'"
-#	line["password"] = "'123456789'"
-#	line["email"] = "'thomas@bogosse.com'"
-#	lines.append(line.duplicate())
-#	var query = "INSERT INTO UTILISATEUR (username,password,email,pays) VALUES"
-#	print(query)
-#	var error = db.query(query)
-#	print(error)
-#	line.clear()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = true
+	db.open_db()
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -96,27 +86,38 @@ func _on_data_lobby (id_client : int):
 
 	var obj = Structure.from_bytes(paquet)
 
-	if obj.type == Structure.PacketType.INSCRIPTION_PARTIE:
-		print('client %d veut rejoindre la partie %d' % [id_client, obj.data])
-		if trouver_partie(obj.data) == -1:
-			print("Le client crée une partie")
-			serveurs_partie.append(Serveur_partie.new());
-			serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back(), obj.client])
-			serveurs_partie.back().code = obj.data
-			sem.wait()
+	match obj.type:
+		Structure.PacketType.INSCRIPTION_PARTIE:
+			print('client %d veut rejoindre la partie %d' % [id_client, obj.data])
+			if trouver_partie(obj.data) == -1:
+				print("Le client crée une partie")
+				serveurs_partie.append(Serveur_partie.new());
+				serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back(), obj.client])
+				serveurs_partie.back().code = obj.data
+				sem.wait()
 
-			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port, serveurs_partie.back().nb_joueurs)
+				var structure = Structure.new()
+				structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port, serveurs_partie.back().nb_joueurs)
 
-			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
-		else:
-			print("Le client rejoint une partie")
-			var id_serveur_partie = trouver_partie(obj.data)
+				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+			else:
+				print("Le client rejoint une partie")
+				var id_serveur_partie = trouver_partie(obj.data)
+				var structure = Structure.new()
+				structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs)
+				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+		Structure.PacketType.INSCRIPTION:
+			#print(obj.data)
+			var error = db.query("INSERT INTO UTILISATEUR (username,password,email,pays) VALUES"+obj.data)
+			print(error)
 			var structure = Structure.new()
-			structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs)
+			if error == false: # false = l'insertion n'a pas eu lieu
+				structure.set_requete_erreur(1) # !=0 -> une erreur a eu lieu
+			else:
+				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
-	else:
-		print('autre type de paquet reçu')
+		_:
+			print('autre type de paquet reçu')	
 
 # warning-ignore:unused_argument
 func _process(delta):
@@ -217,8 +218,6 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print('requête BDD reçue')
 		Structure.PacketType.FIN_DE_TOUR:
 			print('requête fin de tour reçue')
-		Structure.PacketType.INSCRIPTION:
-			print('requête Inscription BDD')
 		_:
 			print("type de données inconnu")
 
