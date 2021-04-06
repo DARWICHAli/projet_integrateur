@@ -50,16 +50,16 @@ Cases.new(), Cases.new(),
 Cases.new(), Cases.new(), 
 Cases.new(), Cases.new()
 ]
-# Variable contenant les codes d'erreurs (0 si rien)
-# var exception = 0
+# Etat de liberte de chaque joueur (1 si en prison, 0 sinon)
+var joueur_prison = []
+# Nombre d'essais de double de chaque joueur quand il est en prison
+var nbr_essai_double = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
 	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
 		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
 		payer_joueur(id_joueur, plateau[0].get_prix())
-	if plateau[position_joueur[id_joueur]].type == Cases.CasesTypes.PRISON : # Tombé dans la prison
-		position_joueur[id_joueur] = plateau[position_joueur[id_joueur]].case_goto
 
 func payer_joueur(id_joueur : int, prix : int):
 	argent_joueur[id_joueur] = argent_joueur[id_joueur] + prix
@@ -80,6 +80,8 @@ func init_partie():
 	for i in list_joueurs:
 		self.position_joueur.append(0)
 		self.argent_joueur.append(10000)
+		self.joueur_prison.append(0)
+		self.nbr_essai_double.append(0)
 	self.attente_joueur = 0
 
 func init_plateau():
@@ -87,8 +89,10 @@ func init_plateau():
 		plateau[i].indice = i
 		if i == 0:
 			plateau[i].set_depart(0)
+		elif i == 10:
+			plateau[i].set_prison()
 		elif i == 30:
-			plateau[i].set_prison(10)
+			plateau[i].set_aller_prison()
 		elif i == 2 or i == 4 or i == 7 or i == 10 or i == 12 or i == 17 or i == 20 or i == 22 or i == 27 or i == 32 or i == 36 or i == 38:
 			plateau[i].set_autre()
 		else:
@@ -115,7 +119,6 @@ func acheter(id):
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
 	return exception
-	#signal vers le joueur pour lui dire que c'est achetes
 
 func rente(case, joueur):
 	argent_joueur[case.proprio] += case.prix
