@@ -145,13 +145,13 @@ func _on_data_partie ():
 		Structure.PacketType.ERREUR:
 			match obj.data:
 				1:
-					print("La case n'est pas de type propriete")
+					print("La case n'est pas de type propriete.")
 				2:
-					print("La case est deja achetee")
+					print("La case est deja achetee.")
 				3:
-					print("Le joueur n'a pas assez d'argent pour acheter la case")
+					print("Le joueur n'a pas assez d'argent pour acheter la case.")
 				4:
-					print("Cette case ne vous appartient pas")
+					print("Cette case ne vous appartient pas.")
 				5:
 					print("Le joueur n'a pas assez d'argent pour une maison.")
 				6:
@@ -179,6 +179,9 @@ func _on_data_partie ():
 			print("VENTE REUSSITE !")
 			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+		Structure.PacketType.GO_PRISON:
+			print("Joueur %d est deroute en prison !" % [obj.client])
+			# TODO afficher le joueur en prison
 		Structure.PacketType.CHAT:
 			print(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
