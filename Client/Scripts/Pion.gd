@@ -9,6 +9,9 @@ var argent = 1000
 var dep_cases = 0
 var prisonnier = false
 var new_pos
+var pseudo = "meilleur joueur"
+
+onready var chat = get_node("../chatbox")
 
 #============== Routines =================
 func _ready():
@@ -31,7 +34,8 @@ func _ready():
 	self.hide()
 	var true_pos = self.id+1
 	position = get_node("../Plateau/cases/cote_gauche/Start/Pos/Position2D"+str(true_pos)).get_global_position()
-
+	
+	chat.set_player_name(self)
 #signal signal_clic_gauche
 
 func _process(delta):

@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -72,6 +72,7 @@
 [ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
 [ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=71]
 [ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
+[ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
 
 [node name="jeu" type="Node2D"]
@@ -82,6 +83,12 @@ visible = false
 position = Vector2( 1925, 1071 )
 scale = Vector2( 2.09844, 2.16852 )
 texture = ExtResource( 8 )
+
+[node name="chatbox" parent="." instance=ExtResource( 73 )]
+margin_left = 15.0
+margin_top = 1054.0
+margin_right = 586.0
+margin_bottom = 2130.0
 
 [node name="Plateau" type="Node2D" parent="."]
 position = Vector2( 940, 1100 )
@@ -538,6 +545,7 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
+visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
 position = Vector2( -3.56348, 14.2544 )
