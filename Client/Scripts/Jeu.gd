@@ -37,12 +37,9 @@ func _ready():
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	nb_joueurs=2
-	
-	# Cacher les boutons qui ne sont pas encore disponibles
-	#get_node("construire").hide()
 
 	#print('ready')
-	#ready_connection()
+	ready_connection()
 
 
 # ============= Client ==================== #
@@ -79,11 +76,6 @@ func _closed_lobby (was_clean = false):
 func _connected_lobby (_proto = ""):
 	print("connecté au serveur lobby à l'adresse %s:%s" % [str(ip), str(port)])
 
-	var structure = Structure.new()
-	# une fois connecté au lobby on demande un serveur de jeu
-	structure.set_inscription_partie(444, nb_joueurs)
-	print('envoi de la demande de partie')
-	envoyer_message(client_lobby, structure.to_bytes())
 
 
 # Fonction de recu de paquet et connexion au nouveau si c'est une ip qu'il recoit
@@ -100,6 +92,14 @@ func _on_data_lobby ():
 			rejoindre_partie(obj.data)
 			nb_joueurs = obj.client
 			affiche_joueur(nb_joueurs)
+		Structure.PacketType.ERREUR:
+			match obj.data:
+				0:# 0 = pas d'erreur, insertion effectuée avec succès
+					print("Inscription confirmée")
+					$menu/background.show()
+					$menu/Form.hide()
+				1:
+					print("Erreur lors de l'inscription, réessayez ultérieurement")
 		_:
 			print('autre paquet reçu')
 
@@ -292,14 +292,18 @@ func _on_vente_pressed():
 
 func _on_start_pressed():
 	print('ready')
-	ready_connection()
-	
+
 	$menu.hide()
+	var structure = Structure.new()
+	# une fois connecté au lobby on demande un serveur de jeu
+	structure.set_inscription_partie(444, nb_joueurs)
+	print('envoi de la demande de partie')
+	envoyer_message(client_lobby, structure.to_bytes())
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
 	$menu/Form.show()
-	ready_connection()
+	
 
 
 func _on_Form_inscription():
@@ -309,4 +313,4 @@ func _on_Form_inscription():
 	var pays = $"menu/Form/formule/choix pays".text
 	var structure = Structure.new()
 	structure.set_requete_inscription(mail,username,mdp,pays)
-	envoyer_message(client_partie, structure.to_bytes())
+	envoyer_message(client_lobby, structure.to_bytes())
