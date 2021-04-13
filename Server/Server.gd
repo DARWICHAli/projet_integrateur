@@ -268,6 +268,7 @@ func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
 	var joueur = -1
 	var structure = Structure.new()
+	var timer
 	while joueur != serveur_jeu.attente_joueur:
 		print("\n\n")
 		print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
@@ -280,8 +281,8 @@ func partie(serveur_jeu : Serveur_partie):
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		
 		print("Attente de lancement de dé...")
-		
-		while !serveur_jeu.reponse_joueur:
+		timer = get_tree().create_timer(10.0)
+		while !serveur_jeu.reponse_joueur and timer.get_time_left() > 0:
 			serveur_jeu.socket.poll()
 		# Réponse du dé
 		var de_un = lancer_de()
@@ -333,7 +334,8 @@ func partie(serveur_jeu : Serveur_partie):
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.ACTION	
 		var status
-		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
+		timer = get_tree().create_timer(15.0)
+		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR and timer.get_time_left() > 0:
 			serveur_jeu.socket.poll()
 			
 #			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CHAT:
@@ -382,7 +384,6 @@ func partie(serveur_jeu : Serveur_partie):
 		serveur_jeu.next_player()
 	print("Player %d win" % joueur)
 	emit_signal("fin_partie", serveur_jeu.code)
-
 
 func _on_Server_fin_partie(code):
 	for i in range(0,serveurs_partie.size()):

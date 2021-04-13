@@ -1,4 +1,4 @@
-[gd_scene load_steps=75 format=2]
+[gd_scene load_steps=76 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -67,13 +67,14 @@
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
-[ext_resource path="res://Bouton/bouton_sign_in_pressed.png" type="Texture" id=68]
-[ext_resource path="res://Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
+[ext_resource path="res://Bouton/bouton_connexion_normal.png" type="Texture" id=68]
+[ext_resource path="res://Bouton/bouton_connexion_pressed.png" type="Texture" id=69]
 [ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
 [ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=71]
 [ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
+[ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -546,8 +547,11 @@ __meta__ = {
 
 [node name="menu" type="Node2D" parent="."]
 
+[node name="connexion" parent="menu" instance=ExtResource( 75 )]
+visible = false
+
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-position = Vector2( -3.56348, 14.2544 )
+visible = false
 
 [node name="background" type="TextureRect" parent="menu"]
 margin_right = 3840.0
@@ -576,8 +580,8 @@ margin_top = 1100.0
 margin_right = 2108.0
 margin_bottom = 1160.0
 rect_scale = Vector2( 3, 3 )
-texture_normal = ExtResource( 69 )
-texture_pressed = ExtResource( 68 )
+texture_normal = ExtResource( 68 )
+texture_pressed = ExtResource( 69 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -597,6 +601,9 @@ __meta__ = {
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
+[connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
+[connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
+[connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]
