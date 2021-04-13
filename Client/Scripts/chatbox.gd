@@ -5,17 +5,18 @@ onready var player_tag = get_node("VBoxContainer/HBoxContainer/Label")
 onready var input_line = get_node("VBoxContainer/HBoxContainer/LineEdit")
 
 var groups = [
-	{'name': 'Joueur1', 'color': '#34c5f1'},
-	{'name': 'Joueur2', 'color': '#f1c234'},
-	{'name': 'Joueur3', 'color': '#ffffff'},
-	{'name': 'Joueur4', 'color': '#34c5f1'},
-	{'name': 'Joueur5', 'color': '#f1c234'},
-	{'name': 'Joueur6', 'color': '#ffffff'},
-	{'name': 'Joueur7', 'color': '#ffffff'},
-	{'name': 'Joueur8', 'color': '#ffffff'}
+	{'name': 'Joueur1', 'color': '#4cacfe'},
+	{'name': 'Joueur2', 'color': '#ff4e4e'},
+	{'name': 'Joueur3', 'color': '#30a10d'},
+	{'name': 'Joueur4', 'color': '#f7780c'},
+	{'name': 'Joueur5', 'color': '#0260b1'},
+	{'name': 'Joueur6', 'color': '#bd2525'},
+	{'name': 'Joueur7', 'color': '#f2f200'},
+	{'name': 'Joueur8', 'color': '#3ce906'},
+	{'name': 'JoueurX', 'color': '#ffffff'}
 ]
 
-var group_index = 0
+var player_index = 0
 var user_name = "Player"
 
 #============== Routines =================
@@ -37,24 +38,28 @@ func _input(event):
 
 func _on_LineEdit_text_entered(text):
 	if text != '':
-		add_message(text, group_index)
-		input_line.text = ''
+		send_message(text)
 	
 	pass # Replace with function body.
 
 #============== Fonctions =================
 
-func add_message(text, index=0):
+func send_message(text):
+	input_line.text = ''
+	get_parent().sig_msg(text, user_name, player_index)
+
+func add_message(text, username, index=8):
 	chat_log.bbcode_text += '\n'
-	chat_log.bbcode_text += '[color=' + groups[group_index]['color'] + ']'
-	chat_log.bbcode_text += user_name
+	chat_log.bbcode_text += '[color=' + groups[index]['color'] + ']'
+	chat_log.bbcode_text += username
 	chat_log.bbcode_text += '[/color]'
+	print (text[1])
 	chat_log.bbcode_text += ': ' + text
 
 func set_player_name(player):
-	group_index = 0 #player.id
+	player_index = 0 #player.id
 	user_name = player.pseudo
 	player_tag.text = '[' + user_name + ']'
-	print(group_index)
+	print(player_index)
 	player_tag.set('custom_colors/font_color', Color(groups[0]['color']))
 

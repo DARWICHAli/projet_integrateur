@@ -79,9 +79,11 @@ func set_plateau (plateau : Array):
 	self.type = PacketType.JEU
 	self.data = plateau
 
-func set_chat_message (chat_message : String):
+func set_chat_message (chat_message : String, joueur : String, playerId : int):
 	self.type = PacketType.CHAT
 	self.data = chat_message
+	self.data2 = joueur
+	self.data3 = playerId
 
 func set_requete_BDD (requete_BDD : String):
 	self.type = PacketType.BDD

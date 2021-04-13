@@ -85,6 +85,7 @@ func _on_data_lobby (id_client : int):
 	var paquet = recevoir_message(serveur_lobby, id_client)
 
 	var obj = Structure.from_bytes(paquet)
+	var structure = Structure.new()
 
 	match obj.type:
 		Structure.PacketType.INSCRIPTION_PARTIE:
@@ -95,22 +96,18 @@ func _on_data_lobby (id_client : int):
 				serveurs_partie.back().thread.start(self, "thread_function", [serveurs_partie.back(), obj.client])
 				serveurs_partie.back().code = obj.data
 				sem.wait()
-
-				var structure = Structure.new()
 				structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port, serveurs_partie.back().nb_joueurs)
 
 				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 			else:
 				print("Le client rejoint une partie")
 				var id_serveur_partie = trouver_partie(obj.data)
-				var structure = Structure.new()
 				structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs)
 				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		Structure.PacketType.INSCRIPTION:
 			#print(obj.data)
 			var error = db.query("INSERT INTO UTILISATEUR (username,password,email,pays) VALUES"+obj.data)
 			print(error)
-			var structure = Structure.new()
 			if error == false: # false = l'insertion n'a pas eu lieu
 				structure.set_requete_erreur(1) # !=0 -> une erreur a eu lieu
 			else:
@@ -188,11 +185,13 @@ func _on_data_jeu(id_client, serveur_jeu):
 	
 	serveur_jeu.packet_recu = type
 
+	print("match %s" % type)
 	match type:
 		Structure.PacketType.CHAT:
+			print('test %d' % serveur_jeu.list_joueurs.find(id_client))
 			print('message de chat reçu: %s' % var2str(data))
-			structure.set_chat_message(var2str(data))
-			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+			structure.set_chat_message(data, obj.data2, serveur_jeu.list_joueurs.find(id_client))
+			for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		Structure.PacketType.JEU:
 			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_jeu == type):
@@ -316,6 +315,14 @@ func partie(serveur_jeu : Serveur_partie):
 		var status
 		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
+			
+#			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CHAT:
+#				var obj = serveur_jeu.packet_recu
+#				print('test')
+#				print('message de chat reçu: %s' % var2str(data))
+#				structure.set_chat_message(obj.data, obj.data2, obj.data3)
+#				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+#					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
 				status = serveur_jeu.acheter(serveur_jeu.attente_joueur)
 				if(status == 0):

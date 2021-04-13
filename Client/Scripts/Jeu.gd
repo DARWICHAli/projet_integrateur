@@ -193,7 +193,8 @@ func _on_data_partie ():
 			print("Joueur %d est deroute en prison !" % [obj.client])
 			# TODO afficher le joueur en prison
 		Structure.PacketType.CHAT:
-			print(obj.data)
+#			print(obj.data)
+			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
@@ -303,8 +304,6 @@ func _on_start_pressed():
 func _on_sign_in_pressed():
 	$menu/background.hide()
 	$menu/Form.show()
-	
-
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -314,3 +313,9 @@ func _on_Form_inscription():
 	var structure = Structure.new()
 	structure.set_requete_inscription(mail,username,mdp,pays)
 	envoyer_message(client_lobby, structure.to_bytes())
+
+func sig_msg(text, username, index):
+	var structure = Structure.new()
+	structure.set_chat_message(text, username, index)
+	print(structure.data)
+	envoyer_message(client_partie, structure.to_bytes())
