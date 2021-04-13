@@ -24,10 +24,10 @@ var db # db connection
 
 func _ready():
 	# Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = true
-#	db.open_db()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = true
+	db.open_db()
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
