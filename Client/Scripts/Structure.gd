@@ -105,7 +105,8 @@ func set_requete_inscription(mail, username, mdp, pays):
 
 func set_requete_connexion(mail,mdp):
 	self.type = PacketType.INSCRIPTION
-	self.data = "(+mdp+"','"+mail+"','"+pays+"');"
+	self.data = "'" +mail+ "','" +mdp+ "';"
+	
 	
 
 func to_bytes () -> PoolByteArray:

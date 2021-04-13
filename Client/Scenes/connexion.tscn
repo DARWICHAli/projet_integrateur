@@ -24,8 +24,7 @@ script = ExtResource( 10 )
 
 [node name="background" type="TextureRect" parent="."]
 margin_right = 3840.0
-margin_bottom = 2165.0
-rect_scale = Vector2( 1, 1.12 )
+margin_bottom = 2160.0
 texture = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -42,10 +41,10 @@ __meta__ = {
 }
 
 [node name="title" type="Label" parent="formule"]
-margin_left = 90.9458
-margin_top = 165.615
-margin_right = 1272.95
-margin_bottom = 707.615
+margin_left = 171.465
+margin_top = 105.074
+margin_right = 1353.47
+margin_bottom = 647.074
 custom_fonts/font = SubResource( 1 )
 text = "Connexion"
 align = 1
@@ -135,4 +134,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="formule/inscription" to="." method="_on_inscription_pressed"]
+[connection signal="pressed" from="formule/connexion" to="." method="_on_connexion_pressed"]
 [connection signal="pressed" from="formule/retour" to="." method="_on_retour_pressed"]
