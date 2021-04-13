@@ -303,7 +303,7 @@ func _on_start_pressed():
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/Form.show()
+	$menu/connexion.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -319,3 +319,19 @@ func sig_msg(text, username, index):
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
+
+
+func _on_connexion_retour_connexion():
+	$menu/connexion.hide()
+	$menu/background.show()
+	
+
+
+func _on_connexion_inscription_conn():
+	$menu/connexion.hide()
+	$menu/Form.show()
+
+
+func _on_Form_retour_form():
+	$menu/Form.hide()
+	$menu/connexion.show()

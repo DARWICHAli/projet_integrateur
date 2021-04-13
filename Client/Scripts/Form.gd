@@ -3,6 +3,7 @@ extends Node2D
 var dbsocket
 var client
 signal inscription
+signal retour_form
 
 func _ready():
 	var websocket_url = "ws://localhost:1234"
@@ -38,3 +39,7 @@ func _on_confirm_pressed():
 	
 	
 	
+
+
+func _on_retour_pressed():
+	emit_signal("retour_form")
