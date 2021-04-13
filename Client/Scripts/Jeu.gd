@@ -335,3 +335,11 @@ func _on_connexion_inscription_conn():
 func _on_Form_retour_form():
 	$menu/Form.hide()
 	$menu/connexion.show()
+
+
+func _on_connexion_connection():
+	var mail = $"menu/connexion/formule/mail".text	
+	var mdp = $"menu/connexion/formule/mdp".text
+	var structure = Structure.new()
+	structure.set_requete_connexion(mail,mdp)
+	envoyer_message(client_lobby, structure.to_bytes())

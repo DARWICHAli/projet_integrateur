@@ -548,12 +548,12 @@ __meta__ = {
 [node name="menu" type="Node2D" parent="."]
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
-visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
 visible = false
 
 [node name="background" type="TextureRect" parent="menu"]
+visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )
@@ -601,6 +601,7 @@ __meta__ = {
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
+[connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
 [connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
 [connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]

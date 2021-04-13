@@ -3,7 +3,7 @@ extends Node2D
 
 signal retour_connexion
 signal inscription_conn
-
+signal connection
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,3 +15,7 @@ func _on_retour_pressed():
 
 func _on_inscription_pressed():
 	emit_signal("inscription_conn")
+
+
+func _on_connexion_pressed():
+	emit_signal("connection")

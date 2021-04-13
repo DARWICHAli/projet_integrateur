@@ -133,8 +133,11 @@ func _on_data_lobby (id_client : int):
 			else:
 				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+		Structure.PacketType.LOGIN:
+			var error = db.query("SELECT * FROM UTILISATEUR WHERE email like '")
 		_:
 			print('autre type de paquet reçu')	
+		
 
 # warning-ignore:unused_argument
 func _process(delta):
