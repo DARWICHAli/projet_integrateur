@@ -67,14 +67,15 @@
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
-[ext_resource path="res://Bouton/bouton_connexion_normal.png" type="Texture" id=68]
-[ext_resource path="res://Bouton/bouton_connexion_pressed.png" type="Texture" id=69]
+[ext_resource path="res://Bouton/bouton_sign_in_pressed.png" type="Texture" id=68]
+[ext_resource path="res://Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
 [ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
 [ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=71]
 [ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
-[ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
+
+[sub_resource type="RectangleShape2D" id=1]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -324,7 +325,10 @@ position = Vector2( 1480, 0.00488281 )
 rotation = 1.5708
 script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/Goto_prison"]
+[node name="CollisionShape" type="CollisionShape2D" parent="Plateau/cases/cote_bas/Goto_prison"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/Goto_prison/CollisionShape"]
 texture = ExtResource( 46 )
 
 [node name="vert_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
@@ -547,13 +551,10 @@ __meta__ = {
 
 [node name="menu" type="Node2D" parent="."]
 
-[node name="connexion" parent="menu" instance=ExtResource( 75 )]
-
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-visible = false
+position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
-visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )
@@ -580,8 +581,8 @@ margin_top = 1100.0
 margin_right = 2108.0
 margin_bottom = 1160.0
 rect_scale = Vector2( 3, 3 )
-texture_normal = ExtResource( 68 )
-texture_pressed = ExtResource( 69 )
+texture_normal = ExtResource( 69 )
+texture_pressed = ExtResource( 68 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -596,15 +597,12 @@ __meta__ = {
 [connection signal="body_entered" from="Plateau/cases/cote_gauche/Start" to="Plateau/cases/cote_gauche/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Parking" to="Plateau/cases/cote_droit/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]
+[connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="." method="_on_Goto_prison_body_entered"]
 [connection signal="pressed" from="lancer_de" to="." method="_on_lancer_des_pressed"]
 [connection signal="pressed" from="fin_de_tour" to="." method="_on_fin_de_tour_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
-[connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
-[connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
-[connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
-[connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]

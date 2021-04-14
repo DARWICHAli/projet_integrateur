@@ -54,6 +54,8 @@ Cases.new(), Cases.new()
 var joueur_prison = []
 # Nombre d'essais de double de chaque joueur quand il est en prison
 var nbr_essai_double = []
+# Prix de la prison
+var prix_prison = 50
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -180,6 +182,9 @@ func vendre(id):
 	# TODO : VENDRE SELON NIVEAU CASE
 	print("La propriete %d est vendue par le joueur %d" % [position_joueur[id], id])
 	return 0
+
+func payer_prison(id):
+	argent_joueur[id] = argent_joueur[id] - prix_prison
 
 #func downgrade(id):
 #	var case = plateau[position_joueur[id]]

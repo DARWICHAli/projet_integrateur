@@ -24,12 +24,10 @@ var db # db connection
 
 func _ready():
 	# Communication avec la base de données
-	db = SQLite.new();
-	db.path="./database.db"
-	db.verbose_mode = true
-	db.open_db()
-	
-	stats("tthirtle2o",db)
+#	db = SQLite.new();
+#	db.path="./database.db"
+#	db.verbose_mode = true
+#	db.open_db()
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -52,24 +50,6 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
-func stats(pseudo,db):
-	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
-	
-	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["tempsJeu","nbWin", "nbLose", "dateInscr"])
-	
-	var date = array[0].dateInscr
-	var temps = array[0].tempsJeu	
-	var win = array[0].nbWin	
-	var lose = array[0].nbLose
-
-	var array2 = db.select_rows("(SELECT id, np, max(nb_ut) FROM (SELECT UP.idU AS id, UP.nomPion AS np, (SELECT count(UP2.nomPion) FROM UTILISE_PION UP2 WHERE UP2.nomPion LIKE UP.nomPion AND UP2.idU = UP.idU) AS nb_ut FROM UTILISE_PION UP WHERE UP.idU = id GROUP BY UP.nomPion))","",["np"])
-	var np = array2[0].np
-	
-	var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
-	var nc = array3[0].nc
-	
-	var row_dict : Dictionary = {"dateInscr":date, "nbLose":lose, "nbWin": win, "tempsJeu": temps, "bestPion":np, "bestCase":nc}
-	return row_dict.duplicate()
 	
 # warning-ignore:unused_argument
 func _connected_lobby (id, proto):
@@ -133,11 +113,8 @@ func _on_data_lobby (id_client : int):
 			else:
 				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
-		Structure.PacketType.LOGIN:
-			var error = db.query("SELECT * FROM UTILISATEUR WHERE email like '")
 		_:
 			print('autre type de paquet reçu')	
-		
 
 # warning-ignore:unused_argument
 func _process(delta):
@@ -238,6 +215,10 @@ func _on_data_jeu(id_client, serveur_jeu):
 				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
+		Structure.PacketType.FIN_DEP_GO_PRISON:
+			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.FIN_DEP_GO_PRISON):
+				print('requête fin_dep_go_prison')
+				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.FIN_DE_TOUR:
 			print('requête fin de tour reçue')
 		_:
@@ -264,14 +245,13 @@ func lancer_de():
 	var rand = RandomNumberGenerator.new()
 	rand.randomize()
 	var deplacement = rand.randi_range(1, 6)
-	return 1
-	#return deplacement
+	#return 1
+	return deplacement
 
 func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
 	var joueur = -1
 	var structure = Structure.new()
-	var timer
 	while joueur != serveur_jeu.attente_joueur:
 		print("\n\n")
 		print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
@@ -284,42 +264,66 @@ func partie(serveur_jeu : Serveur_partie):
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		
 		print("Attente de lancement de dé...")
-		timer = get_tree().create_timer(10.0)
-		while !serveur_jeu.reponse_joueur and timer.get_time_left() > 0:
+		
+		while !serveur_jeu.reponse_joueur:
 			serveur_jeu.socket.poll()
 		# Réponse du dé
-		var de_un = lancer_de()
-		var de_deux = lancer_de()
-		var res = 1#de_un + de_deux
+		var de_un = 3#lancer_de()
+		var de_deux = 2#lancer_de()
+		var res = 30#de_un + de_deux
 		
 		var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 		# current_case -> case sur laquelle le joueur en cours de traitement se trouve
 		
-		if(current_case.type == Cases.CasesTypes.PRISON and serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1):
+		#var test = current_case.type == Cases.CasesTypes.PRISON and serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1
+		#print("TEST ? %d" % [test])
+		
+		print("---------------------")
+		print(current_case.type)
+		print("---------------------")
+		
+		if(serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1):
 		# si on est deja en prison
+			#TODO Choix de payer directement sans faire de double
+			serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]] = serveur_jeu.plateau[10]
+			print("DE NUMERO 1: %d pour joueur %d" % [de_un, serveur_jeu.attente_joueur])
+			print("DE NUMERO 2: %d" % [de_deux])
 			if(de_un != de_deux and serveur_jeu.nbr_essai_double[serveur_jeu.attente_joueur] < 3):
+				print("TOUJOURS PAS SORTI !")
 				serveur_jeu.nbr_essai_double[serveur_jeu.attente_joueur]+=1
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 				continue
 			elif(de_un == de_deux):
-				# TODO envoi sortie de prison gratuite (broadcast)
-				pass
+				structure.set_requete_free_out_prison(serveur_jeu.attente_joueur)
+				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			elif(serveur_jeu.nbr_essai_double[serveur_jeu.attente_joueur] == 3):
-				# TODO envoi sortie de prison payante (broadcast)
-				pass
+				serveur_jeu.payer_prison(serveur_jeu.attente_joueur)
+				structure.set_requete_out_prison(serveur_jeu.attente_joueur, serveur_jeu.prix_prison)
+				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		
 		serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, res)
 		structure.set_resultat_lancer_de(res, serveur_jeu.attente_joueur)
 		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 		
+		current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+		
 		if(current_case.type == Cases.CasesTypes.ALLER_PRISON):
+			serveur_jeu.reponse_joueur = false
+			serveur_jeu.packet_attendu = Structure.PacketType.FIN_DEP_GO_PRISON
+			while(serveur_jeu.packet_recu != Structure.PacketType.FIN_DEP_GO_PRISON):
+				serveur_jeu.socket.poll()
 			serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
+			#serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]] = serveur_jeu.plateau[10]
+			# NB : ligne deplacée au dessus même si rafraichissement obligatoire
 			structure.set_requete_go_prison(serveur_jeu.attente_joueur)
 			for client in serveur_jeu.list_joueurs:
 				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-		
+			serveur_jeu.reponse_joueur = false
+			
 		if(current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur): 
 		# si case achetee et pas self-proprio
 			var status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
@@ -337,8 +341,7 @@ func partie(serveur_jeu : Serveur_partie):
 		serveur_jeu.reponse_joueur = false
 		serveur_jeu.packet_attendu = Structure.PacketType.ACTION	
 		var status
-		timer = get_tree().create_timer(15.0)
-		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR and timer.get_time_left() > 0:
+		while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR:
 			serveur_jeu.socket.poll()
 			
 #			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CHAT:
@@ -387,6 +390,7 @@ func partie(serveur_jeu : Serveur_partie):
 		serveur_jeu.next_player()
 	print("Player %d win" % joueur)
 	emit_signal("fin_partie", serveur_jeu.code)
+
 
 func _on_Server_fin_partie(code):
 	for i in range(0,serveurs_partie.size()):
