@@ -106,6 +106,12 @@ func set_requete_inscription(mail, username, mdp, pays):
 func set_requete_reclamer():
 	self.type = PacketType.RECLAMER
 
+func set_requete_connexion(mail,mdp):
+	self.type = PacketType.INSCRIPTION
+	self.data = "'" +mail+ "','" +mdp+ "';"
+	
+
+
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'data2' : self.data2, 'data3' : self.data3, 'data4' : self.data4, 'client' : self.client}
 	var string = var2str(obj)
