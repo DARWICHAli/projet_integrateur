@@ -319,3 +319,9 @@ func sig_msg(text, username, index):
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
+
+
+func _on_reclamer_pressed():
+	var structure = Structure.new()
+	structure.set_requete_reclamer()
+	envoyer_message(client_partie, structure.to_bytes())

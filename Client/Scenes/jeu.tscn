@@ -596,6 +596,7 @@ __meta__ = {
 [connection signal="pressed" from="fin_de_tour" to="." method="_on_fin_de_tour_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
+[connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]

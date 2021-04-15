@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
 RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, 
-RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION}
+RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER}
 
 var type
 var data
@@ -109,6 +109,8 @@ func to_bytes () -> PoolByteArray:
 	var bytes = string.to_utf8()
 	return bytes
 
+func set_requete_reclamer():
+	self.type = PacketType.RECLAMER
 
 static func from_bytes (bytes : PoolByteArray) -> Object:
 	var string = bytes.get_string_from_utf8()

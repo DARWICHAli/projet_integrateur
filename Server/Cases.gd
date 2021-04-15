@@ -32,4 +32,5 @@ func set_aller_prison():
 
 func set_autre():
 	type = CasesTypes.AUTRE
+	self.proprio = -2
 	prix = 0
