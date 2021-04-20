@@ -101,13 +101,13 @@ func _on_data_lobby ():
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
 		
-		Structure.PacketType.ERREUR_LOGIN:
+		Structure.PacketType.REPONSE_LOGIN:
 			match obj.data:
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
 				
-				_: #pas d'erreur, connexion effectuée avec succès
-					print("Connecté")
+				_: #pas d'erreur, connexion effectuée avec succès, data est le pseudo du joueur
+					print("Connecté sous le nom de "+obj.data)
 					$menu/background.show()
 					$menu/Form.hide()
 				

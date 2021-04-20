@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
 RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, 
-RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER,ERREUR_LOGIN}
+RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER,REPONSE_LOGIN}
 
 var type
 var data
@@ -24,8 +24,8 @@ func set_requete_erreur(code):
 	self.type = PacketType.ERREUR
 	self.data = code
 	
-func set_requete_erreur_login(code):
-	self.type = PacketType.ERREUR_LOGIN
+func set_requete_reponse_login(code):
+	self.type = PacketType.REPONSE_LOGIN
 	self.data = code
 
 func set_requete_maj_argent(argent, id):
