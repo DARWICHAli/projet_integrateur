@@ -56,19 +56,22 @@ func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
 	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["tempsJeu","nbWin", "nbLose", "dateInscr"])
-	
-	var date = array[0].dateInscr
-	var temps = array[0].tempsJeu	
-	var win = array[0].nbWin	
-	var lose = array[0].nbLose
+	var row_dict : Dictionary = {}
+	if(len(array[0]) > 0):
+		var date = array[0].dateInscr
+		var temps = array[0].tempsJeu	
+		var win = array[0].nbWin	
+		var lose = array[0].nbLose
 
-	var array2 = db.select_rows("(SELECT id, np, max(nb_ut) FROM (SELECT UP.idU AS id, UP.nomPion AS np, (SELECT count(UP2.nomPion) FROM UTILISE_PION UP2 WHERE UP2.nomPion LIKE UP.nomPion AND UP2.idU = UP.idU) AS nb_ut FROM UTILISE_PION UP WHERE UP.idU = id GROUP BY UP.nomPion))","",["np"])
-	var np = array2[0].np
-	
-	var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
-	var nc = array3[0].nc
-	
-	var row_dict : Dictionary = {"dateInscr":date, "nbLose":lose, "nbWin": win, "tempsJeu": temps, "bestPion":np, "bestCase":nc}
+		var array2 = db.select_rows("(SELECT id, np, max(nb_ut) FROM (SELECT UP.idU AS id, UP.nomPion AS np, (SELECT count(UP2.nomPion) FROM UTILISE_PION UP2 WHERE UP2.nomPion LIKE UP.nomPion AND UP2.idU = UP.idU) AS nb_ut FROM UTILISE_PION UP WHERE UP.idU = id GROUP BY UP.nomPion))","",["np"])
+		
+		if(len(array2) > 0):
+			var np = array2[0].np
+			var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
+			
+			if(len(array3[0]) > 0):
+				var nc = array3[0].nc
+				row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "tempsJeu": temps, "bestPion":np, "bestCase":nc}
 	return row_dict.duplicate()
 	
 # warning-ignore:unused_argument
@@ -137,9 +140,9 @@ func _on_data_lobby (id_client : int):
 			print(obj.data.pwd)
 			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
 			if(len(array) == 0):
-				structure.set_requete_erreur_login(1)
+				structure.set_requete_reponse_login(1)
 			else:
-				structure.set_requete_erreur_login(array[0].username)
+				structure.set_requete_reponse_login(array[0].username)
 				
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		_:

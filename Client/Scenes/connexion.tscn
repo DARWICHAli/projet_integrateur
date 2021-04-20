@@ -54,10 +54,10 @@ __meta__ = {
 }
 
 [node name="mail_label" type="Label" parent="formule"]
-margin_left = 125.0
-margin_top = 674.343
-margin_right = 888.0
-margin_bottom = 938.343
+margin_left = 128.775
+margin_top = 670.972
+margin_right = 891.775
+margin_bottom = 934.972
 custom_fonts/font = SubResource( 2 )
 text = "E-mail
 
@@ -82,9 +82,9 @@ __meta__ = {
 
 [node name="mail" type="LineEdit" parent="formule"]
 margin_left = 125.0
-margin_top = 788.957
+margin_top = 809.183
 margin_right = 1375.0
-margin_bottom = 858.957
+margin_bottom = 879.183
 __meta__ = {
 "_edit_use_anchors_": false
 }
