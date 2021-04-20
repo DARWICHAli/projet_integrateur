@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=2]
@@ -13,10 +13,12 @@
 [ext_resource path="res://GFX/info_joueur/prop_rose.png" type="Texture" id=11]
 [ext_resource path="res://GFX/info_joueur/water-tap.png" type="Texture" id=12]
 [ext_resource path="res://GFX/info_joueur/es.png" type="Texture" id=13]
+[ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=14]
+[ext_resource path="res://GFX/info_joueur/bouton_open_stats.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
-size = 100
-font_data = ExtResource( 1 )
+size = 40
+font_data = ExtResource( 14 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 100
@@ -26,10 +28,10 @@ font_data = ExtResource( 1 )
 position = Vector2( 2550, 0 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
-margin_left = -2.37842
-margin_top = 2.37842
-margin_right = 1259.62
-margin_bottom = 2162.38
+margin_left = 27.8596
+margin_top = 67.8943
+margin_right = 1277.86
+margin_bottom = 2227.9
 scroll_horizontal_enabled = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -37,18 +39,17 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 1250.0
+margin_bottom = 4356.0
 rect_min_size = Vector2( 1250, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="infobox1" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
 margin_right = 1250.0
 margin_bottom = 541.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -63,6 +64,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox1"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox1/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox1/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox1/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -71,24 +111,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox1"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -430,12 +455,11 @@ __meta__ = {
 }
 
 [node name="infobox2" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 545.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 1086.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -450,6 +474,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox2"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox2/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox2/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox2/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox2"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -458,24 +521,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -817,12 +865,11 @@ __meta__ = {
 }
 
 [node name="infobox3" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 1090.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 1631.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -837,6 +884,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox3"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox3/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox3/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox3/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox3"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -845,24 +931,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1204,12 +1275,11 @@ __meta__ = {
 }
 
 [node name="infobox4" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 1635.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 2176.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1224,6 +1294,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox4"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox4/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox4/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox4/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox4"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1232,24 +1341,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1591,12 +1685,11 @@ __meta__ = {
 }
 
 [node name="infobox5" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 2180.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 2721.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1611,6 +1704,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox5"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox5/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox5/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox5/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox5"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1619,24 +1751,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1978,12 +2095,11 @@ __meta__ = {
 }
 
 [node name="infobox6" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 2725.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 3266.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1998,6 +2114,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox6"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox6/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox6/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox6/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox6"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2006,24 +2161,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2365,12 +2505,11 @@ __meta__ = {
 }
 
 [node name="infobox7" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 3270.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 3811.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -2385,6 +2524,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox7"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox7/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox7/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox7/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox7"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2393,24 +2571,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -2752,12 +2915,11 @@ __meta__ = {
 }
 
 [node name="infobox8" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
+margin_top = 3815.0
 margin_right = 1250.0
-margin_bottom = 541.0
+margin_bottom = 4356.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
-"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -2772,6 +2934,45 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="bouton_stats" type="TextureButton" parent="ScrollContainer/VBoxContainer/infobox8"]
+margin_left = 80.0
+margin_top = 70.0
+margin_right = 270.0
+margin_bottom = 130.0
+rect_scale = Vector2( 2, 1.6 )
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScrollContainer/VBoxContainer/infobox8/bouton_stats"]
+margin_right = 190.0
+margin_bottom = 60.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer/VBoxContainer/infobox8/bouton_stats/HBoxContainer"]
+margin_left = 20.0
+margin_right = 169.0
+margin_bottom = 60.0
+alignment = 1
+
+[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox8/bouton_stats/HBoxContainer/VBoxContainer"]
+margin_top = 5.0
+margin_right = 149.0
+margin_bottom = 55.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.00392157, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox8"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -2780,24 +2981,9 @@ margin_top = 86.1185
 margin_right = 1162.14
 margin_bottom = 209.119
 rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
+custom_fonts/font = SubResource( 2 )
 custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
 text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox8"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
 __meta__ = {
 "_edit_use_anchors_": false
 }
