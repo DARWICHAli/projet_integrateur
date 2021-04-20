@@ -50,6 +50,7 @@ margin_right = 1250.0
 margin_bottom = 541.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -460,6 +461,7 @@ margin_right = 1250.0
 margin_bottom = 1086.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -870,6 +872,7 @@ margin_right = 1250.0
 margin_bottom = 1631.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1280,6 +1283,7 @@ margin_right = 1250.0
 margin_bottom = 2176.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -1690,6 +1694,7 @@ margin_right = 1250.0
 margin_bottom = 2721.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -2100,6 +2105,7 @@ margin_right = 1250.0
 margin_bottom = 3266.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -2510,6 +2516,7 @@ margin_right = 1250.0
 margin_bottom = 3811.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
@@ -2920,6 +2927,7 @@ margin_right = 1250.0
 margin_bottom = 4356.0
 rect_min_size = Vector2( 0, 541 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
