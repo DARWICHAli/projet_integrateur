@@ -29,7 +29,7 @@ func _ready():
 	db.verbose_mode = true
 	db.open_db()
 	
-	stats("tthirtle2o",db)
+	stats("tthirtle2o")
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -52,7 +52,7 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
-func stats(pseudo,db):
+func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
 	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["tempsJeu","nbWin", "nbLose", "dateInscr"])
@@ -125,7 +125,6 @@ func _on_data_lobby (id_client : int):
 				structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs)
 				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		Structure.PacketType.INSCRIPTION:
-			#print(obj.data)
 			var error = db.query("INSERT INTO UTILISATEUR (username,password,email,pays) VALUES"+obj.data)
 			print(error)
 			if error == false: # false = l'insertion n'a pas eu lieu
@@ -134,7 +133,15 @@ func _on_data_lobby (id_client : int):
 				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		Structure.PacketType.LOGIN:
-			var error = db.query("SELECT * FROM UTILISATEUR WHERE email like '")
+			print(obj.data.mail)
+			print(obj.data.pwd)
+			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
+			if(len(array) == 0):
+				structure.set_requete_erreur_login(1)
+			else:
+				structure.set_requete_erreur_login(array[0].username)
+				
+			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		_:
 			print('autre type de paquet reçu')	
 		

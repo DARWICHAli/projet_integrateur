@@ -100,6 +100,17 @@ func _on_data_lobby ():
 					$menu/Form.hide()
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+		
+		Structure.PacketType.ERREUR_LOGIN:
+			match obj.data:
+				1:
+					print("Erreur lors de l'inscription, réessayez ultérieurement")
+				
+				_: #pas d'erreur, connexion effectuée avec succès
+					print("Connecté")
+					$menu/background.show()
+					$menu/Form.hide()
+				
 		_:
 			print('autre paquet reçu')
 
@@ -343,7 +354,7 @@ func _on_Form_retour_form():
 
 
 func _on_connexion_connection():
-	var mail = $"menu/connexion/formule/mail".text	
+	var mail = $"menu/connexion/formule/mail".text
 	var mdp = $"menu/connexion/formule/mdp".text
 	var structure = Structure.new()
 	structure.set_requete_connexion(mail,mdp)
