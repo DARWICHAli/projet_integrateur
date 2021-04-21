@@ -101,7 +101,7 @@ func init_plateau():
 			plateau[i].set_prison()
 		elif i == 30:
 			plateau[i].set_aller_prison()
-		elif i == 2 or i == 4 or i == 7 or i == 10 or i == 12 or i == 17 or i == 20 or i == 22 or i == 27 or i == 32 or i == 36 or i == 38:
+		elif i == 2 or i == 4 or i == 7 or i == 10 or i == 17 or i == 20 or i == 22 or i == 32 or i == 36 or i == 38:
 			plateau[i].set_autre()
 		else:
 			plateau[i].set_propriete(100)
@@ -131,7 +131,7 @@ func acheter(id):
 func rente(case, joueur):
 	argent_joueur[case.proprio] += case.prix
 	argent_joueur[joueur] -= case.prix
-	print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [case.proprio, case.prix, joueur])
+	print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [case.proprio, case.prix, joueur])
 	if argent_joueur[joueur] < 0:
 		return -1
 	return 0
