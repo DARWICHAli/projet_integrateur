@@ -101,10 +101,13 @@ func init_plateau():
 			plateau[i].set_prison()
 		elif i == 30:
 			plateau[i].set_aller_prison()
-		elif i == 2 or i == 4 or i == 7 or i == 10 or i == 17 or i == 20 or i == 22 or i == 32 or i == 36 or i == 38:
+		elif i == 2 or i == 7 or i == 10 or i == 17 or i == 20 or i == 22 or i == 32 or i == 36:
 			plateau[i].set_autre()
+		elif i == 4 or i == 38:
+			plateau[i].set_taxe(i)
 		else:
 			plateau[i].set_propriete(100)
+			# TODO1 Regrouper les propriétés par couleurs pour savoir si l'on peut construire
 
 func acheter(id):
 	var case = plateau[position_joueur[id]]
@@ -136,6 +139,10 @@ func rente(case, joueur):
 		return -1
 	return 0
 
+func taxe(id):
+	var case = plateau[position_joueur[id]]
+	argent_joueur[id] -= case.prix
+
 func upgrade(id):
 	var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
@@ -144,6 +151,8 @@ func upgrade(id):
 	elif (case.proprio != id):
 		print("Cette case ne vous appartient pas")
 		return 4
+	# TODO2 Après regroupement des propriètés par couleurs, vérifier si toutes les proprio appartiennent au joueur
+	# Si non, erreur return nombre positif + ajouter l'erreur dans le type de paquet erreur (cf client)
 	elif (case.niveau_case != 5):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):

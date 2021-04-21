@@ -211,6 +211,9 @@ func _on_data_partie ():
 		Structure.PacketType.FREE_OUT_PRISON:
 			print("DOUBLE !")
 			print("Joueur %d sort de prison !" % [obj.client])
+		Structure.PacketType.TAXE:
+			print("Joueur %d paye une taxe de %d ECTS !" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)

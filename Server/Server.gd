@@ -298,6 +298,7 @@ func partie(serveur_jeu : Serveur_partie):
 		while double:
 			print("\n\n")
 			print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
+			
 			# Attente d'une demande de dé
 			serveur_jeu.reponse_joueur = false
 			serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
@@ -307,20 +308,19 @@ func partie(serveur_jeu : Serveur_partie):
 				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
 			print("Attente de lancement de dé...")
-			
+			timer = get_tree().create_timer(10.0)
 			while !serveur_jeu.reponse_joueur:
 				serveur_jeu.socket.poll()
+				
 			# Réponse du dé
-			var de_un = 3#lancer_de()
-			var de_deux = 3#lancer_de()
+			var de_un = 2#lancer_de()
+			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
 				double = 0
-			
-			if de_un == de_deux:
-				nb_double += 1
-			
+			else:
+				nb_double += 1	
 			if nb_double == 3:
 				goto_prison = 1
 			
@@ -329,7 +329,7 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			if(serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1):
 			# si on est deja en prison
-				#TODO Choix de payer directement sans faire de double
+				# TODO Choix de payer directement sans faire de double
 				serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]] = serveur_jeu.plateau[10]
 				print("DE NUMERO 1: %d pour joueur %d" % [de_un, serveur_jeu.attente_joueur])
 				print("DE NUMERO 2: %d" % [de_deux])
@@ -355,14 +355,19 @@ func partie(serveur_jeu : Serveur_partie):
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				print(serveur_jeu.attente_joueur)
-				
-			#print("1")
+
 			timer_reclamation = get_tree().create_timer(10.0)
 			serveur_jeu.reponse_proprio = false
 			serveur_jeu.proprio_a_reclamer = false
-			#print("2")
+
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# RAFRAICHISSEMENT DE CURRENT_CASE
+			
+			if(current_case.type == Cases.CasesTypes.TAXE):
+				serveur_jeu.taxe(serveur_jeu.attente_joueur)
+				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
+				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
 			# ALLER EN PRISON POUR TRIPLE DOUBLE
 			if(goto_prison == 1):
@@ -389,7 +394,6 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.next_player()
 				continue
 				
-			#print("4")
 #			if(current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur): 
 #			# si case achetee et pas self-proprio
 #				var status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
@@ -400,7 +404,7 @@ func partie(serveur_jeu : Serveur_partie):
 #				else:
 #					# TODO joueur perdu
 #					pass
-			#print("5")
+
 			print("Attente d'action quelconque ou fin de tour...")
 
 			print(current_case.proprio)
@@ -452,7 +456,6 @@ func partie(serveur_jeu : Serveur_partie):
 					serveur_jeu.reponse_joueur = false
 				if serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER:
 					if (timer_reclamation.get_time_left() > 0):
-							# si case achetee et pas self-proprio
 							if (!serveur_jeu.proprio_a_reclamer):
 								serveur_jeu.proprio_a_reclamer = true
 								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
@@ -461,13 +464,12 @@ func partie(serveur_jeu : Serveur_partie):
 									for client in serveur_jeu.list_joueurs:
 										envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 								else:
-									# TODO joueur perdu
 									pass
 			serveur_jeu.packet_recu = -1
-			while (current_case.proprio != -1  and current_case.proprio != serveur_jeu.attente_joueur and serveur_jeu.reponse_proprio == false and timer_reclamation.get_time_left() > 0):
+			
+			while (current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur and serveur_jeu.reponse_proprio == false and timer_reclamation.get_time_left() > 0):
 				serveur_jeu.socket.poll()
 				if (serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER):
-							# si case achetee et pas self-proprio
 							if (!serveur_jeu.proprio_a_reclamer):
 								serveur_jeu.proprio_a_reclamer = true
 								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
@@ -476,7 +478,6 @@ func partie(serveur_jeu : Serveur_partie):
 									for client in serveur_jeu.list_joueurs:
 										envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 								else:
-									# TODO joueur perdu
 									pass
 			print("Test de propiete : %d" % serveur_jeu.plateau[0].proprio)
 			print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
