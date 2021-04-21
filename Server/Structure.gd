@@ -2,10 +2,7 @@ extends Node
 
 class_name Structure
 
-enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
-RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, 
-RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER,REPONSE_LOGIN}
-
+enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN}
 
 var type
 var data
@@ -24,11 +21,11 @@ func set_requete_rente(argent, id, proprio, prix):
 func set_requete_erreur(code):
 	self.type = PacketType.ERREUR
 	self.data = code
-
+	
 func set_requete_reponse_login(code):
 	self.type = PacketType.REPONSE_LOGIN
 	self.data = code
-	
+
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT
 	self.data = argent
@@ -51,6 +48,18 @@ func set_requete_maj_vente(argent, id, nbr_prop, prix):
 func set_requete_go_prison(id):
 	self.type = PacketType.GO_PRISON
 	self.client = id
+
+func set_requete_out_prison(id, prix):
+	self.type = PacketType.OUT_PRISON
+	self.client = id
+	self.data = prix
+	
+func set_requete_free_out_prison(id):
+	self.type = PacketType.FREE_OUT_PRISON
+	self.client = id
+
+func set_fin_dep_go_prison():
+	self.type = PacketType.FIN_DEP_GO_PRISON
 
 func set_requete_vendre():
 	self.type = PacketType.VENTE
@@ -106,11 +115,14 @@ func set_resultat_lancer_de (Resultat : int, Client : int):
 
 func set_requete_inscription(mail, username, mdp, pays):
 	self.type = PacketType.INSCRIPTION
-	self.data = "'"+username+"','"+mdp+"','"+mail+"','"+pays+"'"
+	self.data = "('"+username+"','"+mdp+"','"+mail+"','"+pays+"');"
 
-func set_requete_Login(mail, mdp):
-	self.type = PacketType.INSCRIPTION
-	self.data = "'"+mail+"','"+mdp+"'"
+func set_requete_reclamer():
+	self.type = PacketType.RECLAMER
+
+func set_requete_connexion(mail,mdp):
+	self.type = PacketType.LOGIN
+	self.data = { 'mail' : mail, 'pwd' : mdp}
 
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'data2' : self.data2, 'data3' : self.data3, 'data4' : self.data4, 'client' : self.client}
@@ -118,8 +130,6 @@ func to_bytes () -> PoolByteArray:
 	var bytes = string.to_utf8()
 	return bytes
 
-func set_requete_reclamer():
-	self.type = PacketType.RECLAMER
 
 static func from_bytes (bytes : PoolByteArray) -> Object:
 	var string = bytes.get_string_from_utf8()

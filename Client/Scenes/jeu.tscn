@@ -1,6 +1,6 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=77 format=2]
 
-[ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/Start.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
 [ext_resource path="res://Scripts/Park.gd" type="Script" id=3]
 [ext_resource path="res://Scenes/case basique.tscn" type="PackedScene" id=4]
@@ -76,6 +76,8 @@
 [ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
 [ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
 
+[sub_resource type="RectangleShape2D" id=1]
+
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
 
@@ -107,6 +109,7 @@ rotation = 1.5708
 
 [node name="Start" parent="Plateau/cases/cote_gauche" instance=ExtResource( 7 )]
 position = Vector2( 1480, 0 )
+script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/Start"]
 position = Vector2( 0.514759, 0.894234 )
@@ -322,9 +325,11 @@ __meta__ = {
 [node name="Goto_prison" parent="Plateau/cases/cote_bas" instance=ExtResource( 7 )]
 position = Vector2( 1480, 0.00488281 )
 rotation = 1.5708
-script = ExtResource( 1 )
 
-[node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/Goto_prison"]
+[node name="CollisionShape" type="CollisionShape2D" parent="Plateau/cases/cote_bas/Goto_prison"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/Goto_prison/CollisionShape"]
 texture = ExtResource( 46 )
 
 [node name="vert_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
@@ -546,16 +551,13 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
-visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 position = Vector2( 0, 4.48999 )
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-visible = false
 
 [node name="background" type="TextureRect" parent="menu"]
-visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )
@@ -604,10 +606,6 @@ __meta__ = {
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
-[connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
-[connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
-[connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
-[connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]

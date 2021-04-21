@@ -199,10 +199,18 @@ func _on_data_partie ():
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
-			
 		Structure.PacketType.GO_PRISON:
 			print("Joueur %d est deroute en prison !" % [obj.client])
-			# TODO afficher le joueur en prison
+			if obj.client == 0:
+				get_node("Pion").goto_pos_prison()
+			else:
+				get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+		Structure.PacketType.OUT_PRISON:
+			print("Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
+		Structure.PacketType.FREE_OUT_PRISON:
+			print("DOUBLE !")
+			print("Joueur %d sort de prison !" % [obj.client])
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
@@ -314,7 +322,7 @@ func _on_start_pressed():
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/connexion.show()
+	$menu/Form.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -330,7 +338,12 @@ func sig_msg(text, username, index):
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
-
+	
+func fin_dep_go_prison():
+	print('envoi requête de fin dep go prison')
+	var structure = Structure.new()
+	structure.set_fin_dep_go_prison()
+	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_reclamer_pressed():
 	var structure = Structure.new()
@@ -340,18 +353,14 @@ func _on_reclamer_pressed():
 func _on_connexion_retour_connexion():
 	$menu/connexion.hide()
 	$menu/background.show()
-	
-
 
 func _on_connexion_inscription_conn():
 	$menu/connexion.hide()
 	$menu/Form.show()
 
-
 func _on_Form_retour_form():
 	$menu/Form.hide()
 	$menu/connexion.show()
-
 
 func _on_connexion_connection():
 	var mail = $"menu/connexion/formule/mail".text
@@ -359,3 +368,6 @@ func _on_connexion_connection():
 	var structure = Structure.new()
 	structure.set_requete_connexion(mail,mdp)
 	envoyer_message(client_lobby, structure.to_bytes())
+
+	
+
