@@ -182,13 +182,12 @@ func _on_data_partie ():
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).show()
 		Structure.PacketType.RENTE:
-			print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
+			print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data3])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data3)
 		Structure.PacketType.MAJ_CONSTRUCTION:
 			if(obj.data == -1):
 				print("Joueur %d construit une maison pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
-				
 			elif(obj.data == -2):
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])

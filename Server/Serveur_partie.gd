@@ -106,7 +106,8 @@ func init_plateau():
 		elif i == 4 or i == 38:
 			plateau[i].set_taxe(i)
 		else:
-			plateau[i].set_propriete(100)
+			print(i)
+			plateau[i].set_propriete(100, i)
 			# TODO1 Regrouper les propriétés par couleurs pour savoir si l'on peut construire
 
 func acheter(id):
@@ -131,7 +132,19 @@ func acheter(id):
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
 	return exception
 
-func rente(case, joueur):
+func rente(case, joueur, res_des):
+	# Gestion du cas des compagnies d'eau et electricite d'abord
+	var prix
+	if case.compagnie == 1:
+		if plateau[12].proprio != -1 and plateau[27].proprio != -1:
+			case.prix = res_des * 10
+		elif plateau[12].proprio != -1 or plateau[27].proprio != -1:
+			case.prix = res_des * 4
+		print("********************")
+		print("********************")
+		print(case.prix)
+		print("********************")
+		print("********************")
 	argent_joueur[case.proprio] += case.prix
 	argent_joueur[joueur] -= case.prix
 	print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [case.proprio, case.prix, joueur])

@@ -313,7 +313,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 				
 			# Réponse du dé
-			var de_un = 2#lancer_de()
+			var de_un = 12#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -363,6 +363,12 @@ func partie(serveur_jeu : Serveur_partie):
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# RAFRAICHISSEMENT DE CURRENT_CASE
 			
+			print("------------------")
+			print(current_case.indice)
+			print(current_case.type)
+			print(current_case.sous_type)
+			print("------------------")
+			
 			if(current_case.type == Cases.CasesTypes.TAXE):
 				serveur_jeu.taxe(serveur_jeu.attente_joueur)
 				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
@@ -396,7 +402,7 @@ func partie(serveur_jeu : Serveur_partie):
 				
 #			if(current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur): 
 #			# si case achetee et pas self-proprio
-#				var status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
+#				var status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
 #				if(status == 0):
 #					structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
 #					for client in serveur_jeu.list_joueurs:
@@ -458,7 +464,7 @@ func partie(serveur_jeu : Serveur_partie):
 					if (timer_reclamation.get_time_left() > 0):
 							if (!serveur_jeu.proprio_a_reclamer):
 								serveur_jeu.proprio_a_reclamer = true
-								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
+								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
 								if(status == 0):
 									structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
 									for client in serveur_jeu.list_joueurs:
@@ -472,7 +478,7 @@ func partie(serveur_jeu : Serveur_partie):
 				if (serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER):
 							if (!serveur_jeu.proprio_a_reclamer):
 								serveur_jeu.proprio_a_reclamer = true
-								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur)
+								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
 								if(status == 0):
 									structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
 									for client in serveur_jeu.list_joueurs:

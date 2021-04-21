@@ -359,14 +359,14 @@ position = Vector2( 641, 0 )
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/gare_1"]
 texture = ExtResource( 44 )
 
+[node name="chance_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 37 )]
+position = Vector2( 483, 0 )
+
 [node name="bleu_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 325, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/bleu_1"]
 texture = ExtResource( 21 )
-
-[node name="chance_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 37 )]
-position = Vector2( 483, 0 )
 
 [node name="luxe" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 167, 0 )

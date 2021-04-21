@@ -3,14 +3,16 @@ extends Node
 class_name Cases
 
 enum CasesTypes {DEPART, ALLER_PRISON, PROPRIETE, PRISON, TAXE, AUTRE}
-enum Couleur {GARE, BRUN, BLEU_CIEL, VIOLET, ORANGE, ROUGE, JAUNE, VERT, BLEU_FONCE}
+enum PropTypes {GARE, BRUN, BLEU_CIEL, VIOLET, ORANGE, ROUGE, JAUNE, VERT, BLEU_FONCE, COMPAGNIE}
 
 var indice
 var nom_case
 
 var proprio = -1
 var type
+var sous_type = 0
 var prix
+var compagnie = 0
 
 var prix_maison = 100
 var prix_hotel = 200
@@ -20,8 +22,10 @@ func set_depart(gains : int):
 	type = CasesTypes.DEPART
 	prix = gains
 
-func set_propriete(prix : int):
+func set_propriete(prix : int, i : int):
 	type = CasesTypes.PROPRIETE
+	if(indice == 12 or indice == 27):
+		self.compagnie = 1
 	self.prix = prix
 
 func set_prison():
@@ -39,5 +43,5 @@ func set_taxe(i):
 
 func set_autre():
 	type = CasesTypes.AUTRE
-	self.proprio = -2
+	#self.proprio = -2
 	prix = 0
