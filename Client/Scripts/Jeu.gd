@@ -235,6 +235,9 @@ func _on_data_partie ():
 					emit_signal("signal_resultat_lancer_de7", int(obj.data))
 				7:
 					emit_signal("signal_resultat_lancer_de8", int(obj.data))
+		Structure.PacketType.CACHE_JOUEUR:
+			print("Suppression du joueur %d." % obj.data)
+			supprimer_joueur(obj.data)
 		_:
 			print('autre paquet reçu')
 
@@ -371,5 +374,10 @@ func _on_connexion_connection():
 	structure.set_requete_connexion(mail,mdp)
 	envoyer_message(client_lobby, structure.to_bytes())
 
-	
-
+func supprimer_joueur(n_pion):
+	if n_pion==0:
+		get_node("Pion").hide()
+		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
+	else:
+		get_node("Pion"+str(n_pion+1)).hide()
+		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
