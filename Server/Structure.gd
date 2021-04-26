@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, 
-TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR}
+TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR}
 
 var type
 var data
@@ -63,8 +63,9 @@ func set_requete_free_out_prison(id):
 func set_fin_dep_go_prison():
 	self.type = PacketType.FIN_DEP_GO_PRISON
 
-func set_requete_vendre():
+func set_requete_vendre(id_case):
 	self.type = PacketType.VENTE
+	self.data = id_case
 	
 func set_requete_acheter():
 	self.type = PacketType.ACHAT
@@ -90,6 +91,18 @@ func set_requete_fin_de_tour ():
 
 func set_requete_lancer_de ():
 	self.type = PacketType.REQUETE_LANCER_DE
+	
+func set_requete_hypothequer(id_case):
+	self.type = PacketType.HYPOTHEQUE
+	self.data = id_case
+	
+func set_requete_maj_hypotheque(argent, id, nbr_prop, gain, status):
+	self.type = PacketType.MAJ_HYPOTHEQUE
+	self.data = argent
+	self.data2 = nbr_prop
+	self.data3 = gain
+	self.data4 = status
+	self.client = id
 
 func set_inscription_partie (code_partie : int = 0, nb_joueurs : int = 1):
 	self.type = PacketType.INSCRIPTION_PARTIE

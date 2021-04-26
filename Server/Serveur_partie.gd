@@ -107,7 +107,26 @@ func init_plateau():
 			plateau[i].set_taxe(i)
 		else:
 			print(i)
-			plateau[i].set_propriete(100, i)
+			if i == 1 or i == 3:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.BRUN)
+			if i == 5 or i == 15 or i == 25 or i == 35:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.GARE)
+			if i == 6 or i == 8 or i == 9:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_CIEL)
+			if i == 11 or i == 13 or i == 14:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.VIOLET)
+			if i == 12 or i == 27:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.COMPAGNIE)
+			if i == 16 or i == 18 or i == 19:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.ORANGE)
+			if i == 21 or i == 23 or i == 24:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.ROUGE)
+			if i == 26 or i == 28 or i == 29:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.JAUNE)
+			if i == 31 or i == 33 or i == 34:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.VERT)
+			if i == 37 or i == 39:
+				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_FONCE)
 			# TODO1 Regrouper les propriétés par couleurs pour savoir si l'on peut construire
 
 func acheter(id):
@@ -135,7 +154,10 @@ func acheter(id):
 func rente(case, joueur, res_des):
 	# Gestion du cas des compagnies d'eau et electricite d'abord
 	var prix
-	if case.compagnie == 1:
+	if case.hypotheque == 1:
+		print("Case hypothequée : rente impossible !")
+		return 8
+	if case.sous_type == Cases.PropTypes.COMPAGNIE:
 		if plateau[12].proprio != -1 and plateau[27].proprio != -1:
 			case.prix = res_des * 10
 		elif plateau[12].proprio != -1 or plateau[27].proprio != -1:
@@ -164,15 +186,34 @@ func upgrade(id):
 	elif (case.proprio != id):
 		print("Cette case ne vous appartient pas")
 		return 4
+	elif (case.sous_type == Cases.PropTypes.GARE or case.sous_type == Cases.PropTypes.COMPAGNIE):
+		print("Construction impossible, case non eligible")
+		return 9
+	elif case.hypotheque == 1:
+		print("Case hypothequée : construction impossible !")
+		return 8
+	var cases_tmp = []
+	for i in range(40):
+		if (plateau[i].sous_type == case.sous_type):
+			if plateau[i].proprio != case.proprio:
+				print("Vous ne possedez pas toutes les propriètés de la couleur")
+				return 10
+			else:
+				cases_tmp.append(plateau[i])
 	# TODO2 Après regroupement des propriètés par couleurs, vérifier si toutes les proprio appartiennent au joueur
 	# Si non, erreur return nombre positif + ajouter l'erreur dans le type de paquet erreur (cf client)
-	elif (case.niveau_case != 5):
+	if (case.niveau_case != 5):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):
 				print("Le joueur n'a pas assez d'argent pour une maison.")
 				return 5
 			else:
+				for case_iter in cases_tmp:
+					if abs(case_iter.niveau_case - (case.niveau_case + 1)) >= 2:
+						print("Vous devez contruire uniformement")
+						return 11
 				argent_joueur[id] -= case.prix_maison
+				case.niveau_case += 1
 				print("Maison construite !")
 				return -1
 		else:
@@ -180,16 +221,21 @@ func upgrade(id):
 				print("Le joueur n'a pas assez d'argent pour un hotel.")
 				return 6
 			else:
+				for case_iter in cases_tmp:
+					if abs(case_iter.niveau_case - (case.niveau_case + 1)) >= 2:
+						print("Vous devez contruire uniformement")
+						return 11
 				argent_joueur[id] -= case.prix_hotel
+				case.niveau_case += 1
 				print("Hotel construit !")
 				return -2			
 	else:
 		print("La case est à son niveau maximum.")
 		return 7
 
-func vendre(id):
+func vendre(id, case):
 	print("vendre")
-	var case = plateau[position_joueur[id]]
+	#var case = plateau[position_joueur[id]]
 	var exception = 0
 	if case.type != Cases.CasesTypes.PROPRIETE:
 		print("La case n'est pas de type propriete")
@@ -207,6 +253,7 @@ func vendre(id):
 #	for i in range(case.niveau_case):
 #		downgrade(id)
 	case.niveau_case = 0
+	case.hypotheque = 0
 	# TODO : VENDRE SELON NIVEAU CASE
 	print("La propriete %d est vendue par le joueur %d" % [position_joueur[id], id])
 	return 0
@@ -214,10 +261,27 @@ func vendre(id):
 func payer_prison(id):
 	argent_joueur[id] = argent_joueur[id] - prix_prison
 
+func hypothequer(id, case):
+	if case.type != Cases.CasesTypes.PROPRIETE:
+		print("La case n'est pas de type propriete")
+		return 1
+	if case.proprio != id:
+		print("Cette case ne vous appartient pas")
+		return 4
+	if case.hypotheque == 1:
+		print("Case de-hypothequer !")
+		case.hypotheque = 0
+		argent_joueur[id] = argent_joueur[id] - 1.1*case.prix
+		return -1
+	case.hypotheque = 1
+	argent_joueur[id] = argent_joueur[id] + 0.9*case.prix
+	return 0
+
+
 #func downgrade(id):
 #	var case = plateau[position_joueur[id]]
 #	case.niveau_case -= 1
 #	argent_joueur[id] += case.prix_maison*0.8
 	
-	
+
 	

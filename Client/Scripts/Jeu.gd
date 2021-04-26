@@ -170,6 +170,14 @@ func _on_data_partie ():
 					print("Le joueur n'a pas assez d'argent pour un hotel.")
 				7:
 					print("La case est à son niveau maximum.")
+				8:
+					print("La case est hypothequée !")
+				9:
+					print("Construction impossible, case non eligible.")
+				10:
+					print("Vous ne possedez pas toutes les propriètés de la couleur")
+				11:
+					print("Vous devez contruire uniformement")
 				_:
 					print("Erreur inconnue !")
 		Structure.PacketType.MAJ_ARGENT:
@@ -198,6 +206,15 @@ func _on_data_partie ():
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
+		Structure.PacketType.MAJ_HYPOTHEQUE:
+			if(obj.data4 == 0):
+				print("HYPOTHEQUE !")
+				print("La propriete %d est hypothequee par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
+			else:
+				print("DE-HYPOTHEQUE !")
+				print("La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.GO_PRISON:
 			print("Joueur %d est deroute en prison !" % [obj.client])
 			if obj.client == 0:
@@ -382,3 +399,9 @@ func supprimer_joueur(n_pion):
 	else:
 		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
+
+func _on_hypotheque_pressed():
+	print('envoi requête hypotheque')
+	var structure = Structure.new()
+	structure.set_requete_hypothequer(1)
+	envoyer_message(client_partie, structure.to_bytes())

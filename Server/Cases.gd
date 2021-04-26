@@ -9,10 +9,10 @@ var indice
 var nom_case
 
 var proprio = -1
+var hypotheque = 0
 var type
 var sous_type = 0
 var prix
-var compagnie = 0
 
 var prix_maison = 100
 var prix_hotel = 200
@@ -22,10 +22,9 @@ func set_depart(gains : int):
 	type = CasesTypes.DEPART
 	prix = gains
 
-func set_propriete(prix : int, i : int):
+func set_propriete(prix : int, i : int, sous_type):
 	type = CasesTypes.PROPRIETE
-	if(indice == 12 or indice == 27):
-		self.compagnie = 1
+	self.sous_type = sous_type
 	self.prix = prix
 
 func set_prison():
