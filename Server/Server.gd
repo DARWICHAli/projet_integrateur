@@ -23,11 +23,11 @@ var cert = load("res://unistrapoly_certif.crt")
 var db # db connection
 
 func _ready():
-	# Communication avec la base de données
-	#db = SQLite.new();
-	#db.path="./database.db"
-	#db.verbose_mode = true
-	#db.open_db()
+	#Communication avec la base de données
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = true
+	db.open_db()
 	
 	#stats("tthirtle2o")
 	

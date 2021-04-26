@@ -96,20 +96,25 @@ func _on_data_lobby ():
 			match obj.data:
 				0:# 0 = pas d'erreur, insertion effectuée avec succès
 					print("Inscription confirmée")
-					$menu/background.show()
-					$menu/Form.hide()
+					$menu/Form/success.popup()
+					
+					
+
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/Form/error.popup()
+
 		
 		Structure.PacketType.REPONSE_LOGIN:
 			match obj.data:
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/connexion/error.popup_centered()
 				
 				_: #pas d'erreur, connexion effectuée avec succès, data est le pseudo du joueur
 					print("Connecté sous le nom de "+obj.data)
-					$menu/background.show()
-					$menu/Form.hide()
+					$menu/connexion/success.popup()
+					$menu/background/deconnexion.show()
 				
 		_:
 			print('autre paquet reçu')
@@ -324,7 +329,7 @@ func _on_start_pressed():
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/Form.show()
+	$menu/connexion.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -371,5 +376,14 @@ func _on_connexion_connection():
 	structure.set_requete_connexion(mail,mdp)
 	envoyer_message(client_lobby, structure.to_bytes())
 
-	
+
+
+func _on_deconnexion_pressed():
+	pass # Replace with function body.
+
+
+func _on_Form_exit_on_success():
+	$menu/Form/success.hide()
+	$menu/Form.hide()
+	$menu/connexion.show()
 
