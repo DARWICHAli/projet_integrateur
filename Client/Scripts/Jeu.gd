@@ -339,7 +339,7 @@ func _on_construire_pressed():
 func _on_vente_pressed():
 	print('envoi requête de vente')
 	var structure = Structure.new()
-	structure.set_requete_vendre()
+	structure.set_requete_vendre(1)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_start_pressed():

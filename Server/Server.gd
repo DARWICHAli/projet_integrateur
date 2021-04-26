@@ -24,10 +24,10 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-	db = SQLite.new();
-	db.path="./database.db"
-	db.verbose_mode = true
-	db.open_db()
+	#db = SQLite.new();
+	#db.path="./database.db"
+	#db.verbose_mode = true
+	#db.open_db()
 	
 	#stats("tthirtle2o")
 	
@@ -509,9 +509,9 @@ func partie(serveur_jeu : Serveur_partie):
 func vente_res(id, id_case, serveur_jeu):
 	var case = serveur_jeu.plateau[id_case]
 	var structure = Structure.new()
-	var status = serveur_jeu.vendre(serveur_jeu.attente_joueur, case)
+	var status = serveur_jeu.vendre(id, case)
 	if(status == 0):
-		structure.set_requete_maj_vente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, case.indice, case.prix)
+		structure.set_requete_maj_vente(serveur_jeu.argent_joueur[id], id, case.indice, case.prix)
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 	else:
@@ -522,7 +522,7 @@ func hypotheque_res(id, id_case, serveur_jeu):
 	print("2222222222222222222")
 	var case = serveur_jeu.plateau[id_case]
 	var structure = Structure.new()
-	var status = serveur_jeu.hypothequer(serveur_jeu.attente_joueur, case)
+	var status = serveur_jeu.hypothequer(id, case)
 	print("33333333333333333333")
 	if(status <= 0):
 		var price
@@ -530,7 +530,7 @@ func hypotheque_res(id, id_case, serveur_jeu):
 			price = 1.1*case.prix
 		else:
 			price = 0.9*case.prix
-		structure.set_requete_maj_hypotheque(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, case.indice, price, status)
+		structure.set_requete_maj_hypotheque(serveur_jeu.argent_joueur[id], id, case.indice, price, status)
 		print("444444444444444444")
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)

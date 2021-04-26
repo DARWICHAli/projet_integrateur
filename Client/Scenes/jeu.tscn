@@ -603,7 +603,14 @@ margin_bottom = 1159.65
 rect_scale = Vector2( 3, 3 )
 texture_normal = ExtResource( 76 )
 texture_pressed = ExtResource( 77 )
-
+[connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
+[connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
+[connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
+[connection signal="signal_resultat_lancer_de4" from="." to="Pion4" method="_on_jeu_signal_resultat_lancer_de4"]
+[connection signal="signal_resultat_lancer_de5" from="." to="Pion5" method="_on_jeu_signal_resultat_lancer_de5"]
+[connection signal="signal_resultat_lancer_de6" from="." to="Pion6" method="_on_jeu_signal_resultat_lancer_de6"]
+[connection signal="signal_resultat_lancer_de7" from="." to="Pion7" method="_on_jeu_signal_resultat_lancer_de7"]
+[connection signal="signal_resultat_lancer_de8" from="." to="Pion8" method="_on_jeu_signal_resultat_lancer_de8"]
 [connection signal="body_entered" from="Plateau/cases/cote_gauche/Start" to="Plateau/cases/cote_gauche/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Parking" to="Plateau/cases/cote_droit/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]
