@@ -375,9 +375,10 @@ func _on_connexion_connection():
 	envoyer_message(client_lobby, structure.to_bytes())
 
 func supprimer_joueur(n_pion):
+	print(n_pion)
 	if n_pion==0:
-		get_node("Pion").hide()
+		get_node("Pion/Sprite").hide()
 		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
 	else:
-		get_node("Pion"+str(n_pion+1)).hide()
+		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"

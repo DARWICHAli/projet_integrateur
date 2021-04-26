@@ -504,8 +504,8 @@ func _on_Server_fin_partie(code):
 	print("Serveur de partie non trouvé pour finir")
 
 func supprimer_joueur(id, serveur_jeu):
-	serveur_jeu.list_joueurs.erase(id)
 	var structure = Structure.new()
 	structure.set_requete_cache_joueur(serveur_jeu.list_joueurs.find(id))
+	serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
