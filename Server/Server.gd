@@ -23,11 +23,11 @@ var cert = load("res://unistrapoly_certif.crt")
 var db # db connection
 
 func _ready():
-	# Communication avec la base de données
-	#db = SQLite.new();
-	#db.path="./database.db"
-	#db.verbose_mode = true
-	#db.open_db()
+	#Communication avec la base de données
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = true
+	db.open_db()
 	
 	#stats("tthirtle2o")
 	
@@ -136,8 +136,6 @@ func _on_data_lobby (id_client : int):
 				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		Structure.PacketType.LOGIN:
-			print(obj.data.mail)
-			print(obj.data.pwd)
 			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
 			if(len(array) == 0):
 				structure.set_requete_reponse_login(1)
@@ -248,6 +246,13 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print('requête vente')
 			vente_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 			#serveur_jeu.reponse_joueur = true
+		Structure.PacketType.STATS_CONSULT:
+			var stats = stats(obj.data)
+			if(stats == null):
+				stats = {}
+			structure.set_requete_reponse_stats(stats.duplicate())
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
+			serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
 		Structure.PacketType.FIN_DEP_GO_PRISON:
@@ -258,7 +263,6 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print('requête fin de tour reçue')
 		Structure.PacketType.HYPOTHEQUE:
 			print('requête hypotheque reçue')
-			print("1111111111111111111111")
 			hypotheque_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 		Structure.PacketType.RECLAMER:
 			print(serveur_jeu.attente_proprio)

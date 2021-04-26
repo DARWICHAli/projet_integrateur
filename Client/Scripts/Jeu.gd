@@ -3,7 +3,6 @@ extends Node2D
 class_name Jeu
 
 var dep_cases = 0
-#var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
 var nb_joueurs
@@ -96,20 +95,25 @@ func _on_data_lobby ():
 			match obj.data:
 				0:# 0 = pas d'erreur, insertion effectuée avec succès
 					print("Inscription confirmée")
-					$menu/background.show()
-					$menu/Form.hide()
+					$menu/Form/success.popup()
+					
+					
+
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/Form/error.popup()
+
 		
 		Structure.PacketType.REPONSE_LOGIN:
 			match obj.data:
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/connexion/error.popup_centered()
 				
 				_: #pas d'erreur, connexion effectuée avec succès, data est le pseudo du joueur
 					print("Connecté sous le nom de "+obj.data)
-					$menu/background.show()
-					$menu/Form.hide()
+					$menu/connexion/success.popup()
+					$menu/background/deconnexion.show()
 				
 		_:
 			print('autre paquet reçu')
@@ -233,6 +237,12 @@ func _on_data_partie ():
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
+			
+		Structure.PacketType.REP_STATS:
+			print("stats")
+			print(obj.data)
+			# Mettre à jour le contenu des fentres
+			
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
@@ -344,7 +354,7 @@ func _on_start_pressed():
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/Form.show()
+	$menu/connexion.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -391,6 +401,18 @@ func _on_connexion_connection():
 	structure.set_requete_connexion(mail,mdp)
 	envoyer_message(client_lobby, structure.to_bytes())
 
+
+
+
+func _on_deconnexion_pressed():
+	pass # Replace with function body.
+
+
+func _on_Form_exit_on_success():
+	$menu/Form/success.hide()
+	$menu/Form.hide()
+	$menu/connexion.show()
+
 func supprimer_joueur(n_pion):
 	print(n_pion)
 	if n_pion==0:
@@ -404,4 +426,9 @@ func _on_hypotheque_pressed():
 	print('envoi requête hypotheque')
 	var structure = Structure.new()
 	structure.set_requete_hypothequer(1)
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_info_joueur_stats_pressed(player):
+	var structure = Structure.new()
+	structure.set_requete_consult_stats(player)
 	envoyer_message(client_partie, structure.to_bytes())

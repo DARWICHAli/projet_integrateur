@@ -1,4 +1,4 @@
-[gd_scene load_steps=77 format=2]
+[gd_scene load_steps=79 format=2]
 
 [ext_resource path="res://Scripts/Start.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -75,6 +75,8 @@
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
 [ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
+[ext_resource path="res://Bouton/bouton_deconnexion_normal.png" type="Texture" id=76]
+[ext_resource path="res://Bouton/bouton_deconnexion_pressed.png" type="Texture" id=77]
 
 [sub_resource type="RectangleShape2D" id=1]
 
@@ -553,9 +555,11 @@ __meta__ = {
 [node name="menu" type="Node2D" parent="."]
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
+visible = false
 position = Vector2( 0, 4.48999 )
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
+visible = false
 
 [node name="background" type="TextureRect" parent="menu"]
 margin_right = 3840.0
@@ -589,14 +593,17 @@ texture_pressed = ExtResource( 69 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-[connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
-[connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
-[connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
-[connection signal="signal_resultat_lancer_de4" from="." to="Pion4" method="_on_jeu_signal_resultat_lancer_de4"]
-[connection signal="signal_resultat_lancer_de5" from="." to="Pion5" method="_on_jeu_signal_resultat_lancer_de5"]
-[connection signal="signal_resultat_lancer_de6" from="." to="Pion6" method="_on_jeu_signal_resultat_lancer_de6"]
-[connection signal="signal_resultat_lancer_de7" from="." to="Pion7" method="_on_jeu_signal_resultat_lancer_de7"]
-[connection signal="signal_resultat_lancer_de8" from="." to="Pion8" method="_on_jeu_signal_resultat_lancer_de8"]
+
+[node name="deconnexion" type="TextureButton" parent="menu/background"]
+visible = false
+margin_left = 1918.94
+margin_top = 1099.65
+margin_right = 2108.94
+margin_bottom = 1159.65
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 76 )
+texture_pressed = ExtResource( 77 )
+
 [connection signal="body_entered" from="Plateau/cases/cote_gauche/Start" to="Plateau/cases/cote_gauche/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Parking" to="Plateau/cases/cote_droit/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]
@@ -607,6 +614,12 @@ __meta__ = {
 [connection signal="pressed" from="hypotheque" to="." method="_on_hypotheque_pressed"]
 [connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
+[connection signal="stats_pressed" from="info_joueur" to="." method="_on_info_joueur_stats_pressed"]
+[connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
+[connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
+[connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
+[connection signal="exit_on_success" from="menu/Form" to="." method="_on_Form_exit_on_success"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
+[connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]
