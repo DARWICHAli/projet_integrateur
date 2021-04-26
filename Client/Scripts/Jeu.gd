@@ -3,7 +3,6 @@ extends Node2D
 class_name Jeu
 
 var dep_cases = 0
-#var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
 var nb_joueurs
@@ -221,6 +220,12 @@ func _on_data_partie ():
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
+			
+		Structure.PacketType.REP_STATS:
+			print("stats")
+			print(obj.data)
+			# Mettre à jour le contenu des fentres
+			
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
@@ -405,4 +410,4 @@ func supprimer_joueur(n_pion):
 func _on_info_joueur_stats_pressed(player):
 	var structure = Structure.new()
 	structure.set_requete_consult_stats(player)
-	envoyer_message(client_lobby, structure.to_bytes())
+	envoyer_message(client_partie, structure.to_bytes())

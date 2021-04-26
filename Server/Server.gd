@@ -136,8 +136,6 @@ func _on_data_lobby (id_client : int):
 				structure.set_requete_erreur(0) # 0 = aucune erreur
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
 		Structure.PacketType.LOGIN:
-			print(obj.data.mail)
-			print(obj.data.pwd)
 			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
 			if(len(array) == 0):
 				structure.set_requete_reponse_login(1)
@@ -245,6 +243,15 @@ func _on_data_jeu(id_client, serveur_jeu):
 			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
 				print('requête vente')
 				serveur_jeu.reponse_joueur = true
+		Structure.PacketType.STATS_CONSULT:
+			var stats = stats(obj.data)
+			if(stats == null):
+				stats = {}
+
+			structure.set_requete_reponse_stats(stats.duplicate())
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
+			serveur_jeu.reponse_joueur = true
+			
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
 		Structure.PacketType.FIN_DEP_GO_PRISON:
