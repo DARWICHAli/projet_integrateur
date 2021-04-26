@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=2]
@@ -15,6 +15,7 @@
 [ext_resource path="res://GFX/info_joueur/es.png" type="Texture" id=13]
 [ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=14]
 [ext_resource path="res://GFX/info_joueur/bouton_open_stats.png" type="Texture" id=15]
+[ext_resource path="res://Scripts/info_Joueur.gd" type="Script" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 40
@@ -26,6 +27,7 @@ font_data = ExtResource( 1 )
 
 [node name="info_joueur" type="Node2D"]
 position = Vector2( 2550, 0 )
+script = ExtResource( 16 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = 27.8596
@@ -3331,3 +3333,12 @@ texture = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox1/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox2/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox3/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox4/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox5/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox6/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox7/bouton_stats" to="." method="_on_bouton_stats_pressed"]
+[connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox8/bouton_stats" to="." method="_on_bouton_stats_pressed"]

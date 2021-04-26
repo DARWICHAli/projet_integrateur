@@ -603,6 +603,7 @@ margin_bottom = 1159.65
 rect_scale = Vector2( 3, 3 )
 texture_normal = ExtResource( 76 )
 texture_pressed = ExtResource( 77 )
+
 [connection signal="body_entered" from="Plateau/cases/cote_gauche/Start" to="Plateau/cases/cote_gauche/Start" method="_on_Start_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_droit/Parking" to="Plateau/cases/cote_droit/Parking" method="_on_Parking_body_entered"]
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]
@@ -612,6 +613,7 @@ texture_pressed = ExtResource( 77 )
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
+[connection signal="stats_pressed" from="info_joueur" to="." method="_on_info_joueur_stats_pressed"]
 [connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
 [connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
 [connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]

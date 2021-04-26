@@ -400,3 +400,9 @@ func supprimer_joueur(n_pion):
 		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
 
+
+
+func _on_info_joueur_stats_pressed(player):
+	var structure = Structure.new()
+	structure.set_requete_consult_stats(player)
+	envoyer_message(client_lobby, structure.to_bytes())
