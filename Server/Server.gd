@@ -324,8 +324,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 0.5#lancer_de()
-			var de_deux = 0.5#lancer_de()
+			var de_un = 1#lancer_de()
+			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
@@ -333,8 +333,7 @@ func partie(serveur_jeu : Serveur_partie):
 			else:
 				nb_double += 1	
 			if nb_double == 3:
-				pass
-				#goto_prison = 1
+				goto_prison = 1
 			
 			var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# current_case -> case sur laquelle le joueur en cours de traitement se trouve
