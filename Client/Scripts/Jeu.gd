@@ -240,6 +240,9 @@ func _on_data_partie ():
 					emit_signal("signal_resultat_lancer_de7", int(obj.data))
 				7:
 					emit_signal("signal_resultat_lancer_de8", int(obj.data))
+		Structure.PacketType.CACHE_JOUEUR:
+			print("Suppression du joueur %d." % obj.data)
+			supprimer_joueur(obj.data)
 		_:
 			print('autre paquet reçu')
 
@@ -378,6 +381,7 @@ func _on_connexion_connection():
 
 
 
+
 func _on_deconnexion_pressed():
 	pass # Replace with function body.
 
@@ -386,4 +390,13 @@ func _on_Form_exit_on_success():
 	$menu/Form/success.hide()
 	$menu/Form.hide()
 	$menu/connexion.show()
+
+func supprimer_joueur(n_pion):
+	print(n_pion)
+	if n_pion==0:
+		get_node("Pion/Sprite").hide()
+		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
+	else:
+		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
+		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
 

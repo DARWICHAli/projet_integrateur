@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, 
-TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN}
+TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR}
 
 var type
 var data
@@ -130,6 +130,10 @@ func set_requete_reclamer():
 func set_requete_connexion(mail,mdp):
 	self.type = PacketType.LOGIN
 	self.data = { 'mail' : mail, 'pwd' : mdp}
+
+func set_requete_cache_joueur(num):
+	self.type = PacketType.CACHE_JOUEUR
+	self.data = num
 
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'data2' : self.data2, 'data3' : self.data3, 'data4' : self.data4, 'client' : self.client}
