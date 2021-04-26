@@ -269,6 +269,9 @@ func _on_data_jeu(id_client, serveur_jeu):
 			if (serveur_jeu.attente_proprio == serveur_jeu.list_joueurs.find(id_client)):
 				print("requête reclamer reçue")
 				serveur_jeu.reponse_proprio = true
+		Structure.PacketType.TOUR_PLUS_UN:
+			print('requete tour_plus_un reçue')
+			tourplusun_res(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
 		_:
 			print("type de données inconnu")
 
@@ -319,10 +322,10 @@ func partie(serveur_jeu : Serveur_partie):
 			timer = get_tree().create_timer(10.0)
 			while !serveur_jeu.reponse_joueur:
 				serveur_jeu.socket.poll()
-				
+			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
-			var de_deux = 0#lancer_de()
+			var de_un = 0.5#lancer_de()
+			var de_deux = 0.5#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
@@ -330,7 +333,8 @@ func partie(serveur_jeu : Serveur_partie):
 			else:
 				nb_double += 1	
 			if nb_double == 3:
-				goto_prison = 1
+				pass
+				#goto_prison = 1
 			
 			var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# current_case -> case sur laquelle le joueur en cours de traitement se trouve
@@ -363,7 +367,7 @@ func partie(serveur_jeu : Serveur_partie):
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				print(serveur_jeu.attente_joueur)
-
+			
 			timer_reclamation = get_tree().create_timer(10.0)
 			serveur_jeu.reponse_proprio = false
 			serveur_jeu.proprio_a_reclamer = false
@@ -430,7 +434,6 @@ func partie(serveur_jeu : Serveur_partie):
 
 			while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR and timer.get_time_left() > 0:
 				serveur_jeu.socket.poll()
-				
 	#			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CHAT:
 	#				var obj = serveur_jeu.packet_recu
 	#				print('test')
@@ -450,7 +453,6 @@ func partie(serveur_jeu : Serveur_partie):
 					serveur_jeu.reponse_joueur = false
 				if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
 					status = serveur_jeu.upgrade(serveur_jeu.attente_joueur)
-					print("3333333333333333333")
 					if(status < 0):
 						structure.set_requete_maj_construire(status, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
 						for client in serveur_jeu.list_joueurs:
@@ -519,11 +521,9 @@ func vente_res(id, id_case, serveur_jeu):
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 
 func hypotheque_res(id, id_case, serveur_jeu):
-	print("2222222222222222222")
 	var case = serveur_jeu.plateau[id_case]
 	var structure = Structure.new()
 	var status = serveur_jeu.hypothequer(id, case)
-	print("33333333333333333333")
 	if(status <= 0):
 		var price
 		if (status == -1):
@@ -531,12 +531,23 @@ func hypotheque_res(id, id_case, serveur_jeu):
 		else:
 			price = 0.9*case.prix
 		structure.set_requete_maj_hypotheque(serveur_jeu.argent_joueur[id], id, case.indice, price, status)
-		print("444444444444444444")
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 	else:
 		structure.set_requete_erreur(status)
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+
+func tourplusun_res(id, serveur_jeu):
+	print("1111111")
+	serveur_jeu.salaire_nouv_tour(id)
+	print("22222222")
+	var structure = Structure.new()
+	print(serveur_jeu.argent_joueur[id])
+	structure.set_requete_argent_nouv_tour(serveur_jeu.argent_joueur[id], id)
+	print("33333333")
+	for client in serveur_jeu.list_joueurs:
+		print("44444444")
+		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 
 func _on_Server_fin_partie(code):
 	for i in range(0,serveurs_partie.size()):

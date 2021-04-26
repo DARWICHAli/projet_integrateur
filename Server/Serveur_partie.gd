@@ -67,10 +67,13 @@ func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
 	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
 		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
-		payer_joueur(id_joueur, plateau[0].get_prix())
+		#payer_joueur(id_joueur, plateau[0].get_prix())
 
 func payer_joueur(id_joueur : int, prix : int):
 	argent_joueur[id_joueur] = argent_joueur[id_joueur] + prix
+
+func salaire_nouv_tour(id):
+	argent_joueur[id] = argent_joueur[id] + plateau[0].prix
 
 func next_player():
 	var i = (attente_joueur+1) % list_joueurs.size()
@@ -96,7 +99,7 @@ func init_plateau():
 	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
-			plateau[i].set_depart(0)
+			plateau[i].set_depart(500)
 		elif i == 10:
 			plateau[i].set_prison()
 		elif i == 30:
@@ -265,6 +268,7 @@ func hypothequer(id, case):
 	if case.type != Cases.CasesTypes.PROPRIETE:
 		print("La case n'est pas de type propriete")
 		return 1
+	print("PROPRIO : %d" % [case.proprio])
 	if case.proprio != id:
 		print("Cette case ne vous appartient pas")
 		return 4

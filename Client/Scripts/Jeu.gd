@@ -232,17 +232,18 @@ func _on_data_partie ():
 			print("DOUBLE !")
 			print("Joueur %d sort de prison !" % [obj.client])
 		Structure.PacketType.TAXE:
-			print("Joueur %d paye une taxe de %d ECTS !" % [obj.client, obj.data])
+			print("Joueur %d paye une taxe !" % [obj.client])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
-			
 		Structure.PacketType.REP_STATS:
 			print("stats")
 			print(obj.data)
 			# Mettre à jour le contenu des fentres
-			
+		Structure.PacketType.ARGENT_NOUV_TOUR:
+			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
@@ -402,6 +403,11 @@ func _on_connexion_connection():
 	envoyer_message(client_lobby, structure.to_bytes())
 
 
+func tour_plus_un():
+	print('envoi requête de plus un tour')
+	var structure = Structure.new()
+	structure.set_requete_tour_plus_un()
+	envoyer_message(client_partie, structure.to_bytes())
 
 
 func _on_deconnexion_pressed():

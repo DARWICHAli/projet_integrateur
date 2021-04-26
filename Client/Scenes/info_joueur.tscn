@@ -229,18 +229,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
 visible = false
 margin_left = 166.0
@@ -249,6 +237,18 @@ margin_right = 242.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
 texture = ExtResource( 11 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+visible = false
+margin_left = 639.027
+margin_top = 259.0
+margin_right = 1151.03
+margin_bottom = 771.0
+rect_scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -265,7 +265,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="prop18" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
 visible = false
 margin_left = 233.0
 margin_top = 327.0
@@ -3333,7 +3333,6 @@ texture = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox1/bouton_stats" to="." method="_on_bouton_stats_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox2/bouton_stats" to="." method="_on_bouton_stats_pressed"]
 [connection signal="pressed" from="ScrollContainer/VBoxContainer/infobox3/bouton_stats" to="." method="_on_bouton_stats_pressed"]

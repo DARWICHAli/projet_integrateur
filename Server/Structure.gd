@@ -4,7 +4,8 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, 
-TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR, STATS_CONSULT, REP_STATS}
+TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
+ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR, STATS_CONSULT, REP_STATS}
 
 var type
 var data
@@ -31,10 +32,6 @@ func set_requete_reponse_login(code):
 func set_requete_consult_stats(player):
 	self.type = PacketType.STATS_CONSULT
 	self.data = player
-
-func set_requete_reponse_stats(dico):
-	self.type = PacketType.REP_STATS
-	self.data = dico
 	
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT
@@ -94,9 +91,17 @@ func set_requete_taxe(argent, id):
 func set_requete_construire():
 	self.type = PacketType.CONSTRUCTION
 
-func set_requete_fin_de_tour ():
+func set_requete_fin_de_tour (): # click sur bouton "fin de tour"
 	self.type = PacketType.FIN_DE_TOUR
+	
+func set_requete_tour_plus_un (): # case depart passée (plus un tour)
+	self.type = PacketType.TOUR_PLUS_UN
 
+func set_requete_argent_nouv_tour(argent, id):
+	self.type = PacketType.ARGENT_NOUV_TOUR
+	self.client = id
+	self.data = argent
+	
 func set_requete_lancer_de ():
 	self.type = PacketType.REQUETE_LANCER_DE
 	
