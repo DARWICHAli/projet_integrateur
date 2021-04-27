@@ -42,3 +42,4 @@ position = Vector2( 0, 80 )
 [node name="Position2D8" type="Position2D" parent="Pos"]
 position = Vector2( 80, 80 )
 [connection signal="area_shape_exited" from="." to="." method="_1"]
+[connection signal="body_entered" from="." to="." method="_on_Grosse_case_body_entered"]

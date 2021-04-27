@@ -271,7 +271,8 @@ func _on_data_jeu(id_client, serveur_jeu):
 				serveur_jeu.reponse_proprio = true
 		Structure.PacketType.TOUR_PLUS_UN:
 			print('requete tour_plus_un reçue')
-			tourplusun_res(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
+			if(serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client)):
+				tourplusun_res(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
 		_:
 			print("type de données inconnu")
 
@@ -324,7 +325,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
+			var de_un = 21#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -537,15 +538,11 @@ func hypotheque_res(id, id_case, serveur_jeu):
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 
 func tourplusun_res(id, serveur_jeu):
-	print("1111111")
 	serveur_jeu.salaire_nouv_tour(id)
-	print("22222222")
 	var structure = Structure.new()
 	print(serveur_jeu.argent_joueur[id])
 	structure.set_requete_argent_nouv_tour(serveur_jeu.argent_joueur[id], id)
-	print("33333333")
 	for client in serveur_jeu.list_joueurs:
-		print("44444444")
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 
 func _on_Server_fin_partie(code):

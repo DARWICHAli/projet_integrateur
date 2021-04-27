@@ -402,7 +402,6 @@ func _on_connexion_connection():
 	structure.set_requete_connexion(mail,mdp)
 	envoyer_message(client_lobby, structure.to_bytes())
 
-
 func tour_plus_un():
 	print('envoi requête de plus un tour')
 	var structure = Structure.new()

@@ -3,6 +3,7 @@ extends "Case.gd"
 var taille
 var pos_pions = [[38,8]] #ajouter d'autres positions en fonction du nombre de joueurs
 onready var pos = get_node("Pos")
+var depart = 0
 
 #============== Routines =================
 func _ready():
@@ -16,11 +17,16 @@ func _ready():
 #============== Signaux =================
 func _on_Start_body_entered(body):
 	body.mettre_case(self)
-	print(body.depart)
-	body.depart += 1
-	if body.depart > 1:
+	self.depart += 1
+	print(depart)
+	if(self.depart > 8):
 		get_node("../../../../").tour_plus_un()
-	#print("RECEVEZ 200 ECTS")
+		print("JOUEUR " + str(body.id) + " EST PASSE PAR LA !")
+#	elif (self.depart == 0):
+#		self.depart = 1
 
 #============== Fonctions =================
+
+
+
 
