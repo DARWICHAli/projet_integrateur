@@ -251,13 +251,11 @@ func vendre(id, case):
 	for i in position_joueur:
 		print(i)
 	print(case.indice)
+	# TODO : VENDRE SELON NIVEAU CASE ET DOWNGRADE ENSUITE
 	argent_joueur[id] += case.prix*0.8
 	case.proprio = -1
-#	for i in range(case.niveau_case):
-#		downgrade(id)
 	case.niveau_case = 0
 	case.hypotheque = 0
-	# TODO : VENDRE SELON NIVEAU CASE
 	print("La propriete %d est vendue par le joueur %d" % [position_joueur[id], id])
 	return 0
 
@@ -281,6 +279,11 @@ func hypothequer(id, case):
 	argent_joueur[id] = argent_joueur[id] + 0.9*case.prix
 	return 0
 
+func remise_a_zero(id):
+	for i in range(40):
+		if (plateau[i].type == Cases.CasesTypes.PROPRIETE and plateau[i].proprio == id):
+			plateau[i].proprio = -1
+			plateau[i].niveau_case = 0
 
 #func downgrade(id):
 #	var case = plateau[position_joueur[id]]

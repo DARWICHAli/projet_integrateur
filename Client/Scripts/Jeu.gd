@@ -35,7 +35,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	nb_joueurs=2
+	nb_joueurs=3
 
 	#print('ready')
 	ready_connection()
@@ -437,3 +437,10 @@ func _on_info_joueur_stats_pressed(player):
 	var structure = Structure.new()
 	structure.set_requete_consult_stats(player)
 	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_abandon_pressed():
+	# TODO Client : ne pas se deconnecter du lobby et revenir seulement au menu
+	# TODO Serveur : supprimer toutes ses propriétés 
+	client_partie.disconnect_from_host(0, "Pas de problème")
+	client_lobby.disconnect_from_host(0, "Pas de problème")
+	get_tree().quit(0)

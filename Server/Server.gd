@@ -554,6 +554,7 @@ func _on_Server_fin_partie(code):
 
 func supprimer_joueur(id, serveur_jeu):
 	var structure = Structure.new()
+	serveur_jeu.remise_a_zero(serveur_jeu.list_joueurs.find(id))
 	structure.set_requete_cache_joueur(serveur_jeu.list_joueurs.find(id))
 	serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs

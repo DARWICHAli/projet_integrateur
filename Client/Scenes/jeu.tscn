@@ -616,6 +616,7 @@ texture_pressed = ExtResource( 77 )
 [connection signal="body_entered" from="Plateau/cases/cote_bas/Goto_prison" to="Plateau/cases/cote_bas/Goto_prison" method="_on_Goto_prison_body_entered"]
 [connection signal="pressed" from="lancer_de" to="." method="_on_lancer_des_pressed"]
 [connection signal="pressed" from="fin_de_tour" to="." method="_on_fin_de_tour_pressed"]
+[connection signal="pressed" from="abandon" to="." method="_on_abandon_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
 [connection signal="pressed" from="hypotheque" to="." method="_on_hypotheque_pressed"]
