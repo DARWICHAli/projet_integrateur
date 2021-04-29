@@ -52,9 +52,9 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
-""""
-	Fonctions relatives à la base de données
-"""
+#######
+#	Fonctions relatives à la base de données
+#######
 func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
@@ -196,11 +196,11 @@ func thread_function (args):
 			print("Serveur de partie démarré avec port: " + String(port_serveur_jeu))
 			serveur_jeu.port = port_serveur_jeu
 			find = true
-
 	sem.post()
 	while serveur_jeu.list_joueurs.size() < serveur_jeu.nb_joueurs:
 		serveur_jeu.socket.poll()
 	serveur_jeu.socket.disconnect("client_connected", self, "_connected_jeu") # Ne détecte plus de nouveau client
+	serveur_jeu.socket.set_refuse_new_connections(true)
 	serveur_jeu.init_partie()
 	partie(serveur_jeu)
 
@@ -299,6 +299,8 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print('requete tour_plus_un reçue')
 			if(serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client)):
 				tourplusun_res(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
+		Structure.PacketType.ABANDONNER:
+			supprimer_joueur(id_client, serveur_jeu)
 		_:
 			print("type de données inconnu")
 
