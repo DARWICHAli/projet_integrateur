@@ -212,7 +212,8 @@ func _connected_jeu (id, proto, serveur_jeu):
 	if serveur_jeu.list_joueurs.has(id):
 		print('le id joueur est déja present')
 	else :
-		serveur_jeu.list_joueurs.append(id)	
+		serveur_jeu.list_joueurs.append(id)
+		serveur_jeu.pseudos.append("")
 		print('un id de joueur est ajouté ')
 	#fonctionne pas ou pas tout le temps ? manque probablement une valeur (IP chaine de char ?)
 	print("SERVEUR PARTIE : client connecté avec IP depuis %s:%d" % [client_IP, client_port])
@@ -241,6 +242,9 @@ func _on_data_jeu(id_client, serveur_jeu):
 
 	print("match %s" % type)
 	match type:
+		Structure.PacketType.SEND_PSEUDO:
+			var indice = serveur_jeu.list_joueurs.find(id_client)
+			serveur_jeu.pseudos[indice] = obj.data
 		Structure.PacketType.CHAT:
 			print('test %d' % serveur_jeu.list_joueurs.find(id_client))
 			print('message de chat reçu: %s' % var2str(data))

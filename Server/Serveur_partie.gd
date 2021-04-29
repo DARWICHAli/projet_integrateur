@@ -15,6 +15,8 @@ var code
 var nb_joueurs
 #tableau de stockage des joueurs 
 var list_joueurs=[]
+# pseudo des joueurs
+var pseudos = []
 # Booléen si le joueur à répondu
 var reponse_joueur
 # Booléen si le proprio à répondu

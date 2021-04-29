@@ -129,6 +129,11 @@ func _closed_partie (was_clean = false):
 func _connected_partie (_proto = ""):
 	print("connecté au serveur de partie à l'adresse %s:%s" % [str(ip), str(port)])
 
+	var struct_pseudo = Structure.new()
+	struct_pseudo.set_requete_send_pseudo(mon_nom)
+	envoyer_message(client_partie, struct_pseudo.to_bytes())
+	
+	
 #	var structure = Structure.new()
 #
 #	print('envoi message chat')
