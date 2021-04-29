@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Scripts/Start.gd" type="Script" id=1]
+[ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 128, 128 )
@@ -42,3 +42,4 @@ position = Vector2( 0, 80 )
 [node name="Position2D8" type="Position2D" parent="Pos"]
 position = Vector2( 80, 80 )
 [connection signal="area_shape_exited" from="." to="." method="_1"]
+[connection signal="body_entered" from="." to="." method="_on_Grosse_case_body_entered"]

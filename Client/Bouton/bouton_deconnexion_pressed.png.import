@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pion2.png-2e7ee568c354cbd770970bd581748d81.stex"
+path="res://.import/bouton_deconnexion_pressed.png-085a2d0242879a35740749ff9c3ccfd8.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/pion2.png"
-dest_files=[ "res://.import/pion2.png-2e7ee568c354cbd770970bd581748d81.stex" ]
+source_file="res://Bouton/bouton_deconnexion_pressed.png"
+dest_files=[ "res://.import/bouton_deconnexion_pressed.png-085a2d0242879a35740749ff9c3ccfd8.stex" ]
 
 [params]
 

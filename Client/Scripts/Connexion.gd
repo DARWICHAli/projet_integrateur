@@ -19,3 +19,15 @@ func _on_inscription_pressed():
 
 func _on_connexion_pressed():
 	emit_signal("connection")
+
+
+func _on_TextureButton_pressed():
+	$error.hide()
+
+
+func _on_retour_success_pressed():
+	$success.hide()
+	emit_signal("retour_connexion")
+
+
+

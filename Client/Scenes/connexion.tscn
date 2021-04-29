@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://GFX/acceuil.png" type="Texture" id=1]
 [ext_resource path="res://GFX/form.png" type="Texture" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://Bouton/bouton_connexion_pressed.png" type="Texture" id=7]
 [ext_resource path="res://Bouton/bouton_inscription_normal.png" type="Texture" id=8]
 [ext_resource path="res://Bouton/bouton_inscription_pressed.png" type="Texture" id=9]
-[ext_resource path="res://Scenes/connexion.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/Connexion.gd" type="Script" id=10]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -17,6 +17,18 @@ font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
 size = 70
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 100
 font_data = ExtResource( 4 )
 
 [node name="connexion" type="Node2D"]
@@ -85,6 +97,7 @@ margin_left = 125.0
 margin_top = 788.957
 margin_right = 1375.0
 margin_bottom = 858.957
+custom_fonts/font = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -94,6 +107,8 @@ margin_left = 125.0
 margin_top = 1065.38
 margin_right = 1375.0
 margin_bottom = 1135.38
+custom_fonts/font = SubResource( 4 )
+secret = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -133,6 +148,76 @@ texture_pressed = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="error" type="PopupDialog" parent="."]
+margin_left = 1268.29
+margin_top = 299.564
+margin_right = 2555.29
+margin_bottom = 1989.56
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="error"]
+margin_left = 128.0
+margin_top = 272.0
+margin_right = 1235.0
+margin_bottom = 1415.0
+custom_fonts/normal_font = SubResource( 5 )
+text = "Inscription échoué... 
+Email ou mot de passe incorrecte"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="error"]
+margin_left = 362.448
+margin_top = 1344.08
+margin_right = 552.448
+margin_bottom = 1404.08
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="success" type="PopupDialog" parent="."]
+margin_left = 1268.29
+margin_top = 299.564
+margin_right = 2555.29
+margin_bottom = 1989.56
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": true
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="success"]
+margin_left = 127.816
+margin_top = 272.346
+margin_right = 1234.82
+margin_bottom = 1385.35
+custom_fonts/normal_font = SubResource( 5 )
+text = "Bonjour et bienvenue
+"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="retour_success" type="TextureButton" parent="success"]
+margin_left = 362.448
+margin_top = 1344.08
+margin_right = 552.448
+margin_bottom = 1404.08
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="formule/inscription" to="." method="_on_inscription_pressed"]
 [connection signal="pressed" from="formule/connexion" to="." method="_on_connexion_pressed"]
 [connection signal="pressed" from="formule/retour" to="." method="_on_retour_pressed"]
+[connection signal="pressed" from="error/TextureButton" to="." method="_on_TextureButton_pressed"]
+[connection signal="pressed" from="success/retour_success" to="." method="_on_retour_success_pressed"]
