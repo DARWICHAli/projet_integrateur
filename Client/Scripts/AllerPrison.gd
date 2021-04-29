@@ -8,27 +8,13 @@ onready var pos = get_node("Pos")
 
 #============== Routines =================
 func _ready():
-	taille = get_node("CollisionShape/Sprite").texture.get_size()
+	taille = get_node("Sprite").texture.get_size()
 	pass
 
 
 #============== Signaux =================
 func _on_Goto_prison_body_entered(body):
 	body.mettre_case(self)
-	print("ALLER EN PRISON ATTEINT")
-	#print(body.dep_cases)
-	if (body.dep_cases <= 1):
-		var t_detect = Timer.new()
-		t_detect.set_wait_time(1)
-		t_detect.set_one_shot(true)
-		self.add_child(t_detect)
-		t_detect.start()
-		yield(t_detect, "timeout")
-		if overlaps_body(body):
-			print("Envoi requete de fin de dep go prison......")
-			get_node("../../../..").fin_dep_go_prison()
 
 
 #============== Fonctions =================
-
-
