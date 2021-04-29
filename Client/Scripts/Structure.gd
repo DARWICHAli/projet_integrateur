@@ -143,9 +143,10 @@ func set_requete_BDD (requete_BDD : String):
 	self.type = PacketType.BDD
 	self.data = requete_BDD
 
-func set_adresse_serveur_jeu (ip, port, nb_joueurs):
+func set_adresse_serveur_jeu (ip, port, nb_joueurs, id_joueur):
 	self.type = PacketType.ADRESSE_SERVEUR_JEU
 	self.data = str(ip) + ':' + str(port)
+	self.data2 = id_joueur
 	self.client = nb_joueurs
 
 func set_resultat_lancer_de (Resultat : int, Client : int):
@@ -173,7 +174,6 @@ func to_bytes () -> PoolByteArray:
 	var string = var2str(obj)
 	var bytes = string.to_utf8()
 	return bytes
-
 
 static func from_bytes (bytes : PoolByteArray) -> Object:
 	var string = bytes.get_string_from_utf8()

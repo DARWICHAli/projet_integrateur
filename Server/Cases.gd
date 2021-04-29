@@ -42,5 +42,8 @@ func set_taxe(i):
 
 func set_autre():
 	type = CasesTypes.AUTRE
+<<<<<<< HEAD
+=======
 	#self.proprio = -2
+>>>>>>> origin/snapshot
 	prix = 0

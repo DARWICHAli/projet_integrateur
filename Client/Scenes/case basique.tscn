@@ -1,6 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Propriete.gd" type="Script" id=1]
+[ext_resource path="res://GFX/house.png" type="Texture" id=2]
+[ext_resource path="res://GFX/hotel.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 79.0032, 128 )
@@ -15,9 +17,6 @@ shape = SubResource( 1 )
 
 [node name="Pos" type="Node2D" parent="."]
 position = Vector2( 2, 42 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Position2D" type="Position2D" parent="Pos"]
 position = Vector2( -35, -84 )
@@ -42,4 +41,37 @@ position = Vector2( -35, 42 )
 
 [node name="Position2D8" type="Position2D" parent="Pos"]
 position = Vector2( 35, 42 )
+
+[node name="Houses" type="Node2D" parent="."]
+
+[node name="house" type="Sprite" parent="Houses"]
+visible = false
+position = Vector2( -50.2104, -111 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="house2" type="Sprite" parent="Houses"]
+visible = false
+position = Vector2( -17, -111 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="house3" type="Sprite" parent="Houses"]
+visible = false
+position = Vector2( 17, -111 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="house4" type="Sprite" parent="Houses"]
+visible = false
+position = Vector2( 50, -111 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 2 )
+
+[node name="hotel" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0.584106, -145.809 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 3 )
+
 [connection signal="body_entered" from="." to="." method="_on_case_basique_body_entered"]

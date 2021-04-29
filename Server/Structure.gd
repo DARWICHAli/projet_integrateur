@@ -2,10 +2,16 @@ extends Node
 
 class_name Structure
 
+<<<<<<< HEAD
+enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU,
+RESULTAT_LANCER_DE, CONSTRUCTION, REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, 
+RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, GO_PRISON, ERREUR, INSCRIPTION}
+=======
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
 ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR, STATS_CONSULT, REP_STATS,SEND_PSEUDO, ABANDONNER}
+>>>>>>> origin/snapshot
 
 var type
 var data
@@ -136,9 +142,10 @@ func set_requete_BDD (requete_BDD : String):
 	self.type = PacketType.BDD
 	self.data = requete_BDD
 
-func set_adresse_serveur_jeu (ip, port, nb_joueurs):
+func set_adresse_serveur_jeu (ip, port, nb_joueurs, id_joueur):
 	self.type = PacketType.ADRESSE_SERVEUR_JEU
 	self.data = str(ip) + ':' + str(port)
+	self.data2 = id_joueur
 	self.client = nb_joueurs
 
 func set_resultat_lancer_de (Resultat : int, Client : int):
@@ -150,6 +157,8 @@ func set_requete_inscription(mail, username, mdp, pays):
 	self.type = PacketType.INSCRIPTION
 	self.data = "('"+username+"','"+mdp+"','"+mail+"','"+pays+"');"
 
+<<<<<<< HEAD
+=======
 func set_requete_reclamer():
 	self.type = PacketType.RECLAMER
 
@@ -161,6 +170,7 @@ func set_requete_cache_joueur(num):
 	self.type = PacketType.CACHE_JOUEUR
 	self.data = num
 
+>>>>>>> origin/snapshot
 func to_bytes () -> PoolByteArray:
 	var obj = {'type' : self.type, 'data' : self.data, 'data2' : self.data2, 'data3' : self.data3, 'data4' : self.data4, 'client' : self.client}
 	var string = var2str(obj)

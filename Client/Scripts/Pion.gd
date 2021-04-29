@@ -105,13 +105,8 @@ func move(steps):
 	
 	new_pos = pos_suivante()
 
-#func payer(prix):
-#	#print("prix , argent "+ str(prix)+ str(argent))
-#	if (prix > argent):
-#		return false
-#	else :
-#		argent -= prix
-#		return true
+func payer(prix):
+	argent -= prix
 ##yield(get_tree().create_timer(0.75), "timeout")
 
 #============== Setters/Getters =================
