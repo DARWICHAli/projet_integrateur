@@ -60,4 +60,5 @@ margin_right = 602.0
 margin_bottom = 48.0
 size_flags_horizontal = 3
 custom_fonts/font = SubResource( 3 )
+
 [connection signal="text_entered" from="VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_LineEdit_text_entered"]

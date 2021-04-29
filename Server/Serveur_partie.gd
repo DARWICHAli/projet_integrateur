@@ -17,18 +17,12 @@ var nb_joueurs
 var list_joueurs=[]
 # Booléen si le joueur à répondu
 var reponse_joueur
-# Booléen si le proprio à répondu
-var reponse_proprio
-# Booléen si le rentier à déjà réclamer 1 fois
-var proprio_a_reclamer
 # Packet attendu
 var packet_attendu
 # Packet recu
 var packet_recu
 # Numéro du joueur en attente de réponse
 var attente_joueur = 0
-# Numéro du joueur qui est le propriétaire
-var attente_proprio
 # Numéro de cases des joueurs
 const position_joueur = []
 # Argent des joueurs

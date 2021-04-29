@@ -9,7 +9,7 @@ var cases = []
 var nb_joueurs
 var ip = "localhost"
 var port = "5000"
-
+var joueur
 
 var mon_nom = "Client 1"
 
@@ -89,6 +89,10 @@ func _on_data_lobby ():
 	match obj.type:
 		Structure.PacketType.ADRESSE_SERVEUR_JEU:
 			print('reçu adresse du serveur de jeu: ', obj.data)
+			if (obj.data2 == 0):
+				joueur = get_node("Pion")
+			else:
+				joueur = get_node("Pion"+str(obj.data2))
 			rejoindre_partie(obj.data)
 			nb_joueurs = obj.client
 			affiche_joueur(nb_joueurs)
@@ -177,9 +181,15 @@ func _on_data_partie ():
 		Structure.PacketType.MAJ_CONSTRUCTION:
 			if(obj.data == -1):
 				print("Joueur %d construit une maison pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
-				
 			elif(obj.data == -2):
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
+			
+			cases[obj.data3].show_upgrade()
+			if (obj.data2 == 0):
+				get_node("Pion").payer(obj.data4)
+			else:
+				get_node("Pion"+str(obj.client)).payer(obj.data4)
+			
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
 		Structure.PacketType.MAJ_VENTE:
@@ -274,6 +284,8 @@ func _on_fin_de_tour_pressed():
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_acheter_pressed():
+	if (joueur.case.acheter(joueur) == 0):
+		return
 	print('envoi requête acheter')
 	var structure = Structure.new()
 	structure.set_requete_acheter()
@@ -303,7 +315,7 @@ func _on_start_pressed():
 	
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/connexion.show()
+	$menu/Form.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
@@ -319,32 +331,3 @@ func sig_msg(text, username, index):
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
-
-
-func _on_reclamer_pressed():
-	var structure = Structure.new()
-	structure.set_requete_reclamer()
-	envoyer_message(client_partie, structure.to_bytes())
-
-func _on_connexion_retour_connexion():
-	$menu/connexion.hide()
-	$menu/background.show()
-	
-
-
-func _on_connexion_inscription_conn():
-	$menu/connexion.hide()
-	$menu/Form.show()
-
-
-func _on_Form_retour_form():
-	$menu/Form.hide()
-	$menu/connexion.show()
-
-
-func _on_connexion_connection():
-	var mail = $"menu/connexion/formule/mail".text	
-	var mdp = $"menu/connexion/formule/mdp".text
-	var structure = Structure.new()
-	structure.set_requete_connexion(mail,mdp)
-	envoyer_message(client_lobby, structure.to_bytes())

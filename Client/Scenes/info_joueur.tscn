@@ -1,34 +1,52 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=27 format=2]
 
-[ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=1]
-[ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=2]
-[ext_resource path="res://GFX/info_joueur/prop_orange.png" type="Texture" id=3]
-[ext_resource path="res://GFX/info_joueur/train.png" type="Texture" id=4]
-[ext_resource path="res://GFX/info_joueur/prop_rouge.png" type="Texture" id=5]
-[ext_resource path="res://GFX/info_joueur/prop_cyan.png" type="Texture" id=6]
-[ext_resource path="res://GFX/info_joueur/prop_jaune.png" type="Texture" id=7]
-[ext_resource path="res://GFX/info_joueur/prop_vert.png" type="Texture" id=8]
-[ext_resource path="res://GFX/info_joueur/prop_bleu.png" type="Texture" id=9]
-[ext_resource path="res://GFX/info_joueur/prop_brun.png" type="Texture" id=10]
-[ext_resource path="res://GFX/info_joueur/prop_rose.png" type="Texture" id=11]
-[ext_resource path="res://GFX/info_joueur/water-tap.png" type="Texture" id=12]
-[ext_resource path="res://GFX/info_joueur/es.png" type="Texture" id=13]
+[ext_resource path="res://Scenes/infobox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/info_joueur.gd" type="Script" id=2]
+[ext_resource path="res://GFX/close.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://GFX/hotel.png" type="Texture" id=5]
+[ext_resource path="res://GFX/dollar.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/new_dynamicfont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://GFX/home.png" type="Texture" id=8]
+[ext_resource path="res://GFX/case_bleu.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_normal.png" type="Texture" id=11]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_pressed.png" type="Texture" id=12]
+[ext_resource path="res://GFX/Bouton/bouton_construire_normal.png" type="Texture" id=13]
+[ext_resource path="res://GFX/Bouton/bouton_construire_pressed.png" type="Texture" id=14]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_pressed.png" type="Texture" id=15]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_normal.png" type="Texture" id=16]
+[ext_resource path="res://GFX/Bouton/bouton_détruire_normal.png" type="Texture" id=17]
+[ext_resource path="res://GFX/Bouton/bouton_détruire_pressed.png" type="Texture" id=18]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_normal.png" type="Texture" id=19]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_pressed.png" type="Texture" id=20]
+[ext_resource path="res://GFX/Bouton/bouton_confirmer_pressed.png" type="Texture" id=21]
+[ext_resource path="res://GFX/Bouton/bouton_confirmer_normal.png" type="Texture" id=22]
 
 [sub_resource type="DynamicFont" id=1]
-size = 100
-font_data = ExtResource( 1 )
+size = 60
+font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 100
-font_data = ExtResource( 1 )
+size = 35
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 10 )
 
 [node name="info_joueur" type="Node2D"]
 position = Vector2( 2550, 0 )
+script = ExtResource( 2 )
 
 [node name="ScrollContainer" type="ScrollContainer" parent="."]
 margin_left = -2.37842
 margin_top = 2.37842
-margin_right = 1259.62
+margin_right = 1289.62
 margin_bottom = 2162.38
 scroll_horizontal_enabled = false
 __meta__ = {
@@ -42,3098 +60,616 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="infobox1" type="Container" parent="ScrollContainer/VBoxContainer"]
+[node name="infobox1" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+margin_bottom = 0.0
+
+[node name="infobox2" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
+margin_top = 545.0
+margin_bottom = 1086.0
 
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox1"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox1"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="infobox3" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
+margin_top = 1090.0
+margin_bottom = 1631.0
+
+[node name="infobox4" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 1635.0
+margin_bottom = 2176.0
+
+[node name="infobox5" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 2180.0
+margin_bottom = 2721.0
+
+[node name="infobox6" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 2725.0
+margin_bottom = 3266.0
+
+[node name="infobox7" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 3270.0
+margin_bottom = 3811.0
+
+[node name="infobox8" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 3815.0
+margin_bottom = 4356.0
+
+[node name="panelPlayer" type="Control" parent="ScrollContainer"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelPlayer"]
+margin_top = 1.88776
+margin_right = 1292.0
+margin_bottom = 2163.89
+rect_min_size = Vector2( 1292, 2162 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
+[node name="playertag" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 71.0
+margin_top = 50.0
+margin_right = 393.0
+margin_bottom = 155.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Player"
+text = "Player"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+[node name="money" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 790.0
+margin_top = 50.0
+margin_right = 1174.0
+margin_bottom = 109.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+text = "200 000"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
+[node name="dollar" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect"]
+position = Vector2( 727, 80 )
+scale = Vector2( 0.19323, 0.1735 )
 texture = ExtResource( 6 )
+
+[node name="case" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 128.0
+margin_top = 320.0
+margin_right = 291.0
+margin_bottom = 583.0
+texture_normal = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case"]
 visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
+[node name="case2" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 419.0
+margin_top = 320.0
+margin_right = 582.0
+margin_bottom = 583.0
+texture_normal = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case2"]
 visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="case3" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 710.0
+margin_top = 320.0
+margin_right = 873.0
+margin_bottom = 583.0
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case3"]
 visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case4" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 1001.0
+margin_top = 320.0
+margin_right = 1164.0
+margin_bottom = 583.0
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case4"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="upgrade" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="home1" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 170, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home2" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 320, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home3" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 470, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home4" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 620, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="hotel" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 770, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+
+[node name="loyers" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 354.0
+margin_top = 986.0
+margin_right = 1014.0
+margin_bottom = 1663.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nom propriete" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 660.0
+margin_bottom = 64.0
+custom_fonts/normal_font = ExtResource( 7 )
+text = "nom propriete"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loyer" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 88.2183
+margin_right = 660.0
+margin_bottom = 143.218
+custom_fonts/normal_font = SubResource( 2 )
+text = "loyer :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 150.0
+margin_right = 650.0
+margin_bottom = 205.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 1 maison :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 210.0
+margin_right = 650.0
+margin_bottom = 265.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 2 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 270.0
+margin_right = 650.0
+margin_bottom = 325.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 3 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 330.0
+margin_right = 650.0
+margin_bottom = 385.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 4 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hotel" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 390.0
+margin_right = 650.0
+margin_bottom = 445.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 1 hotel :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prixparmaison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 480.0
+margin_right = 660.0
+margin_bottom = 535.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Prix par maison :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prixparhotel" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 550.0
+margin_right = 660.0
+margin_bottom = 605.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Prix pour un hotel :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="valeur_hypo" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -2.0
+margin_top = 618.0
+margin_right = 658.0
+margin_bottom = 673.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Valeur hypothecaire : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="boutons" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 4.0
+margin_top = 1667.0
+margin_right = 1294.0
+margin_bottom = 2156.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vendre" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 106.0
+margin_top = 380.0
+margin_right = 296.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hypothequer" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 402.0
+margin_top = 380.0
+margin_right = 592.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+
+[node name="construire" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 698.0
+margin_top = 380.0
+margin_right = 888.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="detruire" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 994.0
+margin_top = 380.0
+margin_right = 1184.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 17 )
+texture_pressed = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="confirmation" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+visible = false
+margin_left = 223.0
+margin_top = 1751.0
+margin_right = 1050.0
+margin_bottom = 2012.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 841.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oui" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+margin_left = 125.0
+margin_top = 150.0
+margin_right = 315.0
+margin_bottom = 210.0
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="non" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+margin_left = 550.0
+margin_top = 150.0
+margin_right = 740.0
+margin_bottom = 210.0
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+
+[node name="exit" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 1203.0
+margin_top = 5.11224
+margin_right = 1715.0
+margin_bottom = 517.112
 rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 3 )
+stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
+[node name="panelInfos" type="Control" parent="ScrollContainer"]
 visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelInfos"]
+margin_top = 1.88776
+margin_right = 1292.0
+margin_bottom = 2163.89
+rect_min_size = Vector2( 1292, 2162 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+[node name="playertag" type="RichTextLabel" parent="ScrollContainer/panelInfos/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 71.0
+margin_top = 50.0
+margin_right = 393.0
+margin_bottom = 155.0
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Player"
+text = "Player"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox1"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox2" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox2"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
+[node name="exit2" type="TextureButton" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_left = 1203.0
+margin_top = 5.11224
+margin_right = 1715.0
+margin_bottom = 517.112
 rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 3 )
+stretch_mode = 4
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
+[node name="nb_victoires" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_victoires"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 250.0
+margin_right = 508.0
+margin_bottom = 319.0
+custom_fonts/font = SubResource( 4 )
+text = "nombre de victoires :"
+
+[node name="nb_victoires" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_victoires"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 560.0
+margin_top = 250.0
+margin_right = 763.0
+margin_bottom = 319.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
+[node name="nb_defaites" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_defaites"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 400.0
+margin_right = 489.0
+margin_bottom = 469.0
+custom_fonts/font = SubResource( 4 )
+text = "nombre de defaites :"
+
+[node name="nb_defaites" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_defaites"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 550.0
+margin_top = 400.0
+margin_right = 753.0
+margin_bottom = 469.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
+[node name="case_pref" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/case_pref"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 550.0
+margin_right = 370.0
+margin_bottom = 619.0
+custom_fonts/font = SubResource( 4 )
+text = "case preferee :"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
+[node name="case_pref" type="Label" parent="ScrollContainer/panelInfos/ColorRect/case_pref"]
+modulate = Color( 0, 0, 0, 1 )
 margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox2"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox3" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox3"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox3"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox4" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox4"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox4"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox5" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox5"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox5"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox6" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox6"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox6"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox7" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox7"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox7"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="infobox8" type="Container" parent="ScrollContainer/VBoxContainer"]
-visible = false
-margin_right = 1250.0
-margin_bottom = 541.0
-rect_min_size = Vector2( 0, 541 )
-__meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="info_joueur" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_right = 529.0
-margin_bottom = 227.0
-rect_scale = Vector2( 0.7, 0.7 )
-texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="montant" type="Label" parent="ScrollContainer/VBoxContainer/infobox8"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 703.139
-margin_top = 86.1185
-margin_right = 1162.14
-margin_bottom = 209.119
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 1 )
-custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
-text = "200000"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="nom_joueur" type="Label" parent="ScrollContainer/VBoxContainer/infobox8"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = 90.3181
-margin_top = 77.6524
-margin_right = 462.318
-margin_bottom = 200.652
-rect_scale = Vector2( 0.7, 0.7 )
-custom_fonts/font = SubResource( 2 )
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "joueur1"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop1" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 35.0
-margin_top = 260.0
-margin_right = 111.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop3" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 35.0
-margin_top = 327.0
-margin_right = 111.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 10 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop5" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 588.0
-margin_top = 308.695
-margin_right = 1100.0
-margin_bottom = 820.695
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop6" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 100.0
-margin_top = 260.0
-margin_right = 176.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop8" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 100.0
-margin_top = 327.0
-margin_right = 176.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop9" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 101.2
-margin_top = 395.0
-margin_right = 177.2
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 6 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop11" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 166.0
-margin_top = 260.0
-margin_right = 242.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop12" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 767.0
-margin_top = 266.0
-margin_right = 1099.0
-margin_bottom = 587.0
-rect_scale = Vector2( 0.15, 0.15 )
-texture = ExtResource( 13 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop13" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 166.0
-margin_top = 327.0
-margin_right = 242.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop15" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 639.027
-margin_top = 259.0
-margin_right = 1151.03
-margin_bottom = 771.0
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop14" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 166.0
-margin_top = 395.0
-margin_right = 242.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 11 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop16" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 233.0
-margin_top = 260.0
-margin_right = 309.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop17" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 233.0
-margin_top = 327.0
-margin_right = 309.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop19" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 233.0
-margin_top = 395.0
-margin_right = 309.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop21" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 300.0
-margin_top = 260.0
-margin_right = 376.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop23" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 300.0
-margin_top = 327.0
-margin_right = 376.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop24" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 300.0
-margin_top = 395.0
-margin_right = 376.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop25" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 689.0
-margin_top = 310.65
-margin_right = 1201.0
-margin_bottom = 822.65
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop26" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 365.0
-margin_top = 260.0
-margin_right = 441.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop27" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 767.533
-margin_top = 330.865
-margin_right = 1279.53
-margin_bottom = 842.865
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 12 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop28" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 365.0
-margin_top = 327.0
-margin_right = 441.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop29" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 365.0
-margin_top = 395.0
-margin_right = 441.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 7 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="prop31" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 430.0
-margin_top = 260.0
-margin_right = 506.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+margin_top = 550.0
+margin_right = 633.0
+margin_bottom = 619.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
 
-[node name="prop33" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 430.0
-margin_top = 327.0
-margin_right = 506.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
+[node name="dernier_trophe" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop34" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 430.0
-margin_top = 395.0
-margin_right = 506.0
-margin_bottom = 471.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 8 )
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 700.0
+margin_right = 408.0
+margin_bottom = 769.0
+custom_fonts/font = SubResource( 4 )
+text = "dernier trophe :"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop35" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 637.838
-margin_top = 360.596
-margin_right = 1149.84
-margin_bottom = 872.596
-rect_scale = Vector2( 0.1, 0.1 )
-texture = ExtResource( 4 )
+[node name="dernier_trophee" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 460.0
+margin_top = 700.0
+margin_right = 663.0
+margin_bottom = 769.0
+custom_fonts/font = SubResource( 4 )
+text = "IHM finie"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="prop37" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 496.0
-margin_top = 260.0
-margin_right = 572.0
-margin_bottom = 336.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="description" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 141.0
+margin_top = 772.0
+margin_right = 1150.0
+margin_bottom = 921.0
+custom_fonts/font = SubResource( 4 )
+text = "test"
 
-[node name="prop39" type="TextureRect" parent="ScrollContainer/VBoxContainer/infobox8"]
-visible = false
-margin_left = 496.0
-margin_top = 327.0
-margin_right = 572.0
-margin_bottom = 403.0
-rect_scale = Vector2( 0.75, 0.75 )
-texture = ExtResource( 9 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/vendre" to="ScrollContainer/VBoxContainer/infobox1" method="_on_vendre_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/hypothequer" to="ScrollContainer/VBoxContainer/infobox1" method="_on_hypothequer_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/construire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_construire_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/detruire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_detruire_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/confirmation/oui" to="ScrollContainer/VBoxContainer/infobox1" method="_on_oui_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/confirmation/non" to="ScrollContainer/VBoxContainer/infobox1" method="_on_non_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/exit" to="ScrollContainer/VBoxContainer/infobox1" method="_on_exit_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelInfos/ColorRect/exit2" to="ScrollContainer/VBoxContainer/infobox1" method="_on_exit2_pressed"]

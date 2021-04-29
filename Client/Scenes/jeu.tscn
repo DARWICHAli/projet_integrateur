@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -33,8 +33,8 @@
 [ext_resource path="res://GFX/case_brun_suaps.png" type="Texture" id=31]
 [ext_resource path="res://GFX/pion2_normal.png" type="Texture" id=32]
 [ext_resource path="res://GFX/pion1_normal.png" type="Texture" id=33]
-[ext_resource path="res://Bouton/bouton_hypotheque_normal.png" type="Texture" id=34]
-[ext_resource path="res://Bouton/bouton_hypotheque_pressed.png" type="Texture" id=35]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_normal.png" type="Texture" id=34]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_pressed.png" type="Texture" id=35]
 [ext_resource path="res://Scenes/commu.tscn" type="PackedScene" id=36]
 [ext_resource path="res://Scenes/chance.tscn" type="PackedScene" id=37]
 [ext_resource path="res://GFX/case_taxe.png" type="Texture" id=38]
@@ -47,34 +47,33 @@
 [ext_resource path="res://GFX/case_gare_nord.png" type="Texture" id=45]
 [ext_resource path="res://GFX/case_va_prison.png" type="Texture" id=46]
 [ext_resource path="res://GFX/case_parking.png" type="Texture" id=47]
-[ext_resource path="res://Bouton/bouton_acheter_pressed.png" type="Texture" id=48]
-[ext_resource path="res://Bouton/bouton_abandonner_normal.png" type="Texture" id=49]
-[ext_resource path="res://Bouton/bouton_des_normal.png" type="Texture" id=50]
-[ext_resource path="res://Bouton/bouton_des_pressed.png" type="Texture" id=51]
-[ext_resource path="res://Bouton/bouton_construire_pressed.png" type="Texture" id=52]
-[ext_resource path="res://Bouton/bouton_construire_normal.png" type="Texture" id=53]
-[ext_resource path="res://Bouton/bouton_abandonner_pressed.png" type="Texture" id=54]
-[ext_resource path="res://Bouton/bouton_fin_tour_normal.png" type="Texture" id=55]
-[ext_resource path="res://Bouton/bouton_fin_tour_pressed.png" type="Texture" id=56]
-[ext_resource path="res://Bouton/bouton_reclammer_pressed.png" type="Texture" id=57]
-[ext_resource path="res://Bouton/bouton_acheter_normal.png" type="Texture" id=58]
-[ext_resource path="res://Bouton/bouton_reclamer_normal.png" type="Texture" id=59]
-[ext_resource path="res://Bouton/bouton_start_pressed.png" type="Texture" id=60]
-[ext_resource path="res://Bouton/bouton_start_normal.png" type="Texture" id=61]
+[ext_resource path="res://GFX/Bouton/bouton_acheter_pressed.png" type="Texture" id=48]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_normal.png" type="Texture" id=49]
+[ext_resource path="res://GFX/Bouton/bouton_des_normal.png" type="Texture" id=50]
+[ext_resource path="res://GFX/Bouton/bouton_des_pressed.png" type="Texture" id=51]
+[ext_resource path="res://GFX/Bouton/bouton_construire_pressed.png" type="Texture" id=52]
+[ext_resource path="res://GFX/Bouton/bouton_construire_normal.png" type="Texture" id=53]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_pressed.png" type="Texture" id=54]
+[ext_resource path="res://GFX/Bouton/bouton_fin_tour_normal.png" type="Texture" id=55]
+[ext_resource path="res://GFX/Bouton/bouton_fin_tour_pressed.png" type="Texture" id=56]
+[ext_resource path="res://GFX/Bouton/bouton_reclammer_pressed.png" type="Texture" id=57]
+[ext_resource path="res://GFX/Bouton/bouton_acheter_normal.png" type="Texture" id=58]
+[ext_resource path="res://GFX/Bouton/bouton_reclamer_normal.png" type="Texture" id=59]
+[ext_resource path="res://GFX/Bouton/bouton_start_pressed.png" type="Texture" id=60]
+[ext_resource path="res://GFX/Bouton/bouton_start_normal.png" type="Texture" id=61]
 [ext_resource path="res://GFX/acceuil.png" type="Texture" id=62]
 [ext_resource path="res://GFX/pion5_normal.png" type="Texture" id=63]
 [ext_resource path="res://GFX/pion4_normal.png" type="Texture" id=64]
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
-[ext_resource path="res://Bouton/bouton_connexion_normal.png" type="Texture" id=68]
-[ext_resource path="res://Bouton/bouton_connexion_pressed.png" type="Texture" id=69]
-[ext_resource path="res://Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
-[ext_resource path="res://Bouton/bouton_vendre_normal.png" type="Texture" id=71]
+[ext_resource path="res://GFX/Bouton/bouton_sign_in_pressed.png" type="Texture" id=68]
+[ext_resource path="res://GFX/Bouton/bouton_sign_in_normal.png" type="Texture" id=69]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_pressed.png" type="Texture" id=70]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_normal.png" type="Texture" id=71]
 [ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
-[ext_resource path="res://Bouton/bar_boutons.png" type="Texture" id=74]
-[ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
+[ext_resource path="res://GFX/Bouton/bar_boutons.png" type="Texture" id=74]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -86,9 +85,9 @@ scale = Vector2( 2.09844, 2.16852 )
 texture = ExtResource( 8 )
 
 [node name="chatbox" parent="." instance=ExtResource( 73 )]
-margin_left = 15.0
+margin_left = 16.4983
 margin_top = 1054.0
-margin_right = 586.0
+margin_right = 587.498
 margin_bottom = 2130.0
 
 [node name="Plateau" type="Node2D" parent="."]
@@ -116,7 +115,8 @@ texture = ExtResource( 9 )
 [node name="marron_1" parent="Plateau/cases/cote_gauche" instance=ExtResource( 4 )]
 position = Vector2( 1273, 0 )
 
-[node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/marron_1"]
+[node name="Sprite2" type="Sprite" parent="Plateau/cases/cote_gauche/marron_1"]
+show_behind_parent = true
 rotation = -1.5708
 texture = ExtResource( 24 )
 
@@ -127,6 +127,7 @@ position = Vector2( 1116, -0.00390625 )
 position = Vector2( 957, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/marron_2"]
+show_behind_parent = true
 rotation = -1.5708
 texture = ExtResource( 31 )
 
@@ -148,6 +149,7 @@ texture = ExtResource( 41 )
 position = Vector2( 483, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/cyan_1"]
+show_behind_parent = true
 rotation = -1.5708
 texture = ExtResource( 28 )
 
@@ -158,6 +160,7 @@ position = Vector2( 326, -0.00115967 )
 position = Vector2( 167, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/cyan_2"]
+show_behind_parent = true
 rotation = -1.5708
 texture = ExtResource( 14 )
 
@@ -165,15 +168,13 @@ texture = ExtResource( 14 )
 position = Vector2( 9, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/cyan_3"]
+show_behind_parent = true
 rotation = -1.5708
 texture = ExtResource( 22 )
 
 [node name="cote_haut" type="Node2D" parent="Plateau/cases"]
 position = Vector2( 1282, -838 )
 rotation = -3.14159
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Prison" parent="Plateau/cases/cote_haut" instance=ExtResource( 6 )]
 position = Vector2( 1480, -0.00012207 )
@@ -183,6 +184,7 @@ rotation = -3.14159
 position = Vector2( 1273, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/rose_1"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 26 )
 
@@ -197,6 +199,7 @@ texture = ExtResource( 42 )
 position = Vector2( 957, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/rose_2"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 15 )
 
@@ -204,6 +207,7 @@ texture = ExtResource( 15 )
 position = Vector2( 799, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/rose_3"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 27 )
 
@@ -218,6 +222,7 @@ texture = ExtResource( 45 )
 position = Vector2( 483, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/orange_1"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 20 )
 
@@ -228,6 +233,7 @@ position = Vector2( 324, -0.000823975 )
 position = Vector2( 167, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/orange_2"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 19 )
 
@@ -235,15 +241,13 @@ texture = ExtResource( 19 )
 position = Vector2( 9, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_haut/orange_3"]
+show_behind_parent = true
 rotation = 3.14159
 texture = ExtResource( 13 )
 
 [node name="cote_droit" type="Node2D" parent="Plateau/cases"]
 position = Vector2( 1474.67, 640.222 )
 rotation = -1.5708
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Parking" parent="Plateau/cases/cote_droit" instance=ExtResource( 7 )]
 position = Vector2( 1480, 0.00372314 )
@@ -257,6 +261,7 @@ texture = ExtResource( 47 )
 position = Vector2( 1273, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/rouge_1"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 29 )
 
@@ -267,6 +272,7 @@ position = Vector2( 1115, 0.00415039 )
 position = Vector2( 957, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/rouge_2"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 10 )
 
@@ -274,6 +280,7 @@ texture = ExtResource( 10 )
 position = Vector2( 799, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/rouge_3"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 17 )
 
@@ -287,6 +294,7 @@ texture = ExtResource( 43 )
 position = Vector2( 483, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/jaune_1"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 16 )
 __meta__ = {
@@ -303,6 +311,7 @@ texture = ExtResource( 39 )
 position = Vector2( 167, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/jaune_2"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 30 )
 
@@ -310,14 +319,12 @@ texture = ExtResource( 30 )
 position = Vector2( 9, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_droit/jaune_3"]
+show_behind_parent = true
 rotation = 1.5708
 texture = ExtResource( 18 )
 
 [node name="cote_bas" type="Node2D" parent="Plateau/cases"]
 position = Vector2( 0, 838.222 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Goto_prison" parent="Plateau/cases/cote_bas" instance=ExtResource( 7 )]
 position = Vector2( 1480, 0.00488281 )
@@ -331,6 +338,7 @@ texture = ExtResource( 46 )
 position = Vector2( 1273, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/vert_1"]
+show_behind_parent = true
 texture = ExtResource( 12 )
 
 [node name="commu_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 36 )]
@@ -340,24 +348,28 @@ position = Vector2( 1116, 0 )
 position = Vector2( 957, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/vert_2"]
+show_behind_parent = true
 texture = ExtResource( 11 )
 
 [node name="vert_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 799, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/vert_3"]
+show_behind_parent = true
 texture = ExtResource( 23 )
 
 [node name="gare_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 641, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/gare_1"]
+position = Vector2( 0, 2.82837 )
 texture = ExtResource( 44 )
 
 [node name="bleu_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 325, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/bleu_1"]
+show_behind_parent = true
 texture = ExtResource( 21 )
 
 [node name="chance_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 37 )]
@@ -373,6 +385,7 @@ texture = ExtResource( 40 )
 position = Vector2( 9, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/bleu_2"]
+show_behind_parent = true
 position = Vector2( -1, 0 )
 texture = ExtResource( 25 )
 
@@ -546,14 +559,12 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
-
-[node name="connexion" parent="menu" instance=ExtResource( 75 )]
+visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-visible = false
+position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
-visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )
@@ -580,11 +591,12 @@ margin_top = 1100.0
 margin_right = 2108.0
 margin_bottom = 1160.0
 rect_scale = Vector2( 3, 3 )
-texture_normal = ExtResource( 68 )
-texture_pressed = ExtResource( 69 )
+texture_normal = ExtResource( 69 )
+texture_pressed = ExtResource( 68 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
 [connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
@@ -600,12 +612,7 @@ __meta__ = {
 [connection signal="pressed" from="fin_de_tour" to="." method="_on_fin_de_tour_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="construire" to="." method="_on_construire_pressed"]
-[connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
 [connection signal="pressed" from="vente" to="." method="_on_vente_pressed"]
-[connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
-[connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
-[connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
-[connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
 [connection signal="pressed" from="menu/background/start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="menu/background/sign_in" to="." method="_on_sign_in_pressed"]
