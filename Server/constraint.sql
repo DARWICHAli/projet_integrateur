@@ -1,10 +1,8 @@
-DROP TRIGGER IF EXISTS default_date_ut;
-
--- Fonction retournant les statistiques du joueur
-
-CREATE FUNCTION IF NOT EXISTS stats_joueur(pseudo VARCHAR(30))
-RETURN VARCHAR
-IS
-    retour VARCHAR(400);
-
+CREATE TRIGGER trophee_prison
+AFTER INSERT ON PASSAGE_PRISON FOR EACH ROW
+SET @passages = SELECT count(*) 
+        FROM PASSAGE_PRISON PP
+        WHERE PP.idU like NEW.idU;
 BEGIN
+
+END;

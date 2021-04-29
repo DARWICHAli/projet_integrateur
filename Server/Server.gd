@@ -52,6 +52,9 @@ func _ready():
 		print("Serveur de lobby démarré avec port: " + String(port))
 	rng.randomize()
 
+""""
+	Fonctions relatives à la base de données
+"""
 func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
@@ -73,7 +76,26 @@ func stats(pseudo):
 				var nc = array3[0].nc
 				row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "tempsJeu": temps, "bestPion":np, "bestCase":nc}
 	return row_dict.duplicate()
-	
+
+func passages_prison(pseudo):
+	var id = db.select_rows("UTILISATEUR U","U.username = "+pseudo,["idU"])
+	var count = db.select_rows("(SELECT count(*) as passages FROM PASSAGE_PRISON PP WHERE PP.idU = "+str(id[0].idU)+")","",["passages"])
+	if(count[0].passages == 100):
+		var err = db.query("INSERT INTO TROPHEE_JOUEUR VALUES("+str(id)+",1);")
+		
+		
+func passages_park(pseudo):
+	var id = db.select_rows("UTILISATEUR U","U.username = "+pseudo,["idU"])
+	var count = db.select_rows("(SELECT count(*) as passages FROM PASSAGE_PARK PP WHERE PP.idU = "+str(id[0].idU)+")","",["passages"])
+	if(count[0].passages == 100):
+		var err = db.query("INSERT INTO TROPHEE_JOUEUR VALUES("+str(id)+",2);")
+
+func pas_le_temps_de_niaiser(pseudo):
+	var id = db.select_rows("UTILISATEUR U","U.username = "+pseudo,["idU"])
+	var is_trophy = db.select_rows("TROPHEE_JOUEUR TJ","TJ.idT=6 AND TJ.idU="+str(id[0].idu),["idU"])
+	if(len(is_trophy) == 0):
+		var err = db.query("INSERT INTO TROPHEE_JOUEUR VALUES("+str(id)+",6);")
+
 # warning-ignore:unused_argument
 func _connected_lobby (id, proto):
 	var client_IP   = serveur_lobby.get_peer_address(id)
