@@ -58,11 +58,10 @@ func _ready():
 func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
-	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["tempsJeu","nbWin", "nbLose", "dateInscr"])
+	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["nbWin", "nbLose", "dateInscr"])
 	var row_dict : Dictionary = {}
 	if(len(array[0]) > 0):
 		var date = array[0].dateInscr
-		var temps = array[0].tempsJeu	
 		var win = array[0].nbWin	
 		var lose = array[0].nbLose
 
@@ -74,7 +73,7 @@ func stats(pseudo):
 			
 			if(len(array3[0]) > 0):
 				var nc = array3[0].nc
-				row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "tempsJeu": temps, "bestPion":np, "bestCase":nc}
+				row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win,  "bestPion":np, "bestCase":nc}
 	return row_dict.duplicate()
 
 func passages_prison(pseudo):
@@ -473,6 +472,12 @@ func partie(serveur_jeu : Serveur_partie):
 						structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
 						for client in serveur_jeu.list_joueurs:
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+						# Maj de l'achat de la case dans la BDD
+						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
+						var pseudo = serveur_jeu.pseudos[joueur]
+						var id = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["idU"])
+						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+indice,["nomCase"])
+						db.query("INSERT INTO ACHETE_CASE VALUES("+id[0].idU+",'"+nomCase[0].nomCase+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
@@ -529,9 +534,19 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# Passage au prochain joueur
 			if(double == 0):
+				# Fin de partie d'un joueur -> maj de sa statistique de défaites
+				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+					var pseudo = serveur_jeu.pseudos[joueur]
+					var nbLoses = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbLose"])
+					db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbLoses[0].nbLose+1)+"WHERE U.username like "+pseudo+";")
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
+	
 	print("Player %d win" % joueur)
+	# Maj de la statistique de victoires du joueur
+	var pseudo = serveur_jeu.pseudos[joueur]
+	var nbWins = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbWin"])
+	db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbWins[0].nbWins+1)+"WHERE U.username like "+pseudo)
 	emit_signal("fin_partie", serveur_jeu.code)
 
 func vente_res(id, id_case, serveur_jeu):
