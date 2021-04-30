@@ -7,7 +7,6 @@ const ip = "localhost"
 const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
 # Our WebSocketServer instance
 var serveur_lobby = WebSocketServer.new()
-
 # Pour le nombre random
 var rng = RandomNumberGenerator.new()
 # Permet d'attendre le thread créant le port
@@ -24,12 +23,12 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-	#db = SQLite.new();
-	#db.path="./database.db"
-	#db.verbose_mode = true
-	#db.open_db()
-	
-	#stats("tthirtle2o")
+#	db = SQLite.new();
+#	db.path="./database.db"
+#	db.verbose_mode = true
+#	db.open_db()
+#
+#	stats("tthirtle2o")
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -62,7 +61,7 @@ func stats(pseudo):
 	var row_dict : Dictionary = {}
 	if(len(array[0]) > 0):
 		var date = array[0].dateInscr
-		var win = array[0].nbWin	
+		var win = array[0].nbWin
 		var lose = array[0].nbLose
 
 		var array2 = db.select_rows("(SELECT id, np, max(nb_ut) FROM (SELECT UP.idU AS id, UP.nomPion AS np, (SELECT count(UP2.nomPion) FROM UTILISE_PION UP2 WHERE UP2.nomPion LIKE UP.nomPion AND UP2.idU = UP.idU) AS nb_ut FROM UTILISE_PION UP WHERE UP.idU = id GROUP BY UP.nomPion))","",["np"])
@@ -294,6 +293,9 @@ func _on_data_jeu(id_client, serveur_jeu):
 			if (serveur_jeu.attente_proprio == serveur_jeu.list_joueurs.find(id_client)):
 				print("requête reclamer reçue")
 				serveur_jeu.reponse_proprio = true
+		Structure.PacketType.DESTRUCTION:
+			print("requête reclamer reçue")
+			destruction_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 		Structure.PacketType.TOUR_PLUS_UN:
 			print('requete tour_plus_un reçue')
 			if(serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client)):
@@ -362,7 +364,8 @@ func partie(serveur_jeu : Serveur_partie):
 			else:
 				nb_double += 1	
 			if nb_double == 3:
-				goto_prison = 1
+				pass
+				#goto_prison = 1
 			
 			var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# current_case -> case sur laquelle le joueur en cours de traitement se trouve
@@ -567,6 +570,23 @@ func tourplusun_res(id, serveur_jeu):
 	structure.set_requete_argent_nouv_tour(serveur_jeu.argent_joueur[id], id)
 	for client in serveur_jeu.list_joueurs:
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+
+func destruction_res(id, id_case, serveur_jeu):
+	var case = serveur_jeu.plateau[id_case]
+	var structure = Structure.new()
+	var status = serveur_jeu.downgrade(id, case)
+	if(status < 0):
+		var price
+		if (status == -1):
+			price = 0.8*case.prix_maison
+		else:
+			price = 0.8*case.prix_hotel
+		structure.set_requete_maj_destruction(serveur_jeu.argent_joueur[id], id, case.indice, price, status)
+		for client in serveur_jeu.list_joueurs:
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+	else:
+		structure.set_requete_erreur(status)
+		envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 
 func _on_Server_fin_partie(code):
 	for i in range(0,serveurs_partie.size()):

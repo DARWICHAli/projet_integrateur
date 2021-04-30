@@ -57,6 +57,10 @@ ui_button_left={
  ]
 }
 
+[network]
+
+ssl/certificates="res://unistrapoly_certif.crt"
+
 [rendering]
 
 environment/default_environment="res://default_env.tres"

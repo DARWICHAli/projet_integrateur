@@ -188,7 +188,7 @@ margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 12 )
 
-[node name="prop17" type="TextureButton" parent="."]
+[node name="prop18" type="TextureButton" parent="."]
 margin_left = 233.0
 margin_top = 327.0
 margin_right = 309.0
@@ -317,10 +317,8 @@ rect_scale = Vector2( 0.75, 0.75 )
 texture_normal = ExtResource( 6 )
 
 [node name="Button" type="Button" parent="."]
-visible = false
 margin_right = 12.0
 margin_bottom = 20.0
-
 [connection signal="pressed" from="info_joueur" to="." method="_on_info_joueur_pressed"]
 [connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]
 [connection signal="pressed" from="prop1" to="." method="_on_prop1_pressed"]
@@ -335,7 +333,7 @@ margin_bottom = 20.0
 [connection signal="pressed" from="prop14" to="." method="_on_prop14_pressed"]
 [connection signal="pressed" from="prop15" to="." method="_on_prop15_pressed"]
 [connection signal="pressed" from="prop16" to="." method="_on_prop16_pressed"]
-[connection signal="pressed" from="prop17" to="." method="_on_prop17_pressed"]
+[connection signal="pressed" from="prop18" to="." method="_on_prop17_pressed"]
 [connection signal="pressed" from="prop19" to="." method="_on_prop19_pressed"]
 [connection signal="pressed" from="prop21" to="." method="_on_prop21_pressed"]
 [connection signal="pressed" from="prop23" to="." method="_on_prop23_pressed"]

@@ -156,13 +156,27 @@ func _on_data_partie ():
 				3:
 					print("Le joueur n'a pas assez d'argent pour acheter la case.")
 				4:
-					print("Cette case ne vous appartient pas.")
+					print("Cette case ne vous appartient pas !")
 				5:
 					print("Le joueur n'a pas assez d'argent pour une maison.")
 				6:
 					print("Le joueur n'a pas assez d'argent pour un hotel.")
 				7:
 					print("La case est à son niveau maximum.")
+				8:
+					print("Case hypothequée : construction impossible !")
+				9:
+					print("Case non eligible.")
+				10:
+					print("Vous ne pouvez pas hypothequer une case avec construction !")
+				11:
+					print("Vous ne possedez pas toutes les propriètés de la couleur !")
+				12:
+					print("Vous devez contruire uniformement !")
+				13:
+					print("Vous devez détruire uniformement !")
+				14:
+					print("La case est à son niveau minimum.")
 				_:
 					print("Erreur inconnue !")
 		Structure.PacketType.MAJ_ARGENT:
@@ -206,6 +220,14 @@ func _on_data_partie ():
 			else:
 				print("DE-HYPOTHEQUE !")
 				print("La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+		Structure.PacketType.MAJ_DESTRUCTION:
+			print("DESTRUCTION !")
+			if(obj.data4 == -1):
+				print("Une maison sur la propriété %d est détruite par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
+			else:
+				print("Un hôtel sur la propriété %d est détruit par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.GO_PRISON:
@@ -360,6 +382,12 @@ func sig_msg(text, username, index):
 	var structure = Structure.new()
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
+	envoyer_message(client_partie, structure.to_bytes())
+
+func destruction(id_case):
+	print('envoi requete de destruction')
+	var structure = Structure.new()
+	structure.set_requete_detruire(id_case)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func fin_dep_go_prison():

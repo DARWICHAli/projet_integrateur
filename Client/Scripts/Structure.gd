@@ -2,8 +2,8 @@ extends Node
 
 class_name Structure
 
-enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, 
-REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, VENTE, MAJ_VENTE, ACTION, 
+enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, DESTRUCTION, 
+REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
 ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
 
@@ -13,13 +13,6 @@ var data2
 var data3
 var data4
 var client
-
-func set_requete_abandonner():
-	self.type = PacketType.ABANDONNER
-
-func set_requete_send_pseudo(pseudo):
-	self.type = PacketType.SEND_PSEUDO
-	self.data = pseudo
 
 func set_requete_rente(argent, id, proprio, prix):
 	self.type = PacketType.RENTE
@@ -31,7 +24,7 @@ func set_requete_rente(argent, id, proprio, prix):
 func set_requete_erreur(code):
 	self.type = PacketType.ERREUR
 	self.data = code
-
+	
 func set_requete_reponse_login(code):
 	self.type = PacketType.REPONSE_LOGIN
 	self.data = code
@@ -39,12 +32,12 @@ func set_requete_reponse_login(code):
 func set_requete_consult_stats(player):
 	self.type = PacketType.STATS_CONSULT
 	self.data = player
-
+	
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT
 	self.data = argent
 	self.client = id
-
+	
 func set_requete_maj_achat(argent, proprio, nbr_prop, prix):
 	self.type = PacketType.MAJ_ACHAT
 	self.data = argent
@@ -67,7 +60,7 @@ func set_requete_out_prison(id, prix):
 	self.type = PacketType.OUT_PRISON
 	self.client = id
 	self.data = prix
-
+	
 func set_requete_free_out_prison(id):
 	self.type = PacketType.FREE_OUT_PRISON
 	self.client = id
@@ -78,7 +71,7 @@ func set_fin_dep_go_prison():
 func set_requete_vendre(id_case):
 	self.type = PacketType.VENTE
 	self.data = id_case
-
+	
 func set_requete_acheter():
 	self.type = PacketType.ACHAT
 
@@ -89,7 +82,7 @@ func set_requete_maj_construire(type_cons, argent, id, nbr_prop, prix):
 	self.data3 = nbr_prop
 	self.data4 = prix
 	self.client = id
-
+	
 func set_requete_taxe(argent, id):
 	self.type = PacketType.TAXE
 	self.data = argent
@@ -98,9 +91,13 @@ func set_requete_taxe(argent, id):
 func set_requete_construire():
 	self.type = PacketType.CONSTRUCTION
 
+func set_requete_detruire(id_case):
+	self.type = PacketType.DESTRUCTION
+	self.data = id_case
+
 func set_requete_fin_de_tour (): # click sur bouton "fin de tour"
 	self.type = PacketType.FIN_DE_TOUR
-
+	
 func set_requete_tour_plus_un (): # case depart passée (plus un tour)
 	self.type = PacketType.TOUR_PLUS_UN
 
@@ -118,6 +115,14 @@ func set_requete_hypothequer(id_case):
 	
 func set_requete_maj_hypotheque(argent, id, nbr_prop, gain, status):
 	self.type = PacketType.MAJ_HYPOTHEQUE
+	self.data = argent
+	self.data2 = nbr_prop
+	self.data3 = gain
+	self.data4 = status
+	self.client = id
+
+func set_requete_maj_destruction(argent, id, nbr_prop, gain, status):
+	self.type = PacketType.MAJ_DESTRUCTION
 	self.data = argent
 	self.data2 = nbr_prop
 	self.data3 = gain
@@ -143,9 +148,10 @@ func set_requete_BDD (requete_BDD : String):
 	self.type = PacketType.BDD
 	self.data = requete_BDD
 
-func set_adresse_serveur_jeu (ip, port, nb_joueurs):
+func set_adresse_serveur_jeu (ip, port, nb_joueurs, id_joueur):
 	self.type = PacketType.ADRESSE_SERVEUR_JEU
 	self.data = str(ip) + ':' + str(port)
+	self.data2 = id_joueur
 	self.client = nb_joueurs
 
 func set_resultat_lancer_de (Resultat : int, Client : int):
@@ -173,6 +179,7 @@ func to_bytes () -> PoolByteArray:
 	var string = var2str(obj)
 	var bytes = string.to_utf8()
 	return bytes
+
 
 static func from_bytes (bytes : PoolByteArray) -> Object:
 	var string = bytes.get_string_from_utf8()

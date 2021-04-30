@@ -195,7 +195,7 @@ func upgrade(id):
 		print("Cette case ne vous appartient pas")
 		return 4
 	elif (case.sous_type == Cases.PropTypes.GARE or case.sous_type == Cases.PropTypes.COMPAGNIE):
-		print("Construction impossible, case non eligible")
+		print("Case non eligible")
 		return 9
 	elif case.hypotheque == 1:
 		print("Case hypothequée : construction impossible !")
@@ -205,7 +205,7 @@ func upgrade(id):
 		if (plateau[i].sous_type == case.sous_type):
 			if plateau[i].proprio != case.proprio:
 				print("Vous ne possedez pas toutes les propriètés de la couleur")
-				return 10
+				return 11
 			else:
 				cases_tmp.append(plateau[i])
 	if (case.niveau_case != 5):
@@ -217,7 +217,7 @@ func upgrade(id):
 				for case_iter in cases_tmp:
 					if abs(case_iter.niveau_case - (case.niveau_case + 1)) >= 2:
 						print("Vous devez contruire uniformement")
-						return 11
+						return 12
 				argent_joueur[id] -= case.prix_maison
 				case.niveau_case += 1
 				print("Maison construite !")
@@ -230,7 +230,7 @@ func upgrade(id):
 				for case_iter in cases_tmp:
 					if abs(case_iter.niveau_case - (case.niveau_case + 1)) >= 2:
 						print("Vous devez contruire uniformement")
-						return 11
+						return 12
 				argent_joueur[id] -= case.prix_hotel
 				case.niveau_case += 1
 				print("Hotel construit !")
@@ -273,6 +273,9 @@ func hypothequer(id, case):
 	if case.proprio != id:
 		print("Cette case ne vous appartient pas")
 		return 4
+	if case.niveau_case != 0:
+		print("Vous ne pouvez pas hypothequer une case avec construction")
+		return 10
 	if case.hypotheque == 1:
 		print("Case de-hypothequer !")
 		case.hypotheque = 0
@@ -288,10 +291,42 @@ func remise_a_zero(id):
 			plateau[i].proprio = -1
 			plateau[i].niveau_case = 0
 
-#func downgrade(id):
-#	var case = plateau[position_joueur[id]]
-#	case.niveau_case -= 1
-#	argent_joueur[id] += case.prix_maison*0.8
+func downgrade(id, case):
+	if (case.type != Cases.CasesTypes.PROPRIETE):
+		print("La case n'est pas de type proprieté")
+		return 1
+	elif (case.proprio != id):
+		print("Cette case ne vous appartient pas")
+		return 4
+	elif (case.sous_type == Cases.PropTypes.GARE or case.sous_type == Cases.PropTypes.COMPAGNIE):
+		print("Case non eligible")
+		return 9
+	var cases_tmp = []
+	for i in range(40):
+		if (plateau[i].sous_type == case.sous_type):
+			cases_tmp.append(plateau[i])
+	if (case.niveau_case != 0):
+		if(case.niveau_case <= 3):
+			for case_iter in cases_tmp:
+				if abs(case_iter.niveau_case - (case.niveau_case - 1)) >= 2:
+					print("Vous devez détruire uniformement")
+					return 13
+			argent_joueur[id] += 0.8*case.prix_maison
+			case.niveau_case -= 1
+			print("Maison détruite !")
+			return -1
+		else:
+			for case_iter in cases_tmp:
+				if abs(case_iter.niveau_case - (case.niveau_case - 1)) >= 2:
+					print("Vous devez détruire uniformement")
+					return 13
+			argent_joueur[id] += 0.8*case.prix_hotel
+			case.niveau_case -= 1
+			print("Hotel détruit !")
+			return -2	
+	else:
+		print("La case est à son niveau minimum.")
+		return 14
 	
 
 	

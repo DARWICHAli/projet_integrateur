@@ -168,6 +168,7 @@ func _on_construire_pressed():
 
 func _on_detruire_pressed():
 	change_text_conf("detruire un batiment sur\n")
+	get_tree().get_root().get_node("jeu").destruction(3)
 	show_confirmation(3)
 	pass # Replace with function body.
 
