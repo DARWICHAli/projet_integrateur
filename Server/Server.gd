@@ -353,8 +353,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 21#lancer_de()
-			var de_deux = 0#lancer_de()
+			var de_un = 0.5#lancer_de()
+			var de_deux = 0.5#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
@@ -417,10 +417,13 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# ALLER EN PRISON POUR TRIPLE DOUBLE
 			if(goto_prison == 1):
+				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				structure.set_requete_go_prison(serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs:
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				serveur_jeu.reponse_joueur = false
+				nb_double = 0
+				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 				continue
@@ -436,10 +439,12 @@ func partie(serveur_jeu : Serveur_partie):
 				for client in serveur_jeu.list_joueurs:
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				serveur_jeu.reponse_joueur = false
+				nb_double = 0
+				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 				continue
-
+			
 			print("Attente d'action quelconque ou fin de tour...")
 
 			print(current_case.proprio)
@@ -451,13 +456,6 @@ func partie(serveur_jeu : Serveur_partie):
 
 			while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR and timer.get_time_left() > 0:
 				serveur_jeu.socket.poll()
-	#			if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CHAT:
-	#				var obj = serveur_jeu.packet_recu
-	#				print('test')
-	#				print('message de chat reçu: %s' % var2str(data))
-	#				structure.set_chat_message(obj.data, obj.data2, obj.data3)
-	#				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
-	#					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
 					status = serveur_jeu.acheter(serveur_jeu.attente_joueur)
 					if(status == 0):
@@ -467,9 +465,9 @@ func partie(serveur_jeu : Serveur_partie):
 						# Maj de l'achat de la case dans la BDD
 						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
 						var pseudo = serveur_jeu.pseudos[joueur]
-						var id = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["idU"])
-						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+indice,["nomCase"])
-						db.query("INSERT INTO ACHETE_CASE VALUES("+id[0].idU+",'"+nomCase[0].nomCase+"');")
+#						var id = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["idU"])
+#						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+indice,["nomCase"])
+#						db.query("INSERT INTO ACHETE_CASE VALUES("+id[0].idU+",'"+nomCase[0].nomCase+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
@@ -484,61 +482,53 @@ func partie(serveur_jeu : Serveur_partie):
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 					serveur_jeu.reponse_joueur = false
-#				if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.VENTE:
-#					status = serveur_jeu.vendre(serveur_jeu.attente_joueur)
-#					if(status == 0):
-#						structure.set_requete_maj_vente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
-#						for client in serveur_jeu.list_joueurs:
-#							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-#					else:
-#						structure.set_requete_erreur(status)
-#						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])				
-					serveur_jeu.reponse_joueur = false
 				if serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER:
 					if (timer_reclamation.get_time_left() > 0):
-							if (!serveur_jeu.proprio_a_reclamer):
-								serveur_jeu.proprio_a_reclamer = true
-								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
-								if(status == 0):
-									structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
-									for client in serveur_jeu.list_joueurs:
-										envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-								else:
-									structure.set_requete_erreur(status)
-									envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+						if (!serveur_jeu.proprio_a_reclamer):
+							serveur_jeu.proprio_a_reclamer = true
+							status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
+							if(status == 0):
+								structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
+								for client in serveur_jeu.list_joueurs:
+									envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+							else:
+								structure.set_requete_erreur(status)
+								envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 			serveur_jeu.packet_recu = -1
 			
 			while (current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur and serveur_jeu.reponse_proprio == false and timer_reclamation.get_time_left() > 0):
 				serveur_jeu.socket.poll()
 				if (serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER):
-							if (!serveur_jeu.proprio_a_reclamer):
-								serveur_jeu.proprio_a_reclamer = true
-								status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
-								if(status == 0):
-									structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
-									for client in serveur_jeu.list_joueurs:
-										envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-								else:
-									structure.set_requete_erreur(status)
-									envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
+					if (!serveur_jeu.proprio_a_reclamer):
+						serveur_jeu.proprio_a_reclamer = true
+						status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
+						if(status == 0):
+							structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
+							for client in serveur_jeu.list_joueurs:
+								envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+						else:
+							structure.set_requete_erreur(status)
+							envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 			print("Test de propiete : %d" % serveur_jeu.plateau[0].proprio)
 			print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
 			
 			# Passage au prochain joueur
 			if(double == 0):
 				# Fin de partie d'un joueur -> maj de sa statistique de défaites
-				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-					var pseudo = serveur_jeu.pseudos[joueur]
-					var nbLoses = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbLose"])
-					db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbLoses[0].nbLose+1)+"WHERE U.username like "+pseudo+";")
+#				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+#					var pseudo = serveur_jeu.pseudos[joueur]
+#					var nbLoses = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbLose"])
+#					db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbLoses[0].nbLose+1)+"WHERE U.username like "+pseudo+";")
+				nb_double = 0
+				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 	
 	print("Player %d win" % joueur)
 	# Maj de la statistique de victoires du joueur
 	var pseudo = serveur_jeu.pseudos[joueur]
-	var nbWins = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbWin"])
-	db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbWins[0].nbWins+1)+"WHERE U.username like "+pseudo)
+#	var nbWins = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbWin"])
+#	db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbWins[0].nbWins+1)+"WHERE U.username like "+pseudo)
 	emit_signal("fin_partie", serveur_jeu.code)
 
 func vente_res(id, id_case, serveur_jeu):

@@ -365,15 +365,15 @@ position = Vector2( 641, 0 )
 position = Vector2( 0, 2.82837 )
 texture = ExtResource( 44 )
 
+[node name="chance_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 37 )]
+position = Vector2( 483, 0 )
+
 [node name="bleu_1" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 325, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/bleu_1"]
 show_behind_parent = true
 texture = ExtResource( 21 )
-
-[node name="chance_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 37 )]
-position = Vector2( 483, 0 )
 
 [node name="luxe" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 167, 0 )
@@ -559,7 +559,6 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
-visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
 position = Vector2( -3.56348, 14.2544 )
@@ -596,7 +595,6 @@ texture_pressed = ExtResource( 68 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
 [connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]

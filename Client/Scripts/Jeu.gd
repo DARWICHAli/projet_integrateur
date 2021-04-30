@@ -185,10 +185,11 @@ func _on_data_partie ():
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
 			
 			cases[obj.data3].show_upgrade()
-			if (obj.data2 == 0):
-				get_node("Pion").payer(obj.data4)
-			else:
-				get_node("Pion"+str(obj.client)).payer(obj.data4)
+#			if (obj.data2 == 0):
+#				get_node("Pion").payer(obj.data4)
+#			else:
+#				get_node("Pion"+str(obj.client)).payer(obj.data4)
+			# Pas d'enregistrement dans le client pour le moment (ou tout changer)
 			
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
@@ -198,13 +199,39 @@ func _on_data_partie ():
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
-			
+		Structure.PacketType.MAJ_HYPOTHEQUE:
+			if(obj.data4 == 0):
+				print("HYPOTHEQUE !")
+				print("La propriete %d est hypothequee par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
+			else:
+				print("DE-HYPOTHEQUE !")
+				print("La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3])
+			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.GO_PRISON:
 			print("Joueur %d est deroute en prison !" % [obj.client])
-			# TODO afficher le joueur en prison
+			if obj.client == 0:
+				get_node("Pion").goto_pos_prison()
+			else:
+				get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+		Structure.PacketType.OUT_PRISON:
+			print("Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
+		Structure.PacketType.FREE_OUT_PRISON:
+			print("DOUBLE !")
+			print("Joueur %d sort de prison !" % [obj.client])
+		Structure.PacketType.TAXE:
+			print("Joueur %d paye une taxe !" % [obj.client])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
+		Structure.PacketType.REP_STATS:
+			print("stats")
+			print(obj.data)
+		Structure.PacketType.ARGENT_NOUV_TOUR:
+			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
 			match int(obj.client):
@@ -224,6 +251,9 @@ func _on_data_partie ():
 					emit_signal("signal_resultat_lancer_de7", int(obj.data))
 				7:
 					emit_signal("signal_resultat_lancer_de8", int(obj.data))
+		Structure.PacketType.CACHE_JOUEUR:
+			print("Suppression du joueur %d." % obj.data)
+			supprimer_joueur(obj.data)
 		_:
 			print('autre paquet reçu')
 
@@ -284,8 +314,8 @@ func _on_fin_de_tour_pressed():
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_acheter_pressed():
-	if (joueur.case.acheter(joueur) == 0):
-		return
+#	if (joueur.case.acheter(joueur) == 0):
+#		return
 	print('envoi requête acheter')
 	var structure = Structure.new()
 	structure.set_requete_acheter()
@@ -300,7 +330,7 @@ func _on_construire_pressed():
 func _on_vente_pressed():
 	print('envoi requête de vente')
 	var structure = Structure.new()
-	structure.set_requete_vendre()
+	structure.set_requete_vendre(21)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_start_pressed():
@@ -331,3 +361,74 @@ func sig_msg(text, username, index):
 	structure.set_chat_message(text, username, index)
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
+
+func fin_dep_go_prison():
+	print('envoi requête de fin dep go prison')
+	var structure = Structure.new()
+	structure.set_fin_dep_go_prison()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_reclamer_pressed():
+	print('envoi requête de demande de rente')
+	var structure = Structure.new()
+	structure.set_requete_reclamer()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_connexion_retour_connexion():
+	$menu/connexion.hide()
+	$menu/background.show()
+
+func _on_connexion_inscription_conn():
+	$menu/connexion.hide()
+	$menu/Form.show()
+
+func _on_Form_retour_form():
+	$menu/Form.hide()
+	$menu/connexion.show()
+
+func _on_connexion_connection():
+	var mail = $"menu/connexion/formule/mail".text
+	var mdp = $"menu/connexion/formule/mdp".text
+	var structure = Structure.new()
+	structure.set_requete_connexion(mail,mdp)
+	envoyer_message(client_lobby, structure.to_bytes())
+
+func tour_plus_un():
+	print('envoi requête de plus un tour')
+	var structure = Structure.new()
+	structure.set_requete_tour_plus_un()
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_deconnexion_pressed():
+	pass # Replace with function body.
+
+func _on_Form_exit_on_success():
+	$menu/Form/success.hide()
+	$menu/Form.hide()
+	$menu/connexion.show()
+
+func supprimer_joueur(n_pion):
+	print(n_pion)
+	if n_pion==0:
+		get_node("Pion/Sprite").hide()
+		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
+	else:
+		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
+		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
+
+func _on_hypotheque_pressed():
+	print('envoi requête hypotheque')
+	var structure = Structure.new()
+	structure.set_requete_hypothequer(21)
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_info_joueur_stats_pressed(player):
+	var structure = Structure.new()
+	structure.set_requete_consult_stats(player)
+	envoyer_message(client_partie, structure.to_bytes())
+
+func _on_abandon_pressed(): 
+	var structure = Structure.new()
+	structure.set_requete_abandonner()
+	client_partie.disconnect_from_host(0, "Pas de problème")
+	$menu.show()

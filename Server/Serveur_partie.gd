@@ -58,6 +58,15 @@ var joueur_prison = []
 var nbr_essai_double = []
 # Prix de la prison
 var prix_prison = 50
+# Booléen si le proprio à répondu
+var reponse_proprio
+# Booléen si le rentier à déjà réclamer 1 fois
+var proprio_a_reclamer
+# Numéro du joueur qui est le propriétaire
+var attente_proprio
+
+
+
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -199,8 +208,6 @@ func upgrade(id):
 				return 10
 			else:
 				cases_tmp.append(plateau[i])
-	# TODO2 Après regroupement des propriètés par couleurs, vérifier si toutes les proprio appartiennent au joueur
-	# Si non, erreur return nombre positif + ajouter l'erreur dans le type de paquet erreur (cf client)
 	if (case.niveau_case != 5):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):

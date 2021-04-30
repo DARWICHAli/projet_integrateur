@@ -89,11 +89,14 @@ func _on_jeu_signal_resultat_lancer_de7(resultat : int):
 	move(resultat)
 func _on_jeu_signal_resultat_lancer_de8(resultat : int):
 	move(resultat)
-	
 
 #============== Fonctions =================
 func pos_suivante():
 	return get_parent().cases[(case.id+1)%40].get_node("Pos").get_child(self.id).get_global_position()
+
+func goto_pos_prison():
+	var pos_prison = get_parent().get_node("Plateau/cases/cote_haut/Prison/Pos_prison").get_child(self.id).get_global_position()
+	position = pos_prison
 
 func move(steps):
 	self.dep_cases = steps;
