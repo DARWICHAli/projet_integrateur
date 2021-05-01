@@ -5,7 +5,7 @@ class_name Structure
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, DESTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
-ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
+ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
 
 var type
 var data
@@ -24,7 +24,7 @@ func set_requete_rente(argent, id, proprio, prix):
 func set_requete_erreur(code):
 	self.type = PacketType.ERREUR
 	self.data = code
-	
+
 func set_requete_reponse_login(code):
 	self.type = PacketType.REPONSE_LOGIN
 	self.data = code
@@ -32,12 +32,12 @@ func set_requete_reponse_login(code):
 func set_requete_consult_stats(player):
 	self.type = PacketType.STATS_CONSULT
 	self.data = player
-	
+
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT
 	self.data = argent
 	self.client = id
-	
+
 func set_requete_maj_achat(argent, proprio, nbr_prop, prix):
 	self.type = PacketType.MAJ_ACHAT
 	self.data = argent
@@ -50,6 +50,13 @@ func set_requete_maj_vente(argent, id, nbr_prop, prix):
 	self.data = argent
 	self.data2 = nbr_prop
 	self.data3 = prix
+	self.client = id
+
+func set_requete_tirer_carte(argent, id, prix_gain, carte):
+	self.type = PacketType.TIRER_CARTE
+	self.data = argent
+	self.data2 = prix_gain
+	self.data3 = carte
 	self.client = id
 
 func set_requete_go_prison(id):

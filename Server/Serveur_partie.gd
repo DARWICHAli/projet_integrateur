@@ -64,9 +64,10 @@ var reponse_proprio
 var proprio_a_reclamer
 # Numéro du joueur qui est le propriétaire
 var attente_proprio
-
-
-
+# Tableau de booléen indiquant si le joueur possède une carte sortie de prison
+var sortie_prison = [0,0,0,0,0,0,0,0]
+# Stocke le resultat variable pour la carte tirée
+var temp_carte
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -109,7 +110,11 @@ func init_plateau():
 			plateau[i].set_prison()
 		elif i == 30:
 			plateau[i].set_aller_prison()
-		elif i == 2 or i == 7 or i == 10 or i == 17 or i == 20 or i == 22 or i == 32 or i == 36:
+		elif i == 2 or i == 17 or i == 32:
+			plateau[i].set_comm()
+		elif i == 7 or i == 22 or i == 36:
+			plateau[i].set_chance()
+		elif i == 20:
 			plateau[i].set_autre()
 		elif i == 4 or i == 38:
 			plateau[i].set_taxe(i)
@@ -327,6 +332,57 @@ func downgrade(id, case):
 	else:
 		print("La case est à son niveau minimum.")
 		return 14
-	
 
-	
+func tirer_carte(id, comm_or_chance, double_verif):
+	var rand = RandomNumberGenerator.new()
+	rand.randomize()
+	var carte = rand.randi_range(1, 5)
+	if(comm_or_chance):
+		match carte:
+			1: # Carte sortie de prison
+				if(sortie_prison[id] == 1):
+					return 0 # Carte deja possedee
+				sortie_prison[id] = 1
+			2: # Amende petite triche
+				temp_carte = 50
+				argent_joueur[id] -= temp_carte
+			3: # Favoriser par un prof
+				temp_carte = 150
+				argent_joueur[id] += temp_carte
+			4: # Payer restaurant pour tout l'amphitheatre
+				temp_carte = list_joueurs.size() * 20
+				argent_joueur[id] -= temp_carte
+			5: # Le chef reçoit une somme pour participation avec le groupe de TD
+				temp_carte = list_joueurs.size() * 20
+				argent_joueur[id] += temp_carte
+	else:
+		match carte:
+			1: # Carte sortie de prison
+				if(sortie_prison[id] == 1):
+					return 0 # Carte deja possedee
+				sortie_prison[id] = 1
+			2: # Aller prison
+				return -1
+			3: # Amende conseil de discipline triche de propriétés
+				temp_carte = 0
+				for i in range(40):
+					if (plateau[i].type == Cases.CasesTypes.PROPRIETE):
+						temp_carte += plateau[i].niveau_case
+				argent_joueur[id] -= temp_carte*30
+				return -2
+			4: # Si double avec cette carte, il touche 20 fois son double, sinon il paie 2
+				#if(double_verif == 1 or double_verif == 4)	
+				for i in [1,4,9,16,25,36]:
+					if(i == double_verif):
+						temp_carte = 20*sqrt(double_verif)*2
+						argent_joueur[id] += temp_carte
+						return -3
+					else:
+						temp_carte = 10*double_verif
+						argent_joueur[id] -= temp_carte
+						return -4
+			5: # Controleur du tram -> amende
+				temp_carte = 90
+				argent_joueur[id] -= temp_carte
+				return -5
+	return carte

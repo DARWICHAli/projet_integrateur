@@ -2,7 +2,7 @@ extends Node
 
 class_name Cases
 
-enum CasesTypes {DEPART, ALLER_PRISON, PROPRIETE, PRISON, TAXE, AUTRE}
+enum CasesTypes {DEPART, ALLER_PRISON, PROPRIETE, PRISON, TAXE, COMM, CHANCE, AUTRE}
 enum PropTypes {GARE, BRUN, BLEU_CIEL, VIOLET, ORANGE, ROUGE, JAUNE, VERT, BLEU_FONCE, COMPAGNIE}
 
 var indice
@@ -35,10 +35,16 @@ func set_aller_prison():
 
 func set_taxe(i):
 	type = CasesTypes.TAXE
-	if i == 2:
+	if i == 4:
 		self.prix = 50
 	else:
 		self.prix = 150
+
+func set_comm():
+	type = CasesTypes.COMM
+	
+func set_chance():
+	type = CasesTypes.CHANCE
 
 func set_autre():
 	type = CasesTypes.AUTRE

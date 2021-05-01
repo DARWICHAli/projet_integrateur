@@ -355,8 +355,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 0.5#lancer_de()
-			var de_deux = 0.5#lancer_de()
+			var de_un = 2#lancer_de()
+			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
@@ -364,8 +364,7 @@ func partie(serveur_jeu : Serveur_partie):
 			else:
 				nb_double += 1	
 			if nb_double == 3:
-				pass
-				#goto_prison = 1
+				goto_prison = 1
 			
 			var current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# current_case -> case sur laquelle le joueur en cours de traitement se trouve
@@ -412,13 +411,26 @@ func partie(serveur_jeu : Serveur_partie):
 			print(current_case.sous_type)
 			print("------------------")
 			
+			if(current_case.type == Cases.CasesTypes.COMM or current_case.type == Cases.CasesTypes.CHANCE):
+				var status
+				if(current_case.type == Cases.CasesTypes.COMM):
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
+					if (status == -1):
+						goto_prison = 1
+				else:
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
+				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
+				for client in serveur_jeu.list_joueurs:
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				
+			
 			if(current_case.type == Cases.CasesTypes.TAXE):
 				serveur_jeu.taxe(serveur_jeu.attente_joueur)
 				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
-			# ALLER EN PRISON POUR TRIPLE DOUBLE
+			# ALLER EN PRISON POUR TRIPLE DOUBLE OU CARTE ALLER PRISON
 			if(goto_prison == 1):
 				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				structure.set_requete_go_prison(serveur_jeu.attente_joueur)
