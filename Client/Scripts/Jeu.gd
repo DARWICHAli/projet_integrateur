@@ -418,7 +418,7 @@ func _on_start_pressed():
 
 func _on_sign_in_pressed():
 	$menu/background.hide()
-	$menu/Form.show()
+	$menu/connexion.show()
 
 func _on_Form_inscription():
 	var mail = $"menu/Form/formule/mail".text
