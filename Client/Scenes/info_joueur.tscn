@@ -98,7 +98,6 @@ margin_top = 3815.0
 margin_bottom = 4356.0
 
 [node name="panelPlayer" type="Control" parent="ScrollContainer"]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelPlayer"]
 margin_top = 1.88776
@@ -449,7 +448,6 @@ __meta__ = {
 }
 
 [node name="confirmation" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
-visible = false
 margin_left = 223.0
 margin_top = 1751.0
 margin_right = 1050.0

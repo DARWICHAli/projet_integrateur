@@ -19,6 +19,8 @@ onready var service = preload("res://GFX/cases_bon_sens/case_service.png")
 onready var vert = preload("res://GFX/cases_bon_sens/case_vert.png")
 onready var gare = preload("res://GFX/cases_bon_sens/gare.png")
 
+var prop
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
