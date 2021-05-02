@@ -70,6 +70,8 @@ var sortie_prison = []
 var temp_carte
 # Warning dernière chance faillite
 var warning = []
+# Tableau de ventes selon joueur
+var ventes = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -98,11 +100,12 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		#self.argent_joueur.append(200)
+		self.argent_joueur.append(10000)
 		self.joueur_prison.append(0)
 		self.nbr_essai_double.append(0)
 		self.sortie_prison.append(0)
 		self.warning.append(0)
+		self.ventes.append(0)
 	self.attente_joueur = 0
 
 func init_plateau():
@@ -217,7 +220,7 @@ func upgrade(id):
 				return 11
 			else:
 				cases_tmp.append(plateau[i])
-	if (case.niveau_case != 5):
+	if (case.niveau_case != 4):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):
 				print("Le joueur n'a pas assez d'argent pour une maison.")
@@ -250,7 +253,6 @@ func upgrade(id):
 
 func vendre(id, case):
 	print("vendre")
-	#var case = plateau[position_joueur[id]]
 	var exception = 0
 	if case.type != Cases.CasesTypes.PROPRIETE:
 		print("La case n'est pas de type propriete")
@@ -260,11 +262,15 @@ func vendre(id, case):
 		exception = 4
 	if (exception != 0):
 		return exception
-	for i in position_joueur:
-		print(i)
-	print(case.indice)
-	# TODO : VENDRE SELON NIVEAU CASE ET DOWNGRADE ENSUITE
-	argent_joueur[id] += case.prix*0.8
+
+	ventes[id] = case.prix*0.8
+	for i in range(0, case.niveau_case):
+		if i == 1 or i == 2 or i == 3:
+			ventes[id] += 0.5*case.prix_maison
+		elif i == 4:
+			ventes[id] += 0.5*case.prix_hotel
+	argent_joueur[id] += ventes[id]
+	
 	case.proprio = -1
 	case.niveau_case = 0
 	case.hypotheque = 0

@@ -18,8 +18,8 @@ onready var service = preload("res://GFX/cases_bon_sens/case_service.png")
 onready var vert = preload("res://GFX/cases_bon_sens/case_vert.png")
 onready var gare = preload("res://GFX/cases_bon_sens/gare.png")
 
-var prop = 0
 var type_button = 0
+var prop = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,7 +42,6 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 			cases[i].modulate = Color(1,1,1,contraste)
 	
 	panel.show()
-	pass
 
 func _on_prop1_pressed():
 	prop_pressed(brun, 0, 2, 0.4, 1)
@@ -198,6 +197,7 @@ func _on_exit2_pressed():
 
 func _on_oui_pressed():
 	if type_button == 1:
+		print("PROP : " + str(prop))
 		get_tree().get_root().get_node("jeu").vendre(prop)
 	elif type_button == 2:
 		get_tree().get_root().get_node("jeu").hypothequer(prop)

@@ -24,11 +24,12 @@ size = 100
 font_data = ExtResource( 13 )
 
 [node name="infobox1" type="Container"]
-margin_right = 1250.0
-margin_bottom = 541.0
+anchor_right = 0.325521
+anchor_bottom = 0.250463
+rect_min_size = Vector2( 1234, 544 )
 script = ExtResource( 14 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }
 
 [node name="info_joueur" type="TextureButton" parent="."]

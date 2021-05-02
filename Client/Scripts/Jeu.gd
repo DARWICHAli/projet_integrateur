@@ -327,6 +327,8 @@ func _on_data_partie ():
 				else:
 					print("Le joueur %d l'a mis en faillite !" % [obj.data])
 					print(obj.data2)
+		Structure.PacketType.GAGNE:
+			print("VOUS AVEZ GAGNE ! FELICITATION !")
 		_:
 			print('autre paquet reçu')
 
@@ -435,15 +437,15 @@ func sig_msg(text, username, index):
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
 
-####### Fonctions pour info ########
+####### Fonctions pour boutons de l'infobox ########
 
-func hypotheque(id_case):
+func hypothequer(id_case):
 	print('envoi requête hypotheque')
 	var structure = Structure.new()
 	structure.set_requete_hypothequer(0)
 	envoyer_message(client_partie, structure.to_bytes())
 
-func vente(id_case):
+func vendre(id_case):
 	print('envoi requête de vente')
 	var structure = Structure.new()
 	structure.set_requete_vendre(id_case)

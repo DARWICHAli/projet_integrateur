@@ -560,11 +560,11 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
+visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
-visible = false
 position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]

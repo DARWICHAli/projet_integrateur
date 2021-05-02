@@ -549,6 +549,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.next_player()
 	
 	print("Player %d win" % joueur)
+	structure.set_requete_gagne()
+	envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 	# Maj de la statistique de victoires du joueur
 	var pseudo = serveur_jeu.pseudos[joueur]
 #	var nbWins = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbWin"])
@@ -560,7 +562,7 @@ func vente_res(id, id_case, serveur_jeu):
 	var structure = Structure.new()
 	var status = serveur_jeu.vendre(id, case)
 	if(status == 0):
-		structure.set_requete_maj_vente(serveur_jeu.argent_joueur[id], id, case.indice, case.prix)
+		structure.set_requete_maj_vente(serveur_jeu.argent_joueur[id], id, case.indice, serveur_jeu.ventes[id])
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 	else:
