@@ -403,7 +403,7 @@ func _on_construire_pressed():
 func _on_vente_pressed():
 	print('envoi requête de vente')
 	var structure = Structure.new()
-	structure.set_requete_vendre(21)
+	structure.set_requete_vendre(0)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_start_pressed():
@@ -415,7 +415,7 @@ func _on_start_pressed():
 	structure.set_inscription_partie(444, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
-	
+
 func _on_sign_in_pressed():
 	$menu/background.hide()
 	$menu/Form.show()
@@ -435,11 +435,27 @@ func sig_msg(text, username, index):
 	print(structure.data)
 	envoyer_message(client_partie, structure.to_bytes())
 
+####### Fonctions pour info ########
+
+func hypotheque(id_case):
+	print('envoi requête hypotheque')
+	var structure = Structure.new()
+	structure.set_requete_hypothequer(0)
+	envoyer_message(client_partie, structure.to_bytes())
+
+func vente(id_case):
+	print('envoi requête de vente')
+	var structure = Structure.new()
+	structure.set_requete_vendre(id_case)
+	envoyer_message(client_partie, structure.to_bytes())
+
 func destruction(id_case):
 	print('envoi requete de destruction')
 	var structure = Structure.new()
 	structure.set_requete_detruire(id_case)
 	envoyer_message(client_partie, structure.to_bytes())
+
+####################################
 
 func fin_dep_go_prison():
 	print('envoi requête de fin dep go prison')
@@ -499,7 +515,7 @@ func supprimer_joueur(n_pion):
 func _on_hypotheque_pressed():
 	print('envoi requête hypotheque')
 	var structure = Structure.new()
-	structure.set_requete_hypothequer(21)
+	structure.set_requete_hypothequer(0)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_info_joueur_stats_pressed(player):

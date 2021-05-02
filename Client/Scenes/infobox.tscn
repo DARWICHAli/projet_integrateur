@@ -333,7 +333,7 @@ margin_bottom = 20.0
 [connection signal="pressed" from="prop14" to="." method="_on_prop14_pressed"]
 [connection signal="pressed" from="prop15" to="." method="_on_prop15_pressed"]
 [connection signal="pressed" from="prop16" to="." method="_on_prop16_pressed"]
-[connection signal="pressed" from="prop18" to="." method="_on_prop17_pressed"]
+[connection signal="pressed" from="prop18" to="." method="_on_prop18_pressed"]
 [connection signal="pressed" from="prop19" to="." method="_on_prop19_pressed"]
 [connection signal="pressed" from="prop21" to="." method="_on_prop21_pressed"]
 [connection signal="pressed" from="prop23" to="." method="_on_prop23_pressed"]
