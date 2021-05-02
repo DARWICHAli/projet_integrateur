@@ -28,7 +28,7 @@ var attente_joueur = 0
 # Numéro de cases des joueurs
 const position_joueur = []
 # Argent des joueurs
-const argent_joueur = []
+const argent_joueur = [200, 2]
 # Tableau représentant les cases du jeu
 var plateau = [
 Cases.new(), Cases.new(), 
@@ -65,9 +65,11 @@ var proprio_a_reclamer
 # Numéro du joueur qui est le propriétaire
 var attente_proprio
 # Tableau de booléen indiquant si le joueur possède une carte sortie de prison
-var sortie_prison = [0,0,0,0,0,0,0,0]
+var sortie_prison = []
 # Stocke le resultat variable pour la carte tirée
 var temp_carte
+# Warning dernière chance faillite
+var warning = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
 	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
@@ -96,9 +98,11 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		self.argent_joueur.append(10000)
+		#self.argent_joueur.append(200)
 		self.joueur_prison.append(0)
 		self.nbr_essai_double.append(0)
+		self.sortie_prison.append(0)
+		self.warning.append(0)
 	self.attente_joueur = 0
 
 func init_plateau():
@@ -316,7 +320,7 @@ func downgrade(id, case):
 				if abs(case_iter.niveau_case - (case.niveau_case - 1)) >= 2:
 					print("Vous devez détruire uniformement")
 					return 13
-			argent_joueur[id] += 0.8*case.prix_maison
+			argent_joueur[id] += 0.5*case.prix_maison
 			case.niveau_case -= 1
 			print("Maison détruite !")
 			return -1
@@ -325,7 +329,7 @@ func downgrade(id, case):
 				if abs(case_iter.niveau_case - (case.niveau_case - 1)) >= 2:
 					print("Vous devez détruire uniformement")
 					return 13
-			argent_joueur[id] += 0.8*case.prix_hotel
+			argent_joueur[id] += 0.5*case.prix_hotel
 			case.niveau_case -= 1
 			print("Hotel détruit !")
 			return -2	
@@ -386,3 +390,13 @@ func tirer_carte(id, comm_or_chance, double_verif):
 				argent_joueur[id] -= temp_carte
 				return -5
 	return carte
+
+func leguer(donneur, receveur):
+	var list_prop = []
+	for i in range(40):
+		if (plateau[i].type == Cases.CasesTypes.PROPRIETE and plateau[i].proprio == donneur):
+			plateau[i].proprio = receveur
+			for j in range(0, plateau[i].niveau_case):
+				downgrade(receveur, plateau[i])
+			list_prop.append(plateau[i].indice)
+	return list_prop

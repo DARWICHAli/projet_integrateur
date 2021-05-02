@@ -92,7 +92,7 @@ func _on_data_lobby ():
 			if (obj.data2 == 0):
 				joueur = get_node("Pion")
 			else:
-				joueur = get_node("Pion"+str(obj.data2))
+				joueur = get_node("Pion"+str(obj.data2+1))
 			rejoindre_partie(obj.data)
 			nb_joueurs = obj.client
 			affiche_joueur(nb_joueurs)
@@ -308,6 +308,25 @@ func _on_data_partie ():
 				-5:
 					print("OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2])
 					#get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				_:
+					print("Carte inconnue !")
+		Structure.PacketType.PERDRE:
+			print("ID : " + str(self.joueur.id))
+			if(self.joueur.id == obj.client):
+				print("VOUS AVEZ PERDU !")
+				if(obj.data == -1):
+					print("La banque vous a mis en faillite !")
+				else:
+					print("Le joueur %d vous a mis en faillite !" % [obj.data])
+					print(obj.data2)
+				joueur.present = 0
+			else:
+				print("Le joueur %d a perdu !" % [obj.client])
+				if(obj.data == -1):
+					print("La banque l'a mis en faillite !")
+				else:
+					print("Le joueur %d l'a mis en faillite !" % [obj.data])
+					print(obj.data2)
 		_:
 			print('autre paquet reçu')
 
@@ -473,6 +492,7 @@ func supprimer_joueur(n_pion):
 		get_node("Pion/Sprite").hide()
 		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
 	else:
+		print(n_pion)
 		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
 
@@ -489,6 +509,7 @@ func _on_info_joueur_stats_pressed(player):
 
 func _on_abandon_pressed(): 
 	var structure = Structure.new()
-	structure.set_requete_abandonner()
-	client_partie.disconnect_from_host(0, "Pas de problème")
+	if (joueur.present == 1):
+		structure.set_requete_abandonner()
+		client_partie.disconnect_from_host(0, "Pas de problème")
 	$menu.show()

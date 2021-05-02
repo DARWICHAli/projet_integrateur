@@ -10,6 +10,7 @@ var dep_cases = 0
 var prisonnier = false
 var new_pos
 var pseudo = "meilleur joueur"
+var present = 1
 
 onready var chat = get_node("../chatbox")
 

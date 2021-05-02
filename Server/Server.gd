@@ -15,6 +15,8 @@ var sem = Semaphore.new()
 const serveurs_partie = []
 #tableau de stockage des clients qui se connectent sur le lobby
 var list_clients=[]
+# Semaphore faillite
+#var sem_faillite = Semaphore.new()
 
 var key = load("res://unistrapoly_key.key")
 var cert = load("res://unistrapoly_certif.crt")
@@ -220,6 +222,8 @@ func _close_request_jeu (id, code, reason):
 	print("SERVEUR PARTIE : Client %d disconnecting with code: %d, reason: %s" % [id, code, reason])
 	
 func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
+	if(serveur_jeu.list_joueurs.find(id) == -1):
+		return
 	supprimer_joueur(id, serveur_jeu)
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
 	if serveur_jeu.list_joueurs.size() == 0:
@@ -355,7 +359,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 2#lancer_de()
+			var de_un = 1#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -390,6 +394,7 @@ func partie(serveur_jeu : Serveur_partie):
 					structure.set_requete_out_prison(serveur_jeu.attente_joueur, serveur_jeu.prix_prison)
 					for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+					action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
 			
 			if(goto_prison != 1):
 				serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, res)
@@ -414,14 +419,15 @@ func partie(serveur_jeu : Serveur_partie):
 			if(current_case.type == Cases.CasesTypes.COMM or current_case.type == Cases.CasesTypes.CHANCE):
 				var status
 				if(current_case.type == Cases.CasesTypes.COMM):
-					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
 					if (status == -1):
 						goto_prison = 1
 				else:
-					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
 				for client in serveur_jeu.list_joueurs:
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
 				
 			
 			if(current_case.type == Cases.CasesTypes.TAXE):
@@ -429,6 +435,7 @@ func partie(serveur_jeu : Serveur_partie):
 				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
 			
 			# ALLER EN PRISON POUR TRIPLE DOUBLE OU CARTE ALLER PRISON
 			if(goto_prison == 1):
@@ -506,6 +513,7 @@ func partie(serveur_jeu : Serveur_partie):
 								structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
 								for client in serveur_jeu.list_joueurs:
 									envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+								action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)
 							else:
 								structure.set_requete_erreur(status)
 								envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
@@ -521,6 +529,7 @@ func partie(serveur_jeu : Serveur_partie):
 							structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
 							for client in serveur_jeu.list_joueurs:
 								envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+							action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)
 						else:
 							structure.set_requete_erreur(status)
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
@@ -590,9 +599,9 @@ func destruction_res(id, id_case, serveur_jeu):
 	if(status < 0):
 		var price
 		if (status == -1):
-			price = 0.8*case.prix_maison
+			price = 0.5*case.prix_maison
 		else:
-			price = 0.8*case.prix_hotel
+			price = 0.5*case.prix_hotel
 		structure.set_requete_maj_destruction(serveur_jeu.argent_joueur[id], id, case.indice, price, status)
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
@@ -614,3 +623,15 @@ func supprimer_joueur(id, serveur_jeu):
 	serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+		
+func action_faillite(id, cause, serveur_jeu):
+	if serveur_jeu.argent_joueur[id] < 0 and serveur_jeu.warning[id] == 0:
+		serveur_jeu.warning[id] = 1
+		var structure = Structure.new()
+		var list_prop = []
+		if cause != -1:
+			list_prop = serveur_jeu.leguer(id, cause)
+		structure.set_requete_perdre(id, cause, list_prop)
+		for iter_client in serveur_jeu.list_joueurs:
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), iter_client)
+		supprimer_joueur(serveur_jeu.list_joueurs[id], serveur_jeu)

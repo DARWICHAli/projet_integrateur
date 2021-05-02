@@ -5,7 +5,7 @@ class_name Structure
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, DESTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
-ERREUR, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
+ERREUR, PERDRE, INSCRIPTION, LOGIN, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
 
 var type
 var data
@@ -13,6 +13,9 @@ var data2
 var data3
 var data4
 var client
+
+func set_requete_abandonner():
+	self.type = PacketType.ABANDONNER
 
 func set_requete_rente(argent, id, proprio, prix):
 	self.type = PacketType.RENTE
@@ -134,6 +137,12 @@ func set_requete_maj_destruction(argent, id, nbr_prop, gain, status):
 	self.data2 = nbr_prop
 	self.data3 = gain
 	self.data4 = status
+	self.client = id
+
+func set_requete_perdre(id, cause, list_prop):
+	self.type = PacketType.PERDRE
+	self.data = cause
+	self.data2 = list_prop
 	self.client = id
 
 func set_inscription_partie (code_partie : int = 0, nb_joueurs : int = 1):
