@@ -100,10 +100,22 @@ func _on_data_lobby ():
 			match obj.data:
 				0:# 0 = pas d'erreur, insertion effectuée avec succès
 					print("Inscription confirmée")
-					$menu/background.show()
-					$menu/Form.hide()
+					$menu/Form/success.popup()
 				1:
 					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/Form/error.popup()
+					
+		Structure.PacketType.REPONSE_LOGIN:
+			match obj.data:
+				1:
+					print("Erreur lors de l'inscription, réessayez ultérieurement")
+					$menu/connexion/error.popup_centered()
+				
+				_: #pas d'erreur, connexion effectuée avec succès, data est le pseudo du joueur
+					print("Connecté sous le nom de "+obj.data)
+					$menu/connexion/success.popup()
+					$menu/background/deconnexion.show()
+
 		_:
 			print('autre paquet reçu')
 
@@ -473,7 +485,10 @@ func _on_reclamer_pressed():
 
 func _on_connexion_retour_connexion():
 	$menu/connexion.hide()
+	$menu/background/sign_in.hide()
+	$menu/background/deconnexion.show()
 	$menu/background.show()
+	
 
 func _on_connexion_inscription_conn():
 	$menu/connexion.hide()

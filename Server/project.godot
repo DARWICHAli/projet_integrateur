@@ -36,14 +36,6 @@ config/name="Server"
 run/main_scene="res://Server.tscn"
 config/icon="res://icon.png"
 
-[editor_plugins]
-
-enabled=PoolStringArray( "godot-sqlite" )
-
-[network]
-
-ssl/certificates="res://unistrapoly_certif.crt"
-
 [rendering]
 
 quality/driver/driver_name="GLES2"

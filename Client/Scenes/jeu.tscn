@@ -1,4 +1,4 @@
-[gd_scene load_steps=76 format=2]
+[gd_scene load_steps=78 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -75,6 +75,8 @@
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://GFX/Bouton/bar_boutons.png" type="Texture" id=74]
 [ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
+[ext_resource path="res://GFX/Bouton/bouton_deconnexion_normal.png" type="Texture" id=76]
+[ext_resource path="res://GFX/Bouton/bouton_deconnexion_pressed.png" type="Texture" id=77]
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -558,13 +560,15 @@ __meta__ = {
 }
 
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
-
-[node name="menu" type="Node2D" parent="."]
 visible = false
 
+[node name="menu" type="Node2D" parent="."]
+
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
+visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
+visible = false
 position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
@@ -596,6 +600,19 @@ margin_bottom = 1164.77
 rect_scale = Vector2( 3, 3 )
 texture_normal = ExtResource( 69 )
 texture_pressed = ExtResource( 68 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="deconnexion" type="TextureButton" parent="menu/background"]
+visible = false
+margin_left = 1912.66
+margin_top = 1104.77
+margin_right = 2102.66
+margin_bottom = 1164.77
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 76 )
+texture_pressed = ExtResource( 77 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

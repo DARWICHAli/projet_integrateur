@@ -25,10 +25,10 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = true
-#	db.open_db()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = true
+	db.open_db()
 #
 #	stats("tthirtle2o")
 	
@@ -165,6 +165,7 @@ func _on_data_lobby (id_client : int):
 				structure.set_requete_reponse_login(array[0].username)
 				
 			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+
 		_:
 			print('autre type de paquet reçu')	
 
