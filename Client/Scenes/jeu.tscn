@@ -1,4 +1,4 @@
-[gd_scene load_steps=78 format=2]
+[gd_scene load_steps=80 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -77,6 +77,11 @@
 [ext_resource path="res://Scenes/connexion.tscn" type="PackedScene" id=75]
 [ext_resource path="res://GFX/Bouton/bouton_deconnexion_normal.png" type="Texture" id=76]
 [ext_resource path="res://GFX/Bouton/bouton_deconnexion_pressed.png" type="Texture" id=77]
+[ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=78]
+
+[sub_resource type="DynamicFont" id=1]
+size = 80
+font_data = ExtResource( 78 )
 
 [node name="jeu" type="Node2D"]
 script = ExtResource( 2 )
@@ -86,6 +91,17 @@ visible = false
 position = Vector2( 1925, 1071 )
 scale = Vector2( 2.09844, 2.16852 )
 texture = ExtResource( 8 )
+
+[node name="annonce" type="RichTextLabel" parent="."]
+margin_left = 16.0
+margin_top = 132.0
+margin_right = 608.0
+margin_bottom = 912.0
+custom_fonts/normal_font = SubResource( 1 )
+text = "..."
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="chatbox" parent="." instance=ExtResource( 73 )]
 margin_left = 16.4983
