@@ -113,6 +113,7 @@ func _on_data_lobby ():
 				
 				_: #pas d'erreur, connexion effectuée avec succès, data est le pseudo du joueur
 					print("Connecté sous le nom de "+obj.data)
+					self.mon_nom = obj.data
 					$menu/connexion/success.popup()
 					$menu/background/deconnexion.show()
 
@@ -512,7 +513,7 @@ func tour_plus_un():
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_deconnexion_pressed():
-	pass # Replace with function body.
+	self.mon_nom = "Client 1"
 
 func _on_Form_exit_on_success():
 	$menu/Form/success.hide()
