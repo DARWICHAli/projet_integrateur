@@ -361,6 +361,7 @@ rect_scale = Vector2( 0.7, 0.7 )
 mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 15 )
 texture_pressed = ExtResource( 15 )
+
 [connection signal="pressed" from="info_joueur" to="." method="_on_info_joueur_pressed"]
 [connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]
 [connection signal="pressed" from="prop1" to="." method="_on_prop1_pressed"]
@@ -391,4 +392,3 @@ texture_pressed = ExtResource( 15 )
 [connection signal="pressed" from="prop35" to="." method="_on_prop35_pressed"]
 [connection signal="pressed" from="prop37" to="." method="_on_prop37_pressed"]
 [connection signal="pressed" from="prop39" to="." method="_on_prop39_pressed"]
-[connection signal="pressed" from="jailbreak" to="." method="_on_jailbreak_pressed"]

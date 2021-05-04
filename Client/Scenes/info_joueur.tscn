@@ -62,6 +62,7 @@ __meta__ = {
 }
 
 [node name="infobox1" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1250.0
@@ -668,6 +669,15 @@ margin_right = 1150.0
 margin_bottom = 921.0
 custom_fonts/font = SubResource( 4 )
 text = "test"
+
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox1" to="." method="_on_infobox1_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox2" to="." method="_on_infobox2_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox3" to="." method="_on_infobox3_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox4" to="." method="_on_infobox4_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox5" to="." method="_on_infobox5_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox6" to="." method="_on_infobox6_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox7" to="." method="_on_infobox7_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox8" to="." method="_on_infobox8_sig_stats"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/vendre" to="ScrollContainer/VBoxContainer/infobox1" method="_on_vendre_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/hypothequer" to="ScrollContainer/VBoxContainer/infobox1" method="_on_hypothequer_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/construire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_construire_pressed"]

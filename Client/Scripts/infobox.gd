@@ -21,6 +21,8 @@ onready var gare = preload("res://GFX/cases_bon_sens/gare.png")
 var type_button = 0
 var prop = 0
 
+signal sig_stats(infobox,player)
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -209,8 +211,12 @@ func _on_oui_pressed():
 func _on_non_pressed():
 	pass # Replace with function body.
 
+
+
+	
 func _on_LinkButton_pressed():
-	infos.show()
+	emit_signal("sig_stats",self,$nom_joueur.text)
+	
 
 func _on_jailbreak_pressed():
 	get_tree().get_root().get_node("jeu").carte_sortie_prison()
