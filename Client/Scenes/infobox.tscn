@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=1]
 [ext_resource path="res://GFX/info_joueur/prop_jaune.png" type="Texture" id=2]
@@ -14,6 +14,7 @@
 [ext_resource path="res://GFX/info_joueur/prop_orange.png" type="Texture" id=12]
 [ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=13]
 [ext_resource path="res://Scripts/infobox.gd" type="Script" id=14]
+[ext_resource path="res://GFX/info_joueur/jailbreak.png" type="Texture" id=15]
 
 [sub_resource type="DynamicFont" id=1]
 size = 100
@@ -99,6 +100,7 @@ margin_top = 260.0
 margin_right = 111.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )
 
 [node name="prop3" type="TextureButton" parent="."]
@@ -107,6 +109,7 @@ margin_top = 327.0
 margin_right = 111.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 3 )
 
 [node name="prop5" type="TextureButton" parent="."]
@@ -115,6 +118,7 @@ margin_top = 308.695
 margin_right = 664.0
 margin_bottom = 384.695
 rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 9 )
 
 [node name="prop6" type="TextureButton" parent="."]
@@ -123,6 +127,7 @@ margin_top = 260.0
 margin_right = 176.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 10 )
 
 [node name="prop8" type="TextureButton" parent="."]
@@ -131,6 +136,7 @@ margin_top = 327.0
 margin_right = 176.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 10 )
 
 [node name="prop9" type="TextureButton" parent="."]
@@ -139,6 +145,7 @@ margin_top = 395.0
 margin_right = 176.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 10 )
 
 [node name="prop11" type="TextureButton" parent="."]
@@ -147,6 +154,7 @@ margin_top = 260.0
 margin_right = 242.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 7 )
 
 [node name="prop12" type="TextureButton" parent="."]
@@ -155,6 +163,7 @@ margin_top = 264.0
 margin_right = 1100.0
 margin_bottom = 585.0
 rect_scale = Vector2( 0.15, 0.15 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 8 )
 
 [node name="prop13" type="TextureButton" parent="."]
@@ -163,6 +172,7 @@ margin_top = 327.0
 margin_right = 242.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 7 )
 
 [node name="prop14" type="TextureButton" parent="."]
@@ -171,6 +181,7 @@ margin_top = 395.0
 margin_right = 242.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 7 )
 
 [node name="prop15" type="TextureButton" parent="."]
@@ -179,6 +190,7 @@ margin_top = 259.0
 margin_right = 1151.03
 margin_bottom = 771.0
 rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 9 )
 
 [node name="prop16" type="TextureButton" parent="."]
@@ -187,6 +199,7 @@ margin_top = 260.0
 margin_right = 309.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 12 )
 
 [node name="prop18" type="TextureButton" parent="."]
@@ -195,6 +208,7 @@ margin_top = 327.0
 margin_right = 309.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 12 )
 
 [node name="prop19" type="TextureButton" parent="."]
@@ -203,6 +217,7 @@ margin_top = 395.0
 margin_right = 309.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 12 )
 
 [node name="prop21" type="TextureButton" parent="."]
@@ -211,6 +226,7 @@ margin_top = 260.0
 margin_right = 376.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 
 [node name="prop23" type="TextureButton" parent="."]
@@ -219,6 +235,7 @@ margin_top = 327.0
 margin_right = 376.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 
 [node name="prop24" type="TextureButton" parent="."]
@@ -227,6 +244,7 @@ margin_top = 395.0
 margin_right = 376.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 5 )
 
 [node name="prop25" type="TextureButton" parent="."]
@@ -235,6 +253,7 @@ margin_top = 310.65
 margin_right = 1201.0
 margin_bottom = 822.65
 rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 9 )
 
 [node name="prop26" type="TextureButton" parent="."]
@@ -243,6 +262,7 @@ margin_top = 260.0
 margin_right = 441.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 2 )
 
 [node name="prop27" type="TextureButton" parent="."]
@@ -251,6 +271,7 @@ margin_top = 330.865
 margin_right = 843.533
 margin_bottom = 406.865
 rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 11 )
 
 [node name="prop28" type="TextureButton" parent="."]
@@ -259,6 +280,7 @@ margin_top = 327.0
 margin_right = 441.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 2 )
 
 [node name="prop29" type="TextureButton" parent="."]
@@ -267,6 +289,7 @@ margin_top = 395.0
 margin_right = 441.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 2 )
 
 [node name="prop31" type="TextureButton" parent="."]
@@ -275,6 +298,7 @@ margin_top = 260.0
 margin_right = 506.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 4 )
 
 [node name="prop33" type="TextureButton" parent="."]
@@ -283,6 +307,7 @@ margin_top = 327.0
 margin_right = 506.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 4 )
 
 [node name="prop34" type="TextureButton" parent="."]
@@ -291,6 +316,7 @@ margin_top = 395.0
 margin_right = 506.0
 margin_bottom = 471.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 4 )
 
 [node name="prop35" type="TextureButton" parent="."]
@@ -299,6 +325,7 @@ margin_top = 360.596
 margin_right = 1149.84
 margin_bottom = 872.596
 rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 9 )
 
 [node name="prop37" type="TextureButton" parent="."]
@@ -307,6 +334,7 @@ margin_top = 260.0
 margin_right = 572.0
 margin_bottom = 336.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
 
 [node name="prop39" type="TextureButton" parent="."]
@@ -315,11 +343,24 @@ margin_top = 327.0
 margin_right = 572.0
 margin_bottom = 403.0
 rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
 texture_normal = ExtResource( 6 )
 
 [node name="Button" type="Button" parent="."]
 margin_right = 12.0
 margin_bottom = 20.0
+
+[node name="jailbreak" type="TextureButton" parent="."]
+visible = false
+margin_left = 927.0
+margin_top = 234.0
+margin_right = 1137.0
+margin_bottom = 507.0
+rect_min_size = Vector2( 210, 273 )
+rect_scale = Vector2( 0.7, 0.7 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
 [connection signal="pressed" from="info_joueur" to="." method="_on_info_joueur_pressed"]
 [connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]
 [connection signal="pressed" from="prop1" to="." method="_on_prop1_pressed"]
