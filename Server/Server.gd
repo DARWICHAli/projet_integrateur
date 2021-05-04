@@ -25,10 +25,10 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-	db = SQLite.new();
-	db.path="./database.db"
-	db.verbose_mode = true
-	db.open_db()
+#	db = SQLite.new();
+#	db.path="./database.db"
+#	db.verbose_mode = true
+#	db.open_db()
 #
 #	stats("tthirtle2o")
 	var pseudo = "aaa@bbb.com"
@@ -347,6 +347,9 @@ func partie(serveur_jeu : Serveur_partie):
 		while double:
 			print("\n\n")
 			print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
+			structure.set_requete_maj_tour(serveur_jeu.attente_joueur)
+			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
 			# Attente d'une demande de dé
 			serveur_jeu.reponse_joueur = false
@@ -362,8 +365,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
-			var de_deux = 0#lancer_de()
+			var de_un = 0.5#lancer_de()
+			var de_deux = 0.5#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:

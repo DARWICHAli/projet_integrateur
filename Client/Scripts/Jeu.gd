@@ -207,6 +207,13 @@ func _on_data_partie ():
 				_:
 					$annonce.text = "Erreur inconnue !"
 					print("Erreur inconnue !")
+		Structure.PacketType.MAJ_TOUR:
+			if(self.joueur.id == obj.client):
+				print("A VOTRE TOUR DE JOUER !")
+				get_node("fond_bouton/annonce_tour").text = "A VOTRE TOUR DE JOUER !"
+			else:
+				print("Joueur %d joue son tour !" % [obj.client])
+				get_node("fond_bouton/annonce_tour").text = "Joueur %d joue son tour !" % [obj.client]
 		Structure.PacketType.MAJ_ARGENT:
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
@@ -327,7 +334,6 @@ func _on_data_partie ():
 					print("Le joueur %d reçoit une carte sortie de prison !" % [obj.client])
 					$annonce.text = "Le joueur %d recevez une carte sortie de prison !" % [obj.client]
 					# TODO : afficher carte sortie de prison
-
 				2:
 					print("Le joueur %d paie une amende de %d ECTS pour petite triche !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d paie une amende de "+str([obj.client, obj.data2])+" ECTS pour petite triche !" 
@@ -347,6 +353,12 @@ func _on_data_partie ():
 				-1:
 					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
 					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
+					if obj.client == 0:
+						get_node("Pion").goto_pos_prison()
+						get_node("Pion").dep_cases = 0
+					else:
+						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+						get_node("Pion"+str(obj.client+1)).dep_cases = 0
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 				-2:
 					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
