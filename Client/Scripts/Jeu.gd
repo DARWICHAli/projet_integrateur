@@ -313,7 +313,10 @@ func _on_data_partie ():
 			$info_joueur/ScrollContainer/panelInfos/ColorRect/dernier_trophe/description.text = obj.data["descTrophy"]
 			$info_joueur/ScrollContainer/panelInfos.show()
 		
-		
+		Structure.PacketType.BCAST_PSEUDOS:
+			for i in range(1,len(nb_joueurs)):
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)).text = obj.data[i]
+			
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
 			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])

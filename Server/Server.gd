@@ -371,6 +371,12 @@ func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
 	var joueur = -1
 	var structure = Structure.new()
+	
+	# Broadcast des pseudos
+	structure.set_requete_bcast_pseudos(serveur_jeu.pseudos)
+	for client in serveur_jeu.list_joueurs:
+		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+	
 	var timer
 	var timer_reclamation
 	while joueur != serveur_jeu.attente_joueur:
