@@ -37,7 +37,7 @@ func _ready():
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	nb_joueurs=2
-	get_node("info_joueur/ScrollContainer/VBoxContainer/infobox1/jailbreak").show()
+	
 	#print('ready')
 	ready_connection()
 
@@ -334,55 +334,55 @@ func _on_data_partie ():
 			print("Suppression du joueur %d." % obj.data)
 			supprimer_joueur(obj.data)
 		Structure.PacketType.TIRER_CARTE:
-#			match obj.data3:
-#				1:
+			match obj.data3:
+				1:
 					print("Le joueur %d reçoit une carte sortie de prison !" % [obj.client])
 					$annonce.text = "Le joueur %d recevez une carte sortie de prison !" % [obj.client]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client +1) +"/jailbreak").show()
-#				2:
-#					print("Le joueur %d paie une amende de %d ECTS pour petite triche !" % [obj.client, obj.data2])
-#					$annonce.text = "Le joueur %d paie une amende de "+str([obj.client, obj.data2])+" ECTS pour petite triche !" 
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				3:
-#					print("Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2])
-#					$annonce.text = "Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				4:
-#					print("Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2])
-#					$annonce.text = "Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				5:
-#					print("Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2])
-#					$annonce.text = "Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				-1:
-#					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
-#					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
-#					if obj.client == 0:
-#						get_node("Pion").goto_pos_prison()
-#						get_node("Pion").dep_cases = 0
-#					else:
-#						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
-#						get_node("Pion"+str(obj.client+1)).dep_cases = 0
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				-2:
-#					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
-#					$annonce.text = "Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				-3:
-#					print("Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2])
-#					$annonce.text = "Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				-4:
-#					print("Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2])
-#					$annonce.text = "Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				-5:
-#					print("OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2])
-#					$annonce.text = "OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2]
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#				_:
-#					print("Carte inconnue !")
+				2:
+					print("Le joueur %d paie une amende de %d ECTS pour petite triche !" % [obj.client, obj.data2])
+					$annonce.text = "Le joueur %d paie une amende de "+str([obj.client, obj.data2])+" ECTS pour petite triche !" 
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				3:
+					print("Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2])
+					$annonce.text = "Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				4:
+					print("Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2])
+					$annonce.text = "Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				5:
+					print("Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2])
+					$annonce.text = "Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				-1:
+					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
+					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
+					if obj.client == 0:
+						get_node("Pion").goto_pos_prison()
+						get_node("Pion").dep_cases = 0
+					else:
+						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+						get_node("Pion"+str(obj.client+1)).dep_cases = 0
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				-2:
+					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
+					$annonce.text = "Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				-3:
+					print("Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2])
+					$annonce.text = "Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				-4:
+					print("Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2])
+					$annonce.text = "Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				-5:
+					print("OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2])
+					$annonce.text = "OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2]
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+				_:
+					print("Carte inconnue !")
 		Structure.PacketType.PERDRE:
 			print("ID : " + str(self.joueur.id))
 			if(self.joueur.id == obj.client):
