@@ -31,6 +31,7 @@ func _ready():
 	db.open_db()
 #
 #	stats("tthirtle2o")
+	var pseudo = "aaa@bbb.com"
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -541,11 +542,14 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# Passage au prochain joueur
 			if(double == 0):
-				# Fin de partie d'un joueur -> maj de sa statistique de défaites
-#				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-#					var pseudo = serveur_jeu.pseudos[joueur]
-#					var nbLoses = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbLose"])
-#					db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbLoses[0].nbLose+1)+"WHERE U.username like "+pseudo+";")
+				 #Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
+				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+					var pseudo    = serveur_jeu.pseudos[joueur]
+					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
+					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
+					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
+					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
+
 				nb_double = 0
 				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
@@ -556,8 +560,11 @@ func partie(serveur_jeu : Serveur_partie):
 	envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 	# Maj de la statistique de victoires du joueur
 	var pseudo = serveur_jeu.pseudos[joueur]
-#	var nbWins = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["nbWin"])
-#	db.query("UPDATE UTILISATEUR U SET nbWin="+str(nbWins[0].nbWins+1)+"WHERE U.username like "+pseudo)
+	var nbWins = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbWin"])
+	db.query("UPDATE UTILISATEUR SET nbWin='"+str(nbWins[0].nbWin+1)+"' WHERE username like '"+pseudo+"';")
+	var moneyWin = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyWin"])
+	var error     = db.query("UPDATE UTILISATEUR SET moneyWin='"+str(moneyWin[0].moneyWin + serveur_jeu.argent_joueur[joueur])+"' WHERE username = '"+pseudo+"';")
+					
 	emit_signal("fin_partie", serveur_jeu.code)
 
 func vente_res(id, id_case, serveur_jeu):
