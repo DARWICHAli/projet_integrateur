@@ -65,7 +65,7 @@ var proprio_a_reclamer
 # Numéro du joueur qui est le propriétaire
 var attente_proprio
 # Tableau de booléen indiquant si le joueur possède une carte sortie de prison
-var sortie_prison = []
+var sortie_prison = [1]
 # Stocke le resultat variable pour la carte tirée
 var temp_carte
 # Warning dernière chance faillite

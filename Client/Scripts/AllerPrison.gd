@@ -25,6 +25,6 @@ func _on_Goto_prison_body_entered(body):
 		if overlaps_body(body):
 			print("Envoi requete de fin de dep go prison......")
 			get_node("../../../..").fin_dep_go_prison()
-			body.position_case = 10
+			#body.position_case = 10
 
 #============== Fonctions =================

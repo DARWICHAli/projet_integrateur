@@ -333,6 +333,9 @@ func _on_data_jeu(id_client, serveur_jeu):
 		Structure.PacketType.DESTRUCTION:
 			print("requête reclamer reçue")
 			destruction_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
+		Structure.PacketType.CARTE_SORTIE_PRISON:
+			print("requête carte sortie prison reçue")
+			carte_sortie_prison(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
 		Structure.PacketType.TOUR_PLUS_UN:
 			print('requete tour_plus_un reçue')
 			if(serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client)):
@@ -377,6 +380,9 @@ func partie(serveur_jeu : Serveur_partie):
 		while double:
 			print("\n\n")
 			print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
+			structure.set_requete_maj_tour(serveur_jeu.attente_joueur)
+			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
 			# Attente d'une demande de dé
 			serveur_jeu.reponse_joueur = false
@@ -392,7 +398,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
+			var de_un = 30#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -419,10 +425,12 @@ func partie(serveur_jeu : Serveur_partie):
 					serveur_jeu.next_player()
 					continue
 				elif(de_un == de_deux):
-					structure.set_requete_free_out_prison(serveur_jeu.attente_joueur)
+					serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 0
+					structure.set_requete_free_out_prison(serveur_jeu.attente_joueur, 0)
 					for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				elif(serveur_jeu.nbr_essai_double[serveur_jeu.attente_joueur] == 3):
+					serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 0
 					serveur_jeu.payer_prison(serveur_jeu.attente_joueur)
 					structure.set_requete_out_prison(serveur_jeu.attente_joueur, serveur_jeu.prix_prison)
 					for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
@@ -487,11 +495,11 @@ func partie(serveur_jeu : Serveur_partie):
 			# ALLER EN PRISON POUR CASE GO_PRISON
 			if(current_case.type == Cases.CasesTypes.ALLER_PRISON):
 				passages_prison(serveur_jeu.pseudos[joueur])
-				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				serveur_jeu.reponse_joueur = false
 				serveur_jeu.packet_attendu = Structure.PacketType.FIN_DEP_GO_PRISON
 				while(serveur_jeu.packet_recu != Structure.PacketType.FIN_DEP_GO_PRISON):
 					serveur_jeu.socket.poll()
+				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				structure.set_requete_go_prison(serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs:
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
@@ -669,7 +677,16 @@ func supprimer_joueur(id, serveur_jeu):
 	serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-		
+
+func carte_sortie_prison(id, serveur_jeu):
+	print("Possession carte : " + str(serveur_jeu.sortie_prison[id]) + " joueur en prison ? " + str(serveur_jeu.joueur_prison[id]))
+	if(serveur_jeu.sortie_prison[id] == 1 and serveur_jeu.joueur_prison[id] == 1):
+		var structure = Structure.new()
+		serveur_jeu.joueur_prison[id] = 0
+		structure.set_requete_free_out_prison(id, 1)
+		for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+
 func action_faillite(id, cause, serveur_jeu):
 	if serveur_jeu.argent_joueur[id] < 0 and serveur_jeu.warning[id] == 0:
 		serveur_jeu.warning[id] = 1

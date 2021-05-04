@@ -218,5 +218,5 @@ func _on_LinkButton_pressed():
 	emit_signal("sig_stats",self,$nom_joueur.text)
 	
 
-
- # Replace with function body.
+func _on_jailbreak_pressed():
+	get_tree().get_root().get_node("jeu").carte_sortie_prison()
