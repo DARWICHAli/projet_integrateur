@@ -1,7 +1,7 @@
 extends Node2D
 
 onready var panel = $ScrollContainer/panelPlayer
-
+signal sig_stats_infos_joueur (player,infobox)
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
@@ -16,3 +16,35 @@ func _ready():
 #func _process(delta):
 #	pass
 
+
+
+func _on_infobox1_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox2_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox3_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox4_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox5_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox6_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox7_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)
+
+
+func _on_infobox8_sig_stats(infobox, player):
+	emit_signal("sig_stats_infos_joueur",player,infobox)

@@ -320,6 +320,7 @@ texture_normal = ExtResource( 6 )
 [node name="Button" type="Button" parent="."]
 margin_right = 12.0
 margin_bottom = 20.0
+
 [connection signal="pressed" from="info_joueur" to="." method="_on_info_joueur_pressed"]
 [connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]
 [connection signal="pressed" from="prop1" to="." method="_on_prop1_pressed"]

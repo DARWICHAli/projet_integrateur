@@ -294,6 +294,7 @@ func _on_data_partie ():
 		Structure.PacketType.REP_STATS:
 			print("stats")
 			print(obj.data)
+			
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
 			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
@@ -588,10 +589,6 @@ func _on_hypotheque_pressed():
 	structure.set_requete_hypothequer(0)
 	envoyer_message(client_partie, structure.to_bytes())
 
-func _on_info_joueur_stats_pressed(player):
-	var structure = Structure.new()
-	structure.set_requete_consult_stats(player)
-	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_abandon_pressed(): 
 	var structure = Structure.new()
@@ -599,3 +596,9 @@ func _on_abandon_pressed():
 		structure.set_requete_abandonner()
 		client_partie.disconnect_from_host(0, "Pas de problème")
 	$menu.show()
+
+
+func _on_info_joueur_sig_stats_infos_joueur(player, infobox):
+	var structure = Structure.new()
+	structure.set_requete_consult_stats(player)
+	envoyer_message(client_partie, structure.to_bytes())

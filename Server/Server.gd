@@ -27,12 +27,12 @@ func _ready():
 	#Communication avec la base de données
 	db = SQLite.new();
 	db.path="./database.db"
-	db.verbose_mode = true
+	db.verbose_mode = false
 	db.open_db()
 #
 #	stats("tthirtle2o")
 	var pseudo = "aaa@bbb.com"
-	
+	print(stats(pseudo))
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -62,23 +62,51 @@ func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
 	
 	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["nbWin", "nbLose", "dateInscr"])
-	var row_dict : Dictionary = {}
+	var row_dict : Dictionary = {"dateInscr":" ", "nbLose":" ", "nbWin": " ", "bestCase":" ", "lastTrophy":" ","descTrophy":" "}
 	if(len(array[0]) > 0):
 		var date = array[0].dateInscr
 		var win = array[0].nbWin
 		var lose = array[0].nbLose
 
-		var array2 = db.select_rows("(SELECT id, np, max(nb_ut) FROM (SELECT UP.idU AS id, UP.nomPion AS np, (SELECT count(UP2.nomPion) FROM UTILISE_PION UP2 WHERE UP2.nomPion LIKE UP.nomPion AND UP2.idU = UP.idU) AS nb_ut FROM UTILISE_PION UP WHERE UP.idU = id GROUP BY UP.nomPion))","",["np"])
+		var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
 		
-		if(len(array2) > 0):
-			var np = array2[0].np
-			var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
+		if(len(array3[0]) > 0):
+			var nc = array3[0].nc
 			
-			if(len(array3[0]) > 0):
-				var nc = array3[0].nc
-				row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win,  "bestPion":np, "bestCase":nc}
+			var last_trophy = last_trophy(pseudo)
+			
+			row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "bestCase":case_fav(pseudo), "lastTrophy":last_trophy[0],"descTrophy":last_trophy[1]}
+				
 	return row_dict.duplicate()
 
+func case_fav(pseudo):
+	var result = "Aucune"
+	var idU = db.select_rows("UTILISATEUR U","username  like '"+pseudo+"'", ["idU"])
+	if(len(idU) > 0):
+		var id = idU[0].idU
+		var best = db.select_rows("(SELECT AC.idU, AC.nomCase AS propriete, count(*) AS NB_ACHAT FROM ACHETE_CASE AC WHERE AC.idU = "+str(idU)+" GROUP BY AC.nomCase)","",["propriete,max(NB_ACHAT)"])
+		if(len(best) > 0):
+			result = best[0].propriete
+	return result
+	
+func last_trophy(pseudo):
+	var id =  db.select_rows("UTILISATEUR U","username  like '"+pseudo+"'", ["idU"])
+	var name ="Aucun"
+	var descr = "Aucune"
+	if(len(id)>0):
+		var idU = id[0].idU
+		var last_trophy = db.select_rows("TROPHEE_JOUEUR TJ","TJ.idU = "+str(idU),["min(TJ.dateT) AS date","idT"])
+		if(len(last_trophy) > 0):
+			var date = last_trophy[0].date
+			var idT  = last_trophy[0].idT
+		
+			var trophy = db.select_rows("TROPHEE T","T.idT = "+str(idT),["nomT","descrT"])
+			if(len(trophy)>0):
+				name=trophy[0].nomT
+				descr=trophy[0].descrT
+			
+	return [name, descr]
+	
 func passages_prison(pseudo):
 	var id = db.select_rows("UTILISATEUR U","U.username = "+pseudo,["idU"])
 	var count = db.select_rows("(SELECT count(*) as passages FROM PASSAGE_PRISON PP WHERE PP.idU = "+str(id[0].idU)+")","",["passages"])
@@ -278,9 +306,11 @@ func _on_data_jeu(id_client, serveur_jeu):
 			vente_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 			#serveur_jeu.reponse_joueur = true
 		Structure.PacketType.STATS_CONSULT:
+			print("Demande de stats")
 			var stats = stats(obj.data)
 			if(stats == null):
 				stats = {}
+			print(stats)
 			structure.set_requete_reponse_stats(stats.duplicate())
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
 			serveur_jeu.reponse_joueur = true
