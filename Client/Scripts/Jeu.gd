@@ -561,6 +561,10 @@ func tour_plus_un():
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_deconnexion_pressed():
+	print("Déconnecté")
+	$menu/connexion.show()
+	$menu/background/sign_in.show()
+	$menu/background/deconnexion.hide()
 	self.mon_nom = "Client 1"
 
 func _on_Form_exit_on_success():

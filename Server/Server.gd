@@ -440,6 +440,7 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# ALLER EN PRISON POUR TRIPLE DOUBLE OU CARTE ALLER PRISON
 			if(goto_prison == 1):
+				passages_prison(serveur_jeu.pseudos[joueur])
 				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				structure.set_requete_go_prison(serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs:
@@ -453,6 +454,7 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# ALLER EN PRISON POUR CASE GO_PRISON
 			if(current_case.type == Cases.CasesTypes.ALLER_PRISON):
+				passages_prison(serveur_jeu.pseudos[joueur])
 				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				serveur_jeu.reponse_joueur = false
 				serveur_jeu.packet_attendu = Structure.PacketType.FIN_DEP_GO_PRISON
