@@ -404,6 +404,8 @@ func leguer(donneur, receveur):
 	for i in range(40):
 		if (plateau[i].type == Cases.CasesTypes.PROPRIETE and plateau[i].proprio == donneur):
 			plateau[i].proprio = receveur
+			if (plateau[i].hypotheque == 1):
+				plateau[i].hypotheque = 0
 			for j in range(0, plateau[i].niveau_case):
 				downgrade(receveur, plateau[i])
 			list_prop.append(plateau[i].indice)

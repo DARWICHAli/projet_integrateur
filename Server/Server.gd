@@ -471,8 +471,8 @@ func partie(serveur_jeu : Serveur_partie):
 				var status
 				if(current_case.type == Cases.CasesTypes.COMM):
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
-#					if (status == -1):
-#						goto_prison = 1
+					if (status == -1):
+						goto_prison = 1
 				else:
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)

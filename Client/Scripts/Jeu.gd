@@ -327,8 +327,10 @@ func _on_data_partie ():
 			$info_joueur/ScrollContainer/panelInfos.show()
 		
 		Structure.PacketType.BCAST_PSEUDOS:
-			for i in range(1,len(nb_joueurs)):
-				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)).text = obj.data[i]
+			for i in range(1,nb_joueurs):
+				print(obj.data[i-1])
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)+"/nom_joueur").text = obj.data[i-1]
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)+"/LinkButton/nom_joueur2").text = obj.data[i-1]
 			
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
@@ -384,17 +386,17 @@ func _on_data_partie ():
 					$annonce.text = "Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
-#				-1:
-#					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
-#					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
-#					if obj.client == 0:
-#						get_node("Pion").goto_pos_prison()
-#						get_node("Pion").dep_cases = 0
-#					else:
-#						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
-#						get_node("Pion"+str(obj.client+1)).dep_cases = 0
-#					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
-#					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
+				-1:
+					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
+					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
+					if obj.client == 0:
+						get_node("Pion").goto_pos_prison()
+						get_node("Pion").dep_cases = 0
+					else:
+						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+						get_node("Pion"+str(obj.client+1)).dep_cases = 0
+					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-2:
 					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2]
@@ -427,6 +429,9 @@ func _on_data_partie ():
 				else:
 					$annonce.text = "VOUS AVEZ PERDU ! Le joueur %d vous a mis en faillite !" % [obj.data]
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
+					for i in range(0, len(obj.data2)):
+						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
+						cases[i].hypotheque = 0
 					print(obj.data2)
 				joueur.present = 0
 			else:
@@ -437,6 +442,7 @@ func _on_data_partie ():
 				else:
 					$annonce.text = "Le joueur %d a perdu ! Le joueur %d l'a mis en faillite !" % [obj.client, obj.data]
 					print("Le joueur %d l'a mis en faillite !" % [obj.data])
+					
 					print(obj.data2)
 		Structure.PacketType.GAGNE:
 			$annonce.text = "VOUS AVEZ GAGNE ! FELICITATION !"
