@@ -43,6 +43,11 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 		else:
 			cases[i].modulate = Color(1,1,1,contraste)
 	
+	if(get_tree().get_root().get_node("jeu").cases[nb_prop].hypotheque == 1):
+		cases[indice].get_node("hyp").show()
+	else:
+		cases[indice].get_node("hyp").hide()
+	
 	panel.show()
 
 func _on_prop1_pressed():
@@ -204,15 +209,12 @@ func _on_oui_pressed():
 	elif type_button == 2:
 		get_tree().get_root().get_node("jeu").hypothequer(prop)
 	elif type_button == 3:
-		get_tree().get_root().get_node("jeu").construire()
+		get_tree().get_root().get_node("jeu").construire(prop)
 	elif type_button == 4:
 		get_tree().get_root().get_node("jeu").destruction(prop)
 
 func _on_non_pressed():
 	pass # Replace with function body.
-
-
-
 	
 func _on_LinkButton_pressed():
 	emit_signal("sig_stats",self,$nom_joueur.text)

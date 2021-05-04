@@ -3,8 +3,8 @@ extends "Case.gd"
 var proprio = null
 var prixCase = 100
 var loyer = 50
-var hypotheque = 25
-var estHypothequee = false
+#var hypotheque = 25
+var hypotheque = 0
 var niveau = 0
 
 #var nom = "case basique"

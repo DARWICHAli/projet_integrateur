@@ -25,14 +25,14 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-	db = SQLite.new();
-	db.path="./database.db"
-	db.verbose_mode = false
-	db.open_db()
+#	db = SQLite.new();
+#	db.path="./database.db"
+#	db.verbose_mode = false
+#	db.open_db()
 #
 #	stats("tthirtle2o")
-	var pseudo = "aaa@bbb.com"
-	print(stats(pseudo))
+#	var pseudo = "aaa@bbb.com"
+#	print(stats(pseudo))
 	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -297,9 +297,10 @@ func _on_data_jeu(id_client, serveur_jeu):
 				print('requête achat')
 				serveur_jeu.reponse_joueur = true
 		Structure.PacketType.CONSTRUCTION:
-			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
-				print('requête construction')
-				serveur_jeu.reponse_joueur = true
+			#if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
+			print('requête construction')
+			construction_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
+			#serveur_jeu.reponse_joueur = true
 		Structure.PacketType.VENTE: #####
 			#if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client) and serveur_jeu.packet_attendu == Structure.PacketType.ACTION):
 			print('requête vente')
@@ -400,7 +401,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 30#lancer_de()
+			var de_un = 1#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -464,8 +465,8 @@ func partie(serveur_jeu : Serveur_partie):
 				var status
 				if(current_case.type == Cases.CasesTypes.COMM):
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
-					if (status == -1):
-						goto_prison = 1
+#					if (status == -1):
+#						goto_prison = 1
 				else:
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
@@ -543,26 +544,16 @@ func partie(serveur_jeu : Serveur_partie):
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 						
 						# Maj de l'achat de la case dans la BDD
-						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
-						var pseudo = serveur_jeu.pseudos[joueur]
-						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
-						var idU = id[0].idU
-						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
-						var nom_case = nomCase[0].nomCase
-						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
+#						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
+#						var pseudo = serveur_jeu.pseudos[joueur]
+#						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
+#						var idU = id[0].idU
+#						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
+#						var nom_case = nomCase[0].nomCase
+#						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
-					serveur_jeu.reponse_joueur = false
-				if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.CONSTRUCTION:
-					status = serveur_jeu.upgrade(serveur_jeu.attente_joueur)
-					if(status < 0):
-						structure.set_requete_maj_construire(status, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
-						for client in serveur_jeu.list_joueurs:
-							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-					else:
-						structure.set_requete_erreur(status)
-						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 					serveur_jeu.reponse_joueur = false
 				if serveur_jeu.reponse_proprio == true and serveur_jeu.packet_recu == Structure.PacketType.RECLAMER:
 					if (timer_reclamation.get_time_left() > 0):
@@ -659,6 +650,23 @@ func tourplusun_res(id, serveur_jeu):
 	structure.set_requete_argent_nouv_tour(serveur_jeu.argent_joueur[id], id)
 	for client in serveur_jeu.list_joueurs:
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+
+func construction_res(id, id_case, serveur_jeu):
+	var case = serveur_jeu.plateau[id_case]
+	var structure = Structure.new()
+	var status = serveur_jeu.upgrade(id, case)
+	if(status < 0):
+		var price
+		if(status == -1):
+			price = case.prix_maison
+		else:
+			price = case.prix_hotel
+		structure.set_requete_maj_construire(status, serveur_jeu.argent_joueur[id], id, case.indice, price)
+		for client in serveur_jeu.list_joueurs:
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+	else:
+		structure.set_requete_erreur(status)
+		envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 
 func destruction_res(id, id_case, serveur_jeu):
 	var case = serveur_jeu.plateau[id_case]

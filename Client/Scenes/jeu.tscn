@@ -603,7 +603,6 @@ texture_pressed = ExtResource( 77 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
 [connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
@@ -620,7 +619,6 @@ __meta__ = {
 [connection signal="pressed" from="abandon" to="." method="_on_abandon_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
-[connection signal="sig_stats_infos_joueur" from="info_joueur" to="." method="_on_info_joueur_sig_stats_infos_joueur"]
 [connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
 [connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
 [connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]

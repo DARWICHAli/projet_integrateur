@@ -62,7 +62,6 @@ __meta__ = {
 }
 
 [node name="infobox1" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1250.0
@@ -161,7 +160,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case"]
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case"]
 visible = false
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 20.0
@@ -184,7 +183,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case2"]
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case2"]
 visible = false
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 20.0
@@ -199,15 +198,15 @@ __meta__ = {
 
 [node name="case3" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
 margin_left = 710.0
-margin_top = 320.0
+margin_top = 322.828
 margin_right = 873.0
-margin_bottom = 583.0
+margin_bottom = 585.828
 texture_normal = ExtResource( 9 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case3"]
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case3"]
 visible = false
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 20.0
@@ -230,7 +229,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case4"]
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case4"]
 visible = false
 modulate = Color( 1, 0, 0, 1 )
 margin_left = 20.0
@@ -669,7 +668,6 @@ margin_right = 1150.0
 margin_bottom = 921.0
 custom_fonts/font = SubResource( 4 )
 text = "test"
-
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox1" to="." method="_on_infobox1_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox2" to="." method="_on_infobox2_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox3" to="." method="_on_infobox3_sig_stats"]

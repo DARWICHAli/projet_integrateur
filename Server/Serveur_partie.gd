@@ -2,7 +2,6 @@ extends Node
 
 class_name Serveur_partie
 
-
 # Objet thread utilisé
 var thread = Thread.new()
 # Objet utilisé pour la socket
@@ -201,8 +200,8 @@ func taxe(id):
 	var case = plateau[position_joueur[id]]
 	argent_joueur[id] -= case.prix
 
-func upgrade(id):
-	var case = plateau[position_joueur[id]]
+func upgrade(id, case):
+	#var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
 		print("La case n'est pas de type proprieté")
 		return 1
@@ -223,7 +222,7 @@ func upgrade(id):
 				return 11
 			else:
 				cases_tmp.append(plateau[i])
-	if (case.niveau_case != 4):
+	if (case.niveau_case != 5):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):
 				print("Le joueur n'a pas assez d'argent pour une maison.")

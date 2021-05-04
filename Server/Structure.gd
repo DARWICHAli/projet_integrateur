@@ -106,8 +106,9 @@ func set_requete_taxe(argent, id):
 	self.data = argent
 	self.client = id
 
-func set_requete_construire():
+func set_requete_construire(id_case):
 	self.type = PacketType.CONSTRUCTION
+	self.data = id_case
 
 func set_requete_detruire(id_case):
 	self.type = PacketType.DESTRUCTION
