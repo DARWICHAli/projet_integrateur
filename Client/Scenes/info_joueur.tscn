@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Scenes/infobox.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/info_joueur.gd" type="Script" id=2]
@@ -39,6 +39,11 @@ font_data = ExtResource( 10 )
 size = 40
 font_data = ExtResource( 10 )
 
+[sub_resource type="DynamicFont" id=5]
+size = 39
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
 [node name="info_joueur" type="Node2D"]
 position = Vector2( 2550, 0 )
 script = ExtResource( 2 )
@@ -55,7 +60,6 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 1250.0
-margin_bottom = 544.0
 rect_min_size = Vector2( 1250, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -69,7 +73,10 @@ margin_bottom = 544.0
 
 [node name="infobox2" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 548.0
+margin_right = 1250.0
 margin_bottom = 1092.0
 
 [node name="infobox3" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
@@ -509,8 +516,9 @@ __meta__ = {
 visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelInfos"]
+margin_left = 8.47583
 margin_top = 1.88776
-margin_right = 1292.0
+margin_right = 1300.48
 margin_bottom = 2163.89
 rect_min_size = Vector2( 1292, 2162 )
 __meta__ = {
@@ -562,7 +570,7 @@ margin_top = 250.0
 margin_right = 508.0
 margin_bottom = 319.0
 custom_fonts/font = SubResource( 4 )
-text = "nombre de victoires :"
+text = "Nombre de victoires :"
 
 [node name="nb_victoires" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_victoires"]
 modulate = Color( 0, 0, 0, 1 )
@@ -590,7 +598,7 @@ margin_top = 400.0
 margin_right = 489.0
 margin_bottom = 469.0
 custom_fonts/font = SubResource( 4 )
-text = "nombre de defaites :"
+text = "Nombre de defaites :"
 
 [node name="nb_defaites" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_defaites"]
 modulate = Color( 0, 0, 0, 1 )
@@ -615,7 +623,7 @@ margin_top = 550.0
 margin_right = 370.0
 margin_bottom = 619.0
 custom_fonts/font = SubResource( 4 )
-text = "case preferee :"
+text = "Case preferee :"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -639,35 +647,51 @@ __meta__ = {
 [node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
 modulate = Color( 0, 0, 0, 1 )
 margin_left = 80.0
-margin_top = 700.0
+margin_top = 695.762
 margin_right = 408.0
-margin_bottom = 769.0
+margin_bottom = 764.762
 custom_fonts/font = SubResource( 4 )
-text = "dernier trophe :"
+text = "Dernier trophée remporté :"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="dernier_trophee" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 460.0
-margin_top = 700.0
-margin_right = 663.0
-margin_bottom = 769.0
+margin_left = 693.0
+margin_top = 687.0
+margin_right = 1163.0
+margin_bottom = 739.0
+rect_pivot_offset = Vector2( 57.2048, 109.301 )
 custom_fonts/font = SubResource( 4 )
-text = "IHM finie"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="description" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
 modulate = Color( 0, 0, 0, 1 )
-margin_left = 141.0
-margin_top = 772.0
-margin_right = 1150.0
-margin_bottom = 921.0
+margin_left = 102.859
+margin_top = 835.568
+margin_right = 1111.86
+margin_bottom = 984.568
 custom_fonts/font = SubResource( 4 )
-text = "test"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="desc" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 105.476
+margin_top = 770.903
+margin_right = 624.476
+margin_bottom = 835.903
+custom_fonts/font = SubResource( 5 )
+text = "Description :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox1" to="." method="_on_infobox1_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox2" to="." method="_on_infobox2_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox3" to="." method="_on_infobox3_sig_stats"]

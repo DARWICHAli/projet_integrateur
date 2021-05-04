@@ -5,7 +5,8 @@ class_name Structure
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, DESTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_TOUR, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, CARTE_SORTIE_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
-ERREUR, PERDRE, INSCRIPTION, LOGIN, GAGNE, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
+ERREUR, PERDRE, INSCRIPTION, LOGIN, GAGNE, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, 
+ABANDONNER,BCAST_PSEUDOS}
 
 var type
 var data
@@ -20,6 +21,10 @@ func set_requete_maj_tour(id):
 
 func set_requete_abandonner():
 	self.type = PacketType.ABANDONNER
+	
+func set_requete_bcast_pseudos(tab):
+	self.type = PacketType.BCAST_PSEUDOS
+	self.data = tab
 
 func set_requete_rente(argent, id, proprio, prix):
 	self.type = PacketType.RENTE
@@ -39,6 +44,10 @@ func set_requete_reponse_login(code):
 func set_requete_consult_stats(player):
 	self.type = PacketType.STATS_CONSULT
 	self.data = player
+	
+func set_requete_reponse_stats(data):
+	self.type = PacketType.REP_STATS
+	self.data = data
 
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT

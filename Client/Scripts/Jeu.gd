@@ -319,6 +319,16 @@ func _on_data_partie ():
 		Structure.PacketType.REP_STATS:
 			print("stats")
 			print(obj.data)
+			$info_joueur/ScrollContainer/panelInfos/ColorRect/nb_victoires/nb_victoires.text = str(obj.data["nbWin"])
+			$info_joueur/ScrollContainer/panelInfos/ColorRect/nb_defaites/nb_defaites.text = str(obj.data["nbLose"])
+			$info_joueur/ScrollContainer/panelInfos/ColorRect/case_pref/case_pref.text = obj.data["bestCase"]
+			$info_joueur/ScrollContainer/panelInfos/ColorRect/dernier_trophe/dernier_trophee.text = obj.data["lastTrophy"]
+			$info_joueur/ScrollContainer/panelInfos/ColorRect/dernier_trophe/description.text = obj.data["descTrophy"]
+			$info_joueur/ScrollContainer/panelInfos.show()
+		
+		Structure.PacketType.BCAST_PSEUDOS:
+			for i in range(1,len(nb_joueurs)):
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)).text = obj.data[i]
 			
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
