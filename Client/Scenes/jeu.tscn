@@ -550,6 +550,7 @@ __meta__ = {
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
 [node name="menu" type="Node2D" parent="."]
+visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 visible = false
