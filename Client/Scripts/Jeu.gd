@@ -37,7 +37,7 @@ func _ready():
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	nb_joueurs=2
-
+	get_node("info_joueur/ScrollContainer/VBoxContainer/infobox1/jailbreak").show()
 	#print('ready')
 	ready_connection()
 
@@ -288,8 +288,13 @@ func _on_data_partie ():
 			print("Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
 		Structure.PacketType.FREE_OUT_PRISON:
-			$annonce.text = "DOUBLE ! Joueur %d sort de prison !" % [obj.client]
-			print("DOUBLE !")
+			if(obj.data == 0):
+				$annonce.text = "DOUBLE ! Joueur %d sort de prison !" % [obj.client]
+				print("DOUBLE !")
+			else:
+				$annonce.text = "CARTE SORTIE DE PRISON ! Joueur %d sort de prison !" % [obj.client]
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client +1) +"/jailbreak").hide()
+				print("CARTE SORTIE DE PRISON !")
 			print("Joueur %d sort de prison !" % [obj.client])
 		Structure.PacketType.TAXE:
 			$annonce.text = "Joueur %d paye une taxe !" % [obj.client]
@@ -469,18 +474,6 @@ func _on_acheter_pressed():
 	structure.set_requete_acheter()
 	envoyer_message(client_partie, structure.to_bytes())
 
-func _on_construire_pressed():
-	print('envoi requête de construction')
-	var structure = Structure.new()
-	structure.set_requete_construire()
-	envoyer_message(client_partie, structure.to_bytes())
-	
-func _on_vente_pressed():
-	print('envoi requête de vente')
-	var structure = Structure.new()
-	structure.set_requete_vendre(0)
-	envoyer_message(client_partie, structure.to_bytes())
-
 func _on_start_pressed():
 	print('ready')
 
@@ -594,10 +587,10 @@ func supprimer_joueur(n_pion):
 		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
 
-func _on_hypotheque_pressed():
-	print('envoi requête hypotheque')
+func carte_sortie_prison():
+	print('envoi requête carte sortie prison')
 	var structure = Structure.new()
-	structure.set_requete_hypothequer(0)
+	structure.set_requete_carte_sortie_prison()
 	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_info_joueur_stats_pressed(player):

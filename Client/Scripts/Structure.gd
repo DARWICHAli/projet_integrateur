@@ -4,7 +4,7 @@ class_name Structure
 
 enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULTAT_LANCER_DE, CONSTRUCTION, DESTRUCTION, 
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_TOUR, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
-TAXE, FIN_DEP_GO_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
+TAXE, FIN_DEP_GO_PRISON, CARTE_SORTIE_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
 ERREUR, PERDRE, INSCRIPTION, LOGIN, GAGNE, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, ABANDONNER}
 
 var type
@@ -75,12 +75,16 @@ func set_requete_out_prison(id, prix):
 	self.client = id
 	self.data = prix
 	
-func set_requete_free_out_prison(id):
+func set_requete_free_out_prison(id, type_sortie):
 	self.type = PacketType.FREE_OUT_PRISON
+	self.data = type_sortie # 0 si double, 1 si carte sortie de prison
 	self.client = id
 
 func set_fin_dep_go_prison():
 	self.type = PacketType.FIN_DEP_GO_PRISON
+
+func set_requete_carte_sortie_prison():
+	self.type = PacketType.CARTE_SORTIE_PRISON
 
 func set_requete_vendre(id_case):
 	self.type = PacketType.VENTE
