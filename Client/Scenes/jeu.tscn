@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=75 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -33,6 +33,7 @@
 [ext_resource path="res://GFX/case_brun_suaps.png" type="Texture" id=31]
 [ext_resource path="res://GFX/pion2_normal.png" type="Texture" id=32]
 [ext_resource path="res://GFX/pion1_normal.png" type="Texture" id=33]
+[ext_resource path="res://GFX/case_depart.png" type="Texture" id=34]
 [ext_resource path="res://Scenes/commu.tscn" type="PackedScene" id=36]
 [ext_resource path="res://Scenes/chance.tscn" type="PackedScene" id=37]
 [ext_resource path="res://GFX/case_taxe.png" type="Texture" id=38]
@@ -122,8 +123,7 @@ position = Vector2( 1480, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/Start"]
 position = Vector2( 0.514759, 0.894234 )
-scale = Vector2( 0.176984, 0.17638 )
-texture = ExtResource( 9 )
+texture = ExtResource( 34 )
 
 [node name="marron_1" parent="Plateau/cases/cote_gauche" instance=ExtResource( 4 )]
 position = Vector2( 1273, 0 )
@@ -399,7 +399,6 @@ position = Vector2( 9, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/bleu_2"]
 show_behind_parent = true
-position = Vector2( -1, 0 )
 texture = ExtResource( 25 )
 
 [node name="Pion" parent="." instance=ExtResource( 5 )]
