@@ -123,6 +123,7 @@ position = Vector2( 1480, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/Start"]
 position = Vector2( 0.514759, 0.894234 )
+rotation = -1.5708
 texture = ExtResource( 34 )
 
 [node name="marron_1" parent="Plateau/cases/cote_gauche" instance=ExtResource( 4 )]
@@ -392,6 +393,7 @@ texture = ExtResource( 21 )
 position = Vector2( 167, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_bas/luxe"]
+position = Vector2( -0.198486, 0 )
 texture = ExtResource( 40 )
 
 [node name="bleu_2" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
