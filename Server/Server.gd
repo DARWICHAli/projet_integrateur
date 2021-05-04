@@ -33,6 +33,7 @@ func _ready():
 #	stats("tthirtle2o")
 	var pseudo = "aaa@bbb.com"
 	
+	
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
 	# Connect base signals to get notified of new client connections,
@@ -488,12 +489,15 @@ func partie(serveur_jeu : Serveur_partie):
 						structure.set_requete_maj_achat(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.position_joueur[serveur_jeu.attente_joueur], current_case.prix)
 						for client in serveur_jeu.list_joueurs:
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+						
 						# Maj de l'achat de la case dans la BDD
 						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
 						var pseudo = serveur_jeu.pseudos[joueur]
-#						var id = db.select_rows("UTILISATEUR U","U.username ="+pseudo,["idU"])
-#						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+indice,["nomCase"])
-#						db.query("INSERT INTO ACHETE_CASE VALUES("+id[0].idU+",'"+nomCase[0].nomCase+"');")
+						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
+						var idU = id[0].idU
+						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
+						var nom_case = nomCase[0].nomCase
+						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
