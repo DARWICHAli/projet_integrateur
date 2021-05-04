@@ -309,7 +309,7 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print("Demande de stats")
 			var stats = stats(obj.data)
 			if(stats == null):
-				stats = {}
+				stats 	= {"dateInscr":"Aucune ", "nbLose":0, "nbWin": 0, "bestCase":"Aucune ", "lastTrophy":"Aucun","descTrophy":"Aucune"}
 			print(stats)
 			structure.set_requete_reponse_stats(stats.duplicate())
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)

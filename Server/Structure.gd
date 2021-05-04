@@ -39,6 +39,10 @@ func set_requete_reponse_login(code):
 func set_requete_consult_stats(player):
 	self.type = PacketType.STATS_CONSULT
 	self.data = player
+	
+func set_requete_reponse_stats(data):
+	self.type = PacketType.REP_STATS
+	self.data = data
 
 func set_requete_maj_argent(argent, id):
 	self.type = PacketType.MAJ_ARGENT
