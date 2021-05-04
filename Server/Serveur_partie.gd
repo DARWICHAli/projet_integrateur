@@ -28,7 +28,7 @@ var attente_joueur = 0
 # Numéro de cases des joueurs
 const position_joueur = []
 # Argent des joueurs
-const argent_joueur = [200, 2]
+const argent_joueur = []
 # Tableau représentant les cases du jeu
 var plateau = [
 Cases.new(), Cases.new(), 
