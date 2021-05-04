@@ -384,6 +384,8 @@ func partie(serveur_jeu : Serveur_partie):
 			for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 				envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 			
+			print("ETAT JOUEUR PRISON : " + str(serveur_jeu.joueur_prison[serveur_jeu.attente_joueur]))
+			
 			# Attente d'une demande de dé
 			serveur_jeu.reponse_joueur = false
 			serveur_jeu.packet_attendu = Structure.PacketType.REQUETE_LANCER_DE
@@ -415,7 +417,8 @@ func partie(serveur_jeu : Serveur_partie):
 			if(serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1):
 			# si on est deja en prison
 				# TODO Choix de payer directement sans faire de double
-				serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]] = serveur_jeu.plateau[10]
+				serveur_jeu.pos_prison(serveur_jeu.attente_joueur)
+				print("POS : " + str(serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]].indice))
 				print("DE NUMERO 1: %d pour joueur %d" % [de_un, serveur_jeu.attente_joueur])
 				print("DE NUMERO 2: %d" % [de_deux])
 				if(de_un != de_deux and serveur_jeu.nbr_essai_double[serveur_jeu.attente_joueur] < 3):
@@ -436,18 +439,18 @@ func partie(serveur_jeu : Serveur_partie):
 					for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 					action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
-			
+					
 			if(goto_prison != 1):
 				serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, res)
 				structure.set_resultat_lancer_de(res, serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				print(serveur_jeu.attente_joueur)
-			
+					
 			timer_reclamation = get_tree().create_timer(10.0)
 			serveur_jeu.reponse_proprio = false
 			serveur_jeu.proprio_a_reclamer = false
-
+			
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# RAFRAICHISSEMENT DE CURRENT_CASE
 			
@@ -470,17 +473,21 @@ func partie(serveur_jeu : Serveur_partie):
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
 				
-			
+				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+				
 			if(current_case.type == Cases.CasesTypes.TAXE):
 				serveur_jeu.taxe(serveur_jeu.attente_joueur)
 				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
-			
+				
+				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+				
 			# ALLER EN PRISON POUR TRIPLE DOUBLE OU CARTE ALLER PRISON
 			if(goto_prison == 1):
 				passages_prison(serveur_jeu.pseudos[joueur])
+				serveur_jeu.pos_prison(serveur_jeu.attente_joueur)
 				serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				structure.set_requete_go_prison(serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs:
@@ -491,10 +498,15 @@ func partie(serveur_jeu : Serveur_partie):
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 				continue
-			
+				
+				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+				
 			# ALLER EN PRISON POUR CASE GO_PRISON
 			if(current_case.type == Cases.CasesTypes.ALLER_PRISON):
+				print("testttttt")
 				passages_prison(serveur_jeu.pseudos[joueur])
+				serveur_jeu.pos_prison(serveur_jeu.attente_joueur)
+				print("POS : " + str(serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]].indice))
 				serveur_jeu.reponse_joueur = false
 				serveur_jeu.packet_attendu = Structure.PacketType.FIN_DEP_GO_PRISON
 				while(serveur_jeu.packet_recu != Structure.PacketType.FIN_DEP_GO_PRISON):
@@ -509,16 +521,18 @@ func partie(serveur_jeu : Serveur_partie):
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
 				continue
-			
+				
+				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+				
 			print("Attente d'action quelconque ou fin de tour...")
-
+				
 			print(current_case.proprio)
 			serveur_jeu.reponse_joueur = false
-			serveur_jeu.packet_attendu = Structure.PacketType.ACTION	
+			serveur_jeu.packet_attendu = Structure.PacketType.ACTION
 			var status
 			serveur_jeu.attente_proprio = current_case.proprio
 			timer = get_tree().create_timer(15.0)
-
+				
 			while serveur_jeu.packet_recu != Structure.PacketType.FIN_DE_TOUR and timer.get_time_left() > 0:
 				serveur_jeu.socket.poll()
 				if serveur_jeu.reponse_joueur == true and serveur_jeu.packet_recu == Structure.PacketType.ACHAT:
@@ -591,7 +605,7 @@ func partie(serveur_jeu : Serveur_partie):
 					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
 					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
 					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
-
+				
 				nb_double = 0
 				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur

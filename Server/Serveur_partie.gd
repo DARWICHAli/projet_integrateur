@@ -65,7 +65,7 @@ var proprio_a_reclamer
 # Numéro du joueur qui est le propriétaire
 var attente_proprio
 # Tableau de booléen indiquant si le joueur possède une carte sortie de prison
-var sortie_prison = [1]
+var sortie_prison = []
 # Stocke le resultat variable pour la carte tirée
 var temp_carte
 # Warning dernière chance faillite
@@ -148,6 +148,9 @@ func init_plateau():
 			if i == 37 or i == 39:
 				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_FONCE)
 			# TODO1 Regrouper les propriétés par couleurs pour savoir si l'on peut construire
+
+func pos_prison(id):
+	position_joueur[id] = 10
 
 func acheter(id):
 	var case = plateau[position_joueur[id]]
