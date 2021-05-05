@@ -420,3 +420,4 @@ texture_pressed = ExtResource( 15 )
 [connection signal="pressed" from="prop35" to="." method="_on_prop35_pressed"]
 [connection signal="pressed" from="prop37" to="." method="_on_prop37_pressed"]
 [connection signal="pressed" from="prop39" to="." method="_on_prop39_pressed"]
+[connection signal="pressed" from="jailbreak" to="." method="_on_jailbreak_pressed"]

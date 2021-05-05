@@ -11,6 +11,7 @@ var prisonnier = false
 var new_pos
 var pseudo = "meilleur joueur"
 var present = 1
+var pos_pion = 0
 
 onready var chat = get_node("../chatbox")
 

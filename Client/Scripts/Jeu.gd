@@ -130,6 +130,7 @@ func _closed_partie (was_clean = false):
 # Fonction d'ouverture de connexion
 func _connected_partie (_proto = ""):
 	print("connecté au serveur de partie à l'adresse %s:%s" % [str(ip), str(port)])
+	send_pseudo("TESTTTT")
 
 #	var structure = Structure.new()
 #
@@ -241,14 +242,7 @@ func _on_data_partie ():
 			elif(obj.data == -2):
 				$annonce.text = "CONSTRUCTION ! Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3]
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
-			
 			cases[obj.data3].show_upgrade()
-#			if (obj.data2 == 0):
-#				get_node("Pion").payer(obj.data4)
-#			else:
-#				get_node("Pion"+str(obj.client)).payer(obj.data4)
-			# Pas d'enregistrement dans le client pour le moment (ou tout changer)
-			
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
 			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data2)
@@ -257,6 +251,7 @@ func _on_data_partie ():
 			print("VENTE REUSSITE !")
 			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			cases[obj.data2].hypotheque = 0
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
@@ -327,11 +322,11 @@ func _on_data_partie ():
 			$info_joueur/ScrollContainer/panelInfos.show()
 		
 		Structure.PacketType.BCAST_PSEUDOS:
-			for i in range(1,nb_joueurs):
-				print(obj.data[i-1])
-				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)+"/nom_joueur").text = obj.data[i-1]
-				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)+"/LinkButton/nom_joueur2").text = obj.data[i-1]
-			
+			for i in range(0,nb_joueurs):
+				print(obj.data[i])
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/nom_joueur").text = obj.data[i]
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/LinkButton/nom_joueur2").text = obj.data[i]
+				
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
 			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
@@ -340,6 +335,9 @@ func _on_data_partie ():
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			$annonce.text = "Lancé de dé : %d pour le joueur %d" % [obj.data, obj.client]
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
+			if(obj.client == joueur.id):
+				joueur.pos_pion += obj.data
+			print('VERIF NOUV POS : %d' % [joueur.pos_pion])
 			match int(obj.client):
 				0:
 					emit_signal("signal_resultat_lancer_de", int(obj.data))
@@ -461,8 +459,8 @@ func _process (_delta):
 
 #envoie de données au serveur
 func envoyer_message (client : WebSocketClient, bytes : PoolByteArray):
-		client.get_peer(1).put_packet(bytes)
-		#put_packet return mais on utilise pas le retour
+	client.get_peer(1).put_packet(bytes)
+	#put_packet return mais on utilise pas le retour
 
 
 #reception de données depuis le serveur
@@ -476,7 +474,6 @@ func rejoindre_partie (URL : String):
 	var parts = URL.rsplit(':')
 	ip = parts[0]
 	port = parts[1]
-
 	print('connexion au serveur de partie')
 	var err = client_partie.connect_to_url('ws://' + URL)
 	if err != OK:
@@ -523,6 +520,7 @@ func _on_start_pressed():
 	structure.set_inscription_partie(444, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
+	#send_pseudo(mon_nom)
 
 func _on_sign_in_pressed():
 	$menu/background.hide()
@@ -547,6 +545,7 @@ func sig_msg(text, username, index):
 
 func hypothequer(id_case):
 	print('envoi requête hypotheque')
+	print("ID CASE : " + str(id_case))
 	var structure = Structure.new()
 	structure.set_requete_hypothequer(id_case)
 	envoyer_message(client_partie, structure.to_bytes())
@@ -640,6 +639,11 @@ func carte_sortie_prison():
 	structure.set_requete_carte_sortie_prison()
 	envoyer_message(client_partie, structure.to_bytes())
 
+func send_pseudo(pseudo):
+	print('envoi requête envoi de pseudo')
+	var structure = Structure.new()
+	structure.set_requete_send_pseudo(pseudo)
+	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_abandon_pressed(): 
 	var structure = Structure.new()
@@ -647,7 +651,6 @@ func _on_abandon_pressed():
 		structure.set_requete_abandonner()
 		client_partie.disconnect_from_host(0, "Pas de problème")
 	$menu.show()
-
 
 func _on_info_joueur_sig_stats_infos_joueur(player, infobox):
 	var structure = Structure.new()

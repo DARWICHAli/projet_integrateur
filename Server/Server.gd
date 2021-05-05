@@ -278,6 +278,8 @@ func _on_data_jeu(id_client, serveur_jeu):
 		Structure.PacketType.SEND_PSEUDO:
 			var indice = serveur_jeu.list_joueurs.find(id_client)
 			serveur_jeu.pseudos[indice] = obj.data
+#			serveur_jeu.pseudos.append(obj.data)
+			print("PSEUDO : " + str(obj.data))
 		Structure.PacketType.CHAT:
 			print('test %d' % serveur_jeu.list_joueurs.find(id_client))
 			print('message de chat reçu: %s' % var2str(data))
@@ -336,6 +338,7 @@ func _on_data_jeu(id_client, serveur_jeu):
 			destruction_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 		Structure.PacketType.CARTE_SORTIE_PRISON:
 			print("requête carte sortie prison reçue")
+#			if (serveur_jeu.attente_joueur == serveur_jeu.list_joueurs.find(id_client)):
 			carte_sortie_prison(serveur_jeu.list_joueurs.find(id_client), serveur_jeu)
 		Structure.PacketType.TOUR_PLUS_UN:
 			print('requete tour_plus_un reçue')
@@ -374,9 +377,17 @@ func partie(serveur_jeu : Serveur_partie):
 	var structure = Structure.new()
 	
 	# Broadcast des pseudos
+	for i in range (0, len(serveur_jeu.pseudos)):
+		print(serveur_jeu.pseudos[i])
 	structure.set_requete_bcast_pseudos(serveur_jeu.pseudos)
 	for client in serveur_jeu.list_joueurs:
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+	
+#	var tab = ["Ali", "Jamel"]
+#
+#	structure.set_requete_bcast_pseudos(tab)
+#	for client in serveur_jeu.list_joueurs:
+#		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 	
 	var timer
 	var timer_reclamation
@@ -407,7 +418,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
+			var de_un = 2#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -473,6 +484,7 @@ func partie(serveur_jeu : Serveur_partie):
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
 					if (status == -1):
 						goto_prison = 1
+#						serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				else:
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
@@ -636,6 +648,8 @@ func hypotheque_res(id, id_case, serveur_jeu):
 	var case = serveur_jeu.plateau[id_case]
 	var structure = Structure.new()
 	var status = serveur_jeu.hypothequer(id, case)
+	print(status)
+	print(id_case)
 	if(status <= 0):
 		var price
 		if (status == -1):

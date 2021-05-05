@@ -6,7 +6,7 @@ enum PacketType {CHAT, JEU, BDD, INSCRIPTION_PARTIE, ADRESSE_SERVEUR_JEU, RESULT
 REQUETE_LANCER_DE, FIN_DE_TOUR, ACHAT, MAJ_TOUR, MAJ_ARGENT, MAJ_ACHAT, RENTE, MAJ_CONSTRUCTION, MAJ_DESTRUCTION, VENTE, MAJ_VENTE, ACTION, 
 TAXE, FIN_DEP_GO_PRISON, CARTE_SORTIE_PRISON, GO_PRISON, FREE_OUT_PRISON, TOUR_PLUS_UN, ARGENT_NOUV_TOUR, HYPOTHEQUE, MAJ_HYPOTHEQUE, OUT_PRISON, 
 ERREUR, PERDRE, INSCRIPTION, LOGIN, GAGNE, RECLAMER, REPONSE_LOGIN, TIRER_CARTE, CACHE_JOUEUR, STATS_CONSULT, REP_STATS, SEND_PSEUDO, 
-ABANDONNER,BCAST_PSEUDOS}
+ABANDONNER, BCAST_PSEUDOS}
 
 var type
 var data
@@ -25,6 +25,10 @@ func set_requete_abandonner():
 func set_requete_bcast_pseudos(tab):
 	self.type = PacketType.BCAST_PSEUDOS
 	self.data = tab
+
+func set_requete_send_pseudo(pseudo):
+	self.type = PacketType.SEND_PSEUDO
+	self.data = pseudo
 
 func set_requete_rente(argent, id, proprio, prix):
 	self.type = PacketType.RENTE

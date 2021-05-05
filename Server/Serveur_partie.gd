@@ -73,10 +73,16 @@ var warning = []
 var ventes = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
-	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
-	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
-		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
+#	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
+#	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
+#		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
 		#payer_joueur(id_joueur, plateau[0].get_prix())
+	var dep = position_joueur[id_joueur] + nbr_case
+	if dep >= plateau.size():
+		dep = dep % plateau.size()
+	if joueur_prison[id_joueur] == 0:
+		position_joueur[id_joueur] = dep
+
 
 func payer_joueur(id_joueur : int, prix : int):
 	argent_joueur[id_joueur] = argent_joueur[id_joueur] + prix
@@ -171,6 +177,7 @@ func acheter(id):
 	argent_joueur[id] -= case.prix
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
+	print("VERIF PROPRIO : %d" % [case.proprio])
 	return exception
 
 func rente(case, joueur, res_des):
