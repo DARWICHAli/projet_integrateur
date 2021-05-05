@@ -99,6 +99,7 @@ func pos_suivante():
 func goto_pos_prison():
 	var pos_prison = get_parent().get_node("Plateau/cases/cote_haut/Prison/Pos_prison").get_child(self.id).get_global_position()
 	position = pos_prison
+	pos_pion = 10
 
 func move(steps):
 	self.dep_cases = steps;
