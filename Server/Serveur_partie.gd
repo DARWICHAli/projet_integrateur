@@ -15,7 +15,7 @@ var nb_joueurs
 #tableau de stockage des joueurs 
 var list_joueurs=[]
 # pseudo des joueurs
-var pseudos = []
+var pseudos : Array = ["","","","","","","",""]
 # Booléen si le joueur à répondu
 var reponse_joueur
 # Packet attendu

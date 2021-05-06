@@ -25,11 +25,11 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = false
-#	db.open_db()
-#
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = false
+	db.open_db()
+
 #	stats("tthirtle2o")
 #	var pseudo = "aaa@bbb.com"
 #	print(stats(pseudo))
@@ -260,6 +260,14 @@ func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
 	if serveur_jeu.list_joueurs.size() == 0:
 		emit_signal("fin_partie", serveur_jeu.code)
 
+
+func everybody_is_here(serveur_partie):
+	var retour = true
+	for i in range(0,serveur_partie.nb_joueurs):
+		if serveur_partie.pseudos[i]=="":
+			return false
+	return true
+	
 func _on_data_jeu(id_client, serveur_jeu):
 	print('le serveur de partie a reçu des données')
 	var packet = recevoir_message(serveur_jeu.socket, id_client)
@@ -278,8 +286,13 @@ func _on_data_jeu(id_client, serveur_jeu):
 		Structure.PacketType.SEND_PSEUDO:
 			var indice = serveur_jeu.list_joueurs.find(id_client)
 			serveur_jeu.pseudos[indice] = obj.data
-#			serveur_jeu.pseudos.append(obj.data)
-			print("PSEUDO : " + str(obj.data))
+			if everybody_is_here(serveur_jeu) == true:
+				for i in range (0, len(serveur_jeu.pseudos)):
+					print("un pseudo :" + serveur_jeu.pseudos[i])
+					structure.set_requete_bcast_pseudos(serveur_jeu.pseudos)
+					for client in serveur_jeu.list_joueurs:
+						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+#			print("PSEUDO : " + str(obj.data))
 		Structure.PacketType.CHAT:
 			print('test %d' % serveur_jeu.list_joueurs.find(id_client))
 			print('message de chat reçu: %s' % var2str(data))
@@ -375,19 +388,6 @@ func partie(serveur_jeu : Serveur_partie):
 	print("Partie Démarré")
 	var joueur = -1
 	var structure = Structure.new()
-	
-	# Broadcast des pseudos
-	for i in range (0, len(serveur_jeu.pseudos)):
-		print(serveur_jeu.pseudos[i])
-	structure.set_requete_bcast_pseudos(serveur_jeu.pseudos)
-	for client in serveur_jeu.list_joueurs:
-		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-	
-#	var tab = ["Ali", "Jamel"]
-#
-#	structure.set_requete_bcast_pseudos(tab)
-#	for client in serveur_jeu.list_joueurs:
-#		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 	
 	var timer
 	var timer_reclamation
