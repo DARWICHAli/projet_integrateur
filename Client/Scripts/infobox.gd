@@ -33,7 +33,9 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 	case3.set_normal_texture(color)
 	case4.set_normal_texture(color)
 	
-	prop = nb_prop
+	self.prop = nb_prop
+	
+	print("PROP NUM : " + str(prop))
 	
 	for i in range(4):
 		if (i > total-1):
@@ -42,6 +44,11 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 			cases[i].modulate = Color(1,1,1,1)
 		else:
 			cases[i].modulate = Color(1,1,1,contraste)
+	
+	if(get_tree().get_root().get_node("jeu").cases[nb_prop].hypotheque == 1):
+		cases[indice].get_node("hyp").show()
+	else:
+		cases[indice].get_node("hyp").hide()
 	
 	panel.show()
 
@@ -198,25 +205,25 @@ func _on_exit2_pressed():
 	infos.hide()
 
 func _on_oui_pressed():
+	var case = get_tree().get_root().get_node("jeu").joueur.pos_pion
+	print("PROP : " + str(case))
 	if type_button == 1:
-		print("PROP : " + str(prop))
-		get_tree().get_root().get_node("jeu").vendre(prop)
+		get_tree().get_root().get_node("jeu").vendre(case)
 	elif type_button == 2:
-		get_tree().get_root().get_node("jeu").hypothequer(prop)
+		get_tree().get_root().get_node("jeu").hypothequer(case)
 	elif type_button == 3:
-		get_tree().get_root().get_node("jeu").construire()
+		get_tree().get_root().get_node("jeu").construire(case)
 	elif type_button == 4:
-		get_tree().get_root().get_node("jeu").destruction(prop)
+		get_tree().get_root().get_node("jeu").destruction(case)
 
 func _on_non_pressed():
 	pass # Replace with function body.
-
-
-
 	
 func _on_LinkButton_pressed():
 	emit_signal("sig_stats",self,$nom_joueur.text)
 	
 
 func _on_jailbreak_pressed():
-	get_tree().get_root().get_node("jeu").carte_sortie_prison()
+	var id = get_tree().get_root().get_node("jeu").joueur.id+1
+	if("infobox"+str(id) == name):
+		get_tree().get_root().get_node("jeu").carte_sortie_prison()

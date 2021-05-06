@@ -2,7 +2,6 @@ extends Node
 
 class_name Serveur_partie
 
-
 # Objet thread utilisé
 var thread = Thread.new()
 # Objet utilisé pour la socket
@@ -74,10 +73,16 @@ var warning = []
 var ventes = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
-	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
-	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
-		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
+#	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
+#	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
+#		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
 		#payer_joueur(id_joueur, plateau[0].get_prix())
+	var dep = position_joueur[id_joueur] + nbr_case
+	if dep >= plateau.size():
+		dep = dep % plateau.size()
+	if joueur_prison[id_joueur] == 0:
+		position_joueur[id_joueur] = dep
+
 
 func payer_joueur(id_joueur : int, prix : int):
 	argent_joueur[id_joueur] = argent_joueur[id_joueur] + prix
@@ -172,6 +177,7 @@ func acheter(id):
 	argent_joueur[id] -= case.prix
 	case.proprio = id
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
+	print("VERIF PROPRIO : %d" % [case.proprio])
 	return exception
 
 func rente(case, joueur, res_des):
@@ -201,8 +207,8 @@ func taxe(id):
 	var case = plateau[position_joueur[id]]
 	argent_joueur[id] -= case.prix
 
-func upgrade(id):
-	var case = plateau[position_joueur[id]]
+func upgrade(id, case):
+	#var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
 		print("La case n'est pas de type proprieté")
 		return 1
@@ -223,7 +229,7 @@ func upgrade(id):
 				return 11
 			else:
 				cases_tmp.append(plateau[i])
-	if (case.niveau_case != 4):
+	if (case.niveau_case != 5):
 		if(case.niveau_case <= 3):
 			if(case.prix_maison > argent_joueur[id]):
 				print("Le joueur n'a pas assez d'argent pour une maison.")
@@ -405,6 +411,8 @@ func leguer(donneur, receveur):
 	for i in range(40):
 		if (plateau[i].type == Cases.CasesTypes.PROPRIETE and plateau[i].proprio == donneur):
 			plateau[i].proprio = receveur
+			if (plateau[i].hypotheque == 1):
+				plateau[i].hypotheque = 0
 			for j in range(0, plateau[i].niveau_case):
 				downgrade(receveur, plateau[i])
 			list_prop.append(plateau[i].indice)

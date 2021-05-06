@@ -5,12 +5,13 @@ var id = 0  	#premier joueur
 var case = null 	#prendra la node case dessous
 var vect_direction = Vector2(-1,0)	#
 export (int) var SPEED = 400
-var argent = 1000
+#var argent = 10000
 var dep_cases = 0
 var prisonnier = false
 var new_pos
 var pseudo = "meilleur joueur"
 var present = 1
+var pos_pion = 0
 
 onready var chat = get_node("../chatbox")
 
@@ -98,6 +99,7 @@ func pos_suivante():
 func goto_pos_prison():
 	var pos_prison = get_parent().get_node("Plateau/cases/cote_haut/Prison/Pos_prison").get_child(self.id).get_global_position()
 	position = pos_prison
+	pos_pion = 10
 
 func move(steps):
 	self.dep_cases = steps;
@@ -106,8 +108,8 @@ func move(steps):
 	
 	new_pos = pos_suivante()
 
-func payer(prix):
-	argent -= prix
+#func payer(prix):
+#	argent -= prix
 ##yield(get_tree().create_timer(0.75), "timeout")
 
 #============== Setters/Getters =================

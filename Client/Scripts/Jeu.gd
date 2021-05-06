@@ -24,16 +24,16 @@ var cert = load("res://unistrapoly_certif.crt")
 func _ready():
 
 	for i in range(10):
-		cases.append(get_node("Plateau/cases/cote_bas").get_child(i))
+		cases.append(get_node("Plateau/cases/cote_gauche").get_child(i))	
 		cases[i].setId(i)
 	for i in range(10):
-		cases.append(get_node("Plateau/cases/cote_gauche").get_child(i))
+		cases.append(get_node("Plateau/cases/cote_haut").get_child(i))
 		cases[10+i].setId(10+i)
 	for i in range(10):
-		cases.append(get_node("Plateau/cases/cote_haut").get_child(i))
+		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
 		cases[20+i].setId(20+i)
 	for i in range(10):
-		cases.append(get_node("Plateau/cases/cote_droit").get_child(i))
+		cases.append(get_node("Plateau/cases/cote_bas").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	nb_joueurs=2
@@ -130,6 +130,7 @@ func _closed_partie (was_clean = false):
 # Fonction d'ouverture de connexion
 func _connected_partie (_proto = ""):
 	print("connecté au serveur de partie à l'adresse %s:%s" % [str(ip), str(port)])
+	send_pseudo("TESTTTT")
 
 #	var structure = Structure.new()
 #
@@ -156,7 +157,7 @@ func _on_data_partie ():
 	print ('données reçues (socket partie)')
 	var structure = Structure.new()
 	var data_bytes = recevoir_message(client_partie)
-	#change tous les Structure en structure
+	# change tous les Structure en structure
 	var obj = structure.from_bytes(data_bytes)
 
 	match obj.type:
@@ -217,12 +218,14 @@ func _on_data_partie ():
 		Structure.PacketType.MAJ_ARGENT:
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.MAJ_ACHAT:
 			$annonce.text = "ACHAT REUSSI ! La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3]
 			print("ACHAT REUSSI !")
 			print("La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).show()
 		Structure.PacketType.RENTE:
 			$annonce.text = "RENTE ! Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client]
@@ -230,6 +233,7 @@ func _on_data_partie ():
 			print("Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data3])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data3)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data3)
 		Structure.PacketType.MAJ_CONSTRUCTION:
 			print("CONSTRUCTION !")
 			if(obj.data == -1):
@@ -238,34 +242,33 @@ func _on_data_partie ():
 			elif(obj.data == -2):
 				$annonce.text = "CONSTRUCTION ! Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3]
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
-			
 			cases[obj.data3].show_upgrade()
-#			if (obj.data2 == 0):
-#				get_node("Pion").payer(obj.data4)
-#			else:
-#				get_node("Pion"+str(obj.client)).payer(obj.data4)
-			# Pas d'enregistrement dans le client pour le moment (ou tout changer)
-			
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data2)
 		Structure.PacketType.MAJ_VENTE:
 			$annonce.text = "VENTE REUSSITE ! La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3]
 			print("VENTE REUSSITE !")
 			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
+			cases[obj.data2].hypotheque = 0
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
 		Structure.PacketType.MAJ_HYPOTHEQUE:
 			if(obj.data4 == 0):
 				$annonce.text = "HYPOTHEQUE ! La propriete %d est hypothequee par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3]
 				print("HYPOTHEQUE !")
 				print("La propriete %d est hypothequee par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
+				cases[obj.data2].hypotheque = 1
 			else:
 				$annonce.text = "DE-HYPOTHEQUE ! La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3]
 				print("DE-HYPOTHEQUE !")
 				print("La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3])
+				cases[obj.data2].hypotheque = 0
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.MAJ_DESTRUCTION:
 			print("DESTRUCTION !")
 			if(obj.data4 == -1):
@@ -274,8 +277,10 @@ func _on_data_partie ():
 			else:
 				$annonce.text = "DESTRUCTION ! Un hôtel sur la propriété %d est détruit par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3]
 				print("Un hôtel sur la propriété %d est détruit par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
+			cases[obj.data2].show_downgrade()
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.GO_PRISON:
 			$annonce.text = "Joueur %d est deroute en prison !" % [obj.client]
 			print("Joueur %d est deroute en prison !" % [obj.client])
@@ -286,7 +291,9 @@ func _on_data_partie ():
 		Structure.PacketType.OUT_PRISON:
 			$annonce.text = "Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data]
 			print("Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data])
-			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
+			var money = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = money
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = money
 		Structure.PacketType.FREE_OUT_PRISON:
 			if(obj.data == 0):
 				$annonce.text = "DOUBLE ! Joueur %d sort de prison !" % [obj.client]
@@ -300,6 +307,7 @@ func _on_data_partie ():
 			$annonce.text = "Joueur %d paye une taxe !" % [obj.client]
 			print("Joueur %d paye une taxe !" % [obj.client])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.CHAT:
 #			print(obj.data)
 			get_node("chatbox").add_message(obj.data, obj.data2, obj.data3)
@@ -314,16 +322,22 @@ func _on_data_partie ():
 			$info_joueur/ScrollContainer/panelInfos.show()
 		
 		Structure.PacketType.BCAST_PSEUDOS:
-			for i in range(1,len(nb_joueurs)):
-				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i)).text = obj.data[i]
-			
+			for i in range(0,nb_joueurs):
+				print(obj.data[i])
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/nom_joueur").text = obj.data[i]
+				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/LinkButton/nom_joueur2").text = obj.data[i]
+				
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client]
 			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
 			$annonce.text = "Lancé de dé : %d pour le joueur %d" % [obj.data, obj.client]
 			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
+			if(obj.client == joueur.id):
+				joueur.pos_pion += obj.data
+			print('VERIF NOUV POS : %d' % [joueur.pos_pion])
 			match int(obj.client):
 				0:
 					emit_signal("signal_resultat_lancer_de", int(obj.data))
@@ -354,18 +368,22 @@ func _on_data_partie ():
 					print("Le joueur %d paie une amende de %d ECTS pour petite triche !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d paie une amende de "+str([obj.client, obj.data2])+" ECTS pour petite triche !" 
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				3:
 					print("Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				4:
 					print("Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				5:
 					print("Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-1:
 					print("Le joueur %d va en prison sans passer par la case départ !" % [obj.client])
 					$annonce.text = "Le joueur %d va en prison sans passer par la case départ !" % [obj.client]
@@ -376,22 +394,27 @@ func _on_data_partie ():
 						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
 						get_node("Pion"+str(obj.client+1)).dep_cases = 0
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-2:
 					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
 					$annonce.text = "Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-3:
 					print("Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2])
 					$annonce.text = "Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-4:
 					print("Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2])
 					$annonce.text = "Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				-5:
 					print("OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2])
 					$annonce.text = "OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 				_:
 					print("Carte inconnue !")
 		Structure.PacketType.PERDRE:
@@ -404,6 +427,9 @@ func _on_data_partie ():
 				else:
 					$annonce.text = "VOUS AVEZ PERDU ! Le joueur %d vous a mis en faillite !" % [obj.data]
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
+					for i in range(0, len(obj.data2)):
+						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
+						cases[i].hypotheque = 0
 					print(obj.data2)
 				joueur.present = 0
 			else:
@@ -414,6 +440,7 @@ func _on_data_partie ():
 				else:
 					$annonce.text = "Le joueur %d a perdu ! Le joueur %d l'a mis en faillite !" % [obj.client, obj.data]
 					print("Le joueur %d l'a mis en faillite !" % [obj.data])
+					
 					print(obj.data2)
 		Structure.PacketType.GAGNE:
 			$annonce.text = "VOUS AVEZ GAGNE ! FELICITATION !"
@@ -432,8 +459,8 @@ func _process (_delta):
 
 #envoie de données au serveur
 func envoyer_message (client : WebSocketClient, bytes : PoolByteArray):
-		client.get_peer(1).put_packet(bytes)
-		#put_packet return mais on utilise pas le retour
+	client.get_peer(1).put_packet(bytes)
+	#put_packet return mais on utilise pas le retour
 
 
 #reception de données depuis le serveur
@@ -447,7 +474,6 @@ func rejoindre_partie (URL : String):
 	var parts = URL.rsplit(':')
 	ip = parts[0]
 	port = parts[1]
-
 	print('connexion au serveur de partie')
 	var err = client_partie.connect_to_url('ws://' + URL)
 	if err != OK:
@@ -494,6 +520,7 @@ func _on_start_pressed():
 	structure.set_inscription_partie(444, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
+	#send_pseudo(mon_nom)
 
 func _on_sign_in_pressed():
 	$menu/background.hide()
@@ -518,8 +545,9 @@ func sig_msg(text, username, index):
 
 func hypothequer(id_case):
 	print('envoi requête hypotheque')
+	print("ID CASE : " + str(id_case))
 	var structure = Structure.new()
-	structure.set_requete_hypothequer(0)
+	structure.set_requete_hypothequer(id_case)
 	envoyer_message(client_partie, structure.to_bytes())
 
 func vendre(id_case):
@@ -533,6 +561,13 @@ func destruction(id_case):
 	var structure = Structure.new()
 	structure.set_requete_detruire(id_case)
 	envoyer_message(client_partie, structure.to_bytes())
+
+func construire(id_case):
+	print('envoi requête de construction')
+	var structure = Structure.new()
+	structure.set_requete_construire(id_case)
+	envoyer_message(client_partie, structure.to_bytes())
+
 
 ####################################
 
@@ -604,6 +639,11 @@ func carte_sortie_prison():
 	structure.set_requete_carte_sortie_prison()
 	envoyer_message(client_partie, structure.to_bytes())
 
+func send_pseudo(pseudo):
+	print('envoi requête envoi de pseudo')
+	var structure = Structure.new()
+	structure.set_requete_send_pseudo(pseudo)
+	envoyer_message(client_partie, structure.to_bytes())
 
 func _on_abandon_pressed(): 
 	var structure = Structure.new()
@@ -611,7 +651,6 @@ func _on_abandon_pressed():
 		structure.set_requete_abandonner()
 		client_partie.disconnect_from_host(0, "Pas de problème")
 	$menu.show()
-
 
 func _on_info_joueur_sig_stats_infos_joueur(player, infobox):
 	var structure = Structure.new()
