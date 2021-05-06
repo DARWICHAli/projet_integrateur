@@ -40,7 +40,6 @@ func _ready():
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
 	#nb_joueurs=2
-	
 	#print('ready')
 	ready_connection()
 
@@ -92,6 +91,7 @@ func _on_data_lobby ():
 	match obj.type:
 		Structure.PacketType.ADRESSE_SERVEUR_JEU:
 			print('reçu adresse du serveur de jeu: ', obj.data)
+			mon_nom = "Joueur " + str(obj.data2)
 			if (obj.data2 == 0):
 				joueur = get_node("Pion")
 			else:
@@ -335,6 +335,8 @@ func _on_data_partie ():
 				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/nom_joueur").text = obj.data[i]
 				get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(i+1)+"/LinkButton/nom_joueur2").text = obj.data[i]
 			pseudos = obj.data
+			joueur.pseudo = pseudos[joueur.id]
+			joueur.chat.set_player_name(joueur)
 		Structure.PacketType.ARGENT_NOUV_TOUR:
 			$annonce.text = "%s vient de passer par la case départ ! Il reçoit 500 ECTS !" % [pseudos[obj.client]]
 			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
@@ -430,14 +432,14 @@ func _on_data_partie ():
 			if(self.joueur.id == obj.client):
 				print("VOUS AVEZ PERDU !")
 				if(obj.data == -1):
-					$annonce.text = "VOUS AVEZ PERDU ! La banque vous a mis en faillite !"
+					$gagne.text = "VOUS AVEZ PERDU ! La banque vous a mis en faillite !"
 					print("La banque vous a mis en faillite !")
 				else:
-					$annonce.text = "VOUS AVEZ PERDU ! %s vous a mis en faillite !" % [pseudos[obj.data]]
+					$gagne.text = "VOUS AVEZ PERDU ! %s vous a mis en faillite !" % [pseudos[obj.data]]
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
 					for i in range(0, len(obj.data2)):
 						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
-						cases[i].hypotheque = 0
+						#cases[i].hypotheque = 0
 					print(obj.data2)
 				joueur.present = 0
 			else:

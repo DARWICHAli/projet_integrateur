@@ -81,11 +81,11 @@ font_data = ExtResource( 78 )
 size = 75
 font_data = ExtResource( 78 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 75
 font_data = ExtResource( 78 )
 
-[sub_resource type="DynamicFont" id=3]
+[sub_resource type="DynamicFont" id=4]
 size = 75
 font_data = ExtResource( 78 )
 
@@ -492,6 +492,7 @@ margin_left = 1269.56
 margin_top = 12.4271
 margin_right = 2546.56
 margin_bottom = 130.427
+rect_pivot_offset = Vector2( 598.675, 132.471 )
 custom_fonts/normal_font = SubResource( 1 )
 text = "BIENVENUE !"
 __meta__ = {
@@ -559,7 +560,20 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="gagne" type="RichTextLabel" parent="."]
+margin_left = 945.935
+margin_top = 450.055
+margin_right = 2222.94
+margin_bottom = 568.055
+rect_pivot_offset = Vector2( 598.675, 132.471 )
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
+position = Vector2( 2554.76, -14.2703 )
 
 [node name="join_party" type="Node2D" parent="."]
 visible = false
@@ -590,7 +604,7 @@ margin_top = 1451.03
 margin_right = 2390.0
 margin_bottom = 1576.03
 rect_pivot_offset = Vector2( 477.298, 219.935 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -600,7 +614,7 @@ margin_left = 1350.63
 margin_top = 1246.22
 margin_right = 1861.63
 margin_bottom = 1347.22
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 text = "Code partie :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -611,7 +625,7 @@ margin_left = 1335.68
 margin_top = 1465.0
 margin_right = 2127.68
 margin_bottom = 1566.0
-custom_fonts/normal_font = SubResource( 3 )
+custom_fonts/normal_font = SubResource( 4 )
 text = "Nombre de joueurs :"
 __meta__ = {
 "_edit_use_anchors_": false

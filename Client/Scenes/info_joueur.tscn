@@ -76,19 +76,22 @@ margin_bottom = 544.0
 visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
-margin_top = 548.0
 margin_right = 1250.0
-margin_bottom = 1092.0
+margin_bottom = 544.0
 
 [node name="infobox3" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
-margin_top = 548.0
-margin_bottom = 1092.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1250.0
+margin_bottom = 544.0
 
 [node name="infobox4" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
-margin_top = 548.0
-margin_bottom = 1092.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1250.0
+margin_bottom = 544.0
 
 [node name="infobox5" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
@@ -97,8 +100,10 @@ margin_bottom = 1092.0
 
 [node name="infobox6" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
-margin_top = 548.0
-margin_bottom = 1092.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1250.0
+margin_bottom = 544.0
 
 [node name="infobox7" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false

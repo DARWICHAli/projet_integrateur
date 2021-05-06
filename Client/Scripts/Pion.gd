@@ -9,7 +9,7 @@ export (int) var SPEED = 400
 var dep_cases = 0
 var prisonnier = false
 var new_pos
-var pseudo = "meilleur joueur"
+var pseudo = ""
 var present = 1
 var pos_pion = 0
 

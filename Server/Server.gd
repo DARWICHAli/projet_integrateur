@@ -395,6 +395,8 @@ func partie(serveur_jeu : Serveur_partie):
 		var double = 1
 		var nb_double = 0
 		var goto_prison = 0
+		if(serveur_jeu.list_joueurs.size() == 1):
+			break
 		while double:
 			print("\n\n")
 			print("AU TOUR DU JOUEUR %d !" % [serveur_jeu.attente_joueur])
@@ -418,7 +420,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 2#lancer_de()
+			var de_un = 1#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -608,18 +610,18 @@ func partie(serveur_jeu : Serveur_partie):
 			# Passage au prochain joueur
 			if(double == 0):
 				 #Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
-				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-					var pseudo    = serveur_jeu.pseudos[joueur]
-					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
-					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
-					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
-					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
+#				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+#					var pseudo    = serveur_jeu.pseudos[joueur]
+#					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
+#					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
+#					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
+#					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
 				
 				nb_double = 0
 				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
 				serveur_jeu.next_player()
-	
+			
 	print("Player %d win" % joueur)
 	structure.set_requete_gagne()
 	envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])

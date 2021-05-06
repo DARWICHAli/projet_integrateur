@@ -57,9 +57,9 @@ func add_message(text, username, index=8):
 	chat_log.bbcode_text += ': ' + text
 
 func set_player_name(player):
-	player_index = 0 #player.id
+	player_index = player.id
 	user_name = player.pseudo
 	player_tag.text = '[' + user_name + ']'
 	print(player_index)
-	player_tag.set('custom_colors/font_color', Color(groups[0]['color']))
+	player_tag.set('custom_colors/font_color', Color(groups[player_index]['color']))
 

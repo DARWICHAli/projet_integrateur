@@ -27,7 +27,7 @@ var attente_joueur = 0
 # Numéro de cases des joueurs
 const position_joueur = []
 # Argent des joueurs
-const argent_joueur = []
+const argent_joueur = [200,100]
 # Tableau représentant les cases du jeu
 var plateau = [
 Cases.new(), Cases.new(), 
@@ -411,8 +411,8 @@ func leguer(donneur, receveur):
 	for i in range(40):
 		if (plateau[i].type == Cases.CasesTypes.PROPRIETE and plateau[i].proprio == donneur):
 			plateau[i].proprio = receveur
-			if (plateau[i].hypotheque == 1):
-				plateau[i].hypotheque = 0
+			#if (plateau[i].hypotheque == 1):
+			#	plateau[i].hypotheque = 0
 			for j in range(0, plateau[i].niveau_case):
 				downgrade(receveur, plateau[i])
 			list_prop.append(plateau[i].indice)
