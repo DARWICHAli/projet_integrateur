@@ -25,10 +25,10 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-	db = SQLite.new();
-	db.path="./database.db"
-	db.verbose_mode = false
-	db.open_db()
+#	db = SQLite.new();
+#	db.path="./database.db"
+#	db.verbose_mode = false
+#	db.open_db()
 
 #	stats("tthirtle2o")
 #	var pseudo = "aaa@bbb.com"

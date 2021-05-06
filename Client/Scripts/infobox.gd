@@ -20,6 +20,7 @@ onready var gare = preload("res://GFX/cases_bon_sens/gare.png")
 
 var type_button = 0
 var prop = 0
+var ind = 0
 
 signal sig_stats(infobox,player)
 
@@ -34,6 +35,7 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 	case4.set_normal_texture(color)
 	
 	self.prop = nb_prop
+	self.ind = indice
 	
 	print("PROP NUM : " + str(prop))
 	
@@ -199,6 +201,7 @@ func show_houses(nb):
 		i += 1
 
 func _on_exit_pressed():
+	cases[ind].get_node("hyp").hide()
 	panel.hide()
 
 func _on_exit2_pressed():

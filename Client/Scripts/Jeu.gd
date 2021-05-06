@@ -289,7 +289,7 @@ func _on_data_partie ():
 			get_node("info_joueur/ScrollContainer/panelPlayer/ColorRect/money").text = str(obj.data)
 		Structure.PacketType.GO_PRISON:
 			$annonce.text = pseudos[obj.client] + " est deroute en prison !" 
-			print(pseudos[obj.data] + " est deroute en prison !" )
+			print(pseudos[obj.client] + " est deroute en prison !" )
 			if obj.client == 0:
 				get_node("Pion").goto_pos_prison()
 			else:
