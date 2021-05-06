@@ -14,6 +14,8 @@ var joueur
 var mon_nom = "Client 1"
 var pseudos : Array = ["","","","","","","",""]
 
+var code_partie
+
 # Our WebSocketClient instance
 var client_lobby  = WebSocketClient.new()
 var client_partie = WebSocketClient.new()
@@ -37,7 +39,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_bas").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	nb_joueurs=2
+	#nb_joueurs=2
 	
 	#print('ready')
 	ready_connection()
@@ -519,14 +521,18 @@ func _on_acheter_pressed():
 
 func _on_start_pressed():
 	print('ready')
-
 	$menu.hide()
+	$join_party.show()
+
+func _on_start2_pressed():
 	var structure = Structure.new()
 	# une fois connecté au lobby on demande un serveur de jeu
-	structure.set_inscription_partie(444, nb_joueurs)
+	code_partie = int($join_party/code_partie.text)
+	nb_joueurs = int($join_party/nbjoueurs.text)
+	structure.set_inscription_partie(code_partie, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
-	#send_pseudo(mon_nom)
+	$join_party.hide()
 
 func _on_sign_in_pressed():
 	$menu/background.hide()
@@ -662,3 +668,6 @@ func _on_info_joueur_sig_stats_infos_joueur(player, infobox):
 	var structure = Structure.new()
 	structure.set_requete_consult_stats(player)
 	envoyer_message(client_partie, structure.to_bytes())
+
+
+

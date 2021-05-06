@@ -1,4 +1,4 @@
-[gd_scene load_steps=74 format=2]
+[gd_scene load_steps=77 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -75,6 +75,18 @@
 
 [sub_resource type="DynamicFont" id=1]
 size = 80
+font_data = ExtResource( 78 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 75
+font_data = ExtResource( 78 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 75
+font_data = ExtResource( 78 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 75
 font_data = ExtResource( 78 )
 
 [node name="jeu" type="Node2D"]
@@ -549,6 +561,74 @@ __meta__ = {
 
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 
+[node name="join_party" type="Node2D" parent="."]
+visible = false
+
+[node name="background" type="TextureRect" parent="join_party"]
+margin_right = 3840.0
+margin_bottom = 2165.0
+rect_scale = Vector2( 1, 1.12 )
+texture = ExtResource( 62 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="code_partie" type="TextEdit" parent="join_party"]
+margin_left = 1878.25
+margin_top = 1227.46
+margin_right = 2123.25
+margin_bottom = 1352.46
+rect_pivot_offset = Vector2( 477.298, 219.935 )
+custom_fonts/font = SubResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nbjoueurs" type="TextEdit" parent="join_party"]
+margin_left = 2136.0
+margin_top = 1451.03
+margin_right = 2390.0
+margin_bottom = 1576.03
+rect_pivot_offset = Vector2( 477.298, 219.935 )
+custom_fonts/font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text_code2" type="RichTextLabel" parent="join_party"]
+margin_left = 1350.63
+margin_top = 1246.22
+margin_right = 1861.63
+margin_bottom = 1347.22
+custom_fonts/normal_font = SubResource( 3 )
+text = "Code partie :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="text_nbjoueur" type="RichTextLabel" parent="join_party"]
+margin_left = 1335.68
+margin_top = 1465.0
+margin_right = 2127.68
+margin_bottom = 1566.0
+custom_fonts/normal_font = SubResource( 3 )
+text = "Nombre de joueurs :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="start2" type="TextureButton" parent="join_party"]
+margin_left = 1579.96
+margin_top = 1674.39
+margin_right = 1769.96
+margin_bottom = 1734.39
+rect_scale = Vector2( 3, 3 )
+texture_normal = ExtResource( 61 )
+texture_pressed = ExtResource( 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="menu" type="Node2D" parent="."]
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
@@ -619,6 +699,7 @@ __meta__ = {
 [connection signal="pressed" from="abandon" to="." method="_on_abandon_pressed"]
 [connection signal="pressed" from="acheter" to="." method="_on_acheter_pressed"]
 [connection signal="pressed" from="reclamer" to="." method="_on_reclamer_pressed"]
+[connection signal="pressed" from="join_party/start2" to="." method="_on_start2_pressed"]
 [connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
 [connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
 [connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]

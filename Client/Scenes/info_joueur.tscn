@@ -111,6 +111,7 @@ margin_top = 548.0
 margin_bottom = 1092.0
 
 [node name="panelPlayer" type="Control" parent="ScrollContainer"]
+visible = false
 
 [node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelPlayer"]
 margin_top = 1.88776
