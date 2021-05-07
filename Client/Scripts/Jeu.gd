@@ -39,7 +39,7 @@ func _ready():
 		cases.append(get_node("Plateau/cases/cote_bas").get_child(i))
 		cases[30+i].setId(30+i)
 	# Choix du nombre de joueur
-	#nb_joueurs=2
+	nb_joueurs=0
 	#print('ready')
 	ready_connection()
 
@@ -531,6 +531,14 @@ func _on_start2_pressed():
 	# une fois connecté au lobby on demande un serveur de jeu
 	code_partie = int($join_party/code_partie.text)
 	nb_joueurs = int($join_party/nbjoueurs.text)
+	if(code_partie == 0):
+		$join_party/error/texte_erreur.text = "Code invalide ! Veuillez entrez un code valide (nombre entier non nul)."
+		$join_party/error.show()
+		return
+	if(nb_joueurs <= 1 or nb_joueurs > 8):
+		$join_party/error/texte_erreur.text = "Nombre de joueurs invalide ! Veuillez entrez un nombre de joueurs valide (supérieur ou égale à 2 et inférieur à 8)."
+		$join_party/error.show()
+		return
 	structure.set_inscription_partie(code_partie, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
@@ -671,5 +679,9 @@ func _on_info_joueur_sig_stats_infos_joueur(player, infobox):
 	structure.set_requete_consult_stats(player)
 	envoyer_message(client_partie, structure.to_bytes())
 
+func _on_retour2_pressed():
+	$join_party.hide()
+	$menu.show()
 
-
+func _on_retour_err_join_pressed():
+	$join_party/error.hide()

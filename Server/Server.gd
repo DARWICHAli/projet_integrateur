@@ -486,7 +486,6 @@ func partie(serveur_jeu : Serveur_partie):
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
 					if (status == -1):
 						goto_prison = 1
-#						serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] = 1
 				else:
 					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
@@ -610,12 +609,12 @@ func partie(serveur_jeu : Serveur_partie):
 			# Passage au prochain joueur
 			if(double == 0):
 				 #Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
-#				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-#					var pseudo    = serveur_jeu.pseudos[joueur]
-#					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
-#					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
-#					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
-#					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
+				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+					var pseudo    = serveur_jeu.pseudos[joueur]
+					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
+					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
+					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
+					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
 				
 				nb_double = 0
 				goto_prison = 0
