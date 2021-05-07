@@ -50,6 +50,8 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 	else:
 		cases[indice].get_node("hyp").hide()
 	
+	panel.get_node("ColorRect/money").text = int(name[7])-1
+	
 	panel.show()
 
 func _on_prop1_pressed():

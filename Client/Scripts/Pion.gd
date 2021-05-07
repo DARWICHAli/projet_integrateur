@@ -5,14 +5,13 @@ var id = 0  	#premier joueur
 var case = null 	#prendra la node case dessous
 var vect_direction = Vector2(-1,0)	#
 export (int) var SPEED = 400
-#var argent = 10000
+var argent = [0,0,0,0,0,0,0,0]
 var dep_cases = 0
 var prisonnier = false
 var new_pos
 var pseudo = ""
 var present = 1
 var pos_pion = 0
-
 var prop
 
 onready var chat = get_node("../chatbox")

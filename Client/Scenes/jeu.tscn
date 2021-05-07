@@ -1,4 +1,4 @@
-[gd_scene load_steps=80 format=2]
+[gd_scene load_steps=83 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -51,6 +51,7 @@
 [ext_resource path="res://GFX/Bouton/bouton_abandonner_normal.png" type="Texture" id=49]
 [ext_resource path="res://GFX/Bouton/bouton_des_normal.png" type="Texture" id=50]
 [ext_resource path="res://GFX/Bouton/bouton_des_pressed.png" type="Texture" id=51]
+[ext_resource path="res://Scripts/historique.gd" type="Script" id=52]
 [ext_resource path="res://GFX/Bouton/bouton_abandonner_pressed.png" type="Texture" id=54]
 [ext_resource path="res://GFX/Bouton/bouton_fin_tour_normal.png" type="Texture" id=55]
 [ext_resource path="res://GFX/Bouton/bouton_fin_tour_pressed.png" type="Texture" id=56]
@@ -76,15 +77,15 @@
 [ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=78]
 
 [sub_resource type="DynamicFont" id=1]
-size = 80
+size = 50
 font_data = ExtResource( 78 )
 
 [sub_resource type="DynamicFont" id=2]
-size = 75
+size = 30
 font_data = ExtResource( 78 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 75
+size = 80
 font_data = ExtResource( 78 )
 
 [sub_resource type="DynamicFont" id=4]
@@ -92,6 +93,14 @@ size = 75
 font_data = ExtResource( 78 )
 
 [sub_resource type="DynamicFont" id=5]
+size = 75
+font_data = ExtResource( 78 )
+
+[sub_resource type="DynamicFont" id=6]
+size = 75
+font_data = ExtResource( 78 )
+
+[sub_resource type="DynamicFont" id=7]
 size = 100
 font_data = ExtResource( 78 )
 
@@ -104,22 +113,11 @@ position = Vector2( 1925, 1071 )
 scale = Vector2( 2.09844, 2.16852 )
 texture = ExtResource( 8 )
 
-[node name="annonce" type="RichTextLabel" parent="."]
-margin_left = 16.0
-margin_top = 132.0
-margin_right = 608.0
-margin_bottom = 912.0
-custom_fonts/normal_font = SubResource( 1 )
-text = "..."
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
 [node name="chatbox" parent="." instance=ExtResource( 73 )]
-margin_left = 16.4983
-margin_top = 1054.0
-margin_right = 587.498
-margin_bottom = 2130.0
+margin_left = 16.0
+margin_top = 1269.0
+margin_right = 587.0
+margin_bottom = 2133.0
 
 [node name="Plateau" type="Node2D" parent="."]
 position = Vector2( 940, 1100 )
@@ -420,6 +418,32 @@ show_behind_parent = true
 position = Vector2( -1, 0 )
 texture = ExtResource( 25 )
 
+[node name="annonce" type="RichTextLabel" parent="."]
+margin_left = 897.364
+margin_top = 429.818
+margin_right = 2259.36
+margin_bottom = 630.818
+custom_fonts/normal_font = SubResource( 1 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="historique" type="RichTextLabel" parent="."]
+margin_left = 10.0
+margin_top = 125.0
+margin_right = 608.0
+margin_bottom = 1268.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+script = ExtResource( 52 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Pion" parent="." instance=ExtResource( 5 )]
 position = Vector2( 1001, 1845 )
 
@@ -499,7 +523,7 @@ margin_top = 12.4271
 margin_right = 2546.56
 margin_bottom = 130.427
 rect_pivot_offset = Vector2( 598.675, 132.471 )
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
 text = "BIENVENUE !"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -567,12 +591,12 @@ __meta__ = {
 }
 
 [node name="gagne" type="RichTextLabel" parent="."]
-margin_left = 945.935
-margin_top = 450.055
-margin_right = 2222.94
-margin_bottom = 568.055
+margin_left = 2826.18
+margin_top = 917.593
+margin_right = 4103.18
+margin_bottom = 1035.59
 rect_pivot_offset = Vector2( 598.675, 132.471 )
-custom_fonts/normal_font = SubResource( 1 )
+custom_fonts/normal_font = SubResource( 3 )
 custom_colors/default_color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -599,7 +623,7 @@ margin_top = 1185.05
 margin_right = 2265.23
 margin_bottom = 1310.05
 rect_pivot_offset = Vector2( 477.298, 219.935 )
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -611,7 +635,7 @@ margin_top = 1551.82
 margin_right = 2294.25
 margin_bottom = 1676.82
 rect_pivot_offset = Vector2( 477.298, 219.935 )
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -631,7 +655,7 @@ margin_left = 1496.17
 margin_top = 1215.12
 margin_right = 2007.17
 margin_bottom = 1316.12
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 6 )
 text = "Code partie :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -644,7 +668,7 @@ margin_top = 1565.79
 margin_right = 2031.93
 margin_bottom = 1666.79
 rect_pivot_offset = Vector2( 873.233, 24.6063 )
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 6 )
 text = "Nombre de joueurs :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -656,7 +680,7 @@ margin_top = 1393.43
 margin_right = 2031.67
 margin_bottom = 1494.43
 rect_pivot_offset = Vector2( 873.233, 24.6063 )
-custom_fonts/normal_font = SubResource( 4 )
+custom_fonts/normal_font = SubResource( 6 )
 text = "Créer partie :"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -700,7 +724,7 @@ margin_left = 176.0
 margin_top = 130.0
 margin_right = 1183.0
 margin_bottom = 1272.0
-custom_fonts/normal_font = SubResource( 5 )
+custom_fonts/normal_font = SubResource( 7 )
 text = "Code de partie incorrect !"
 __meta__ = {
 "_edit_use_anchors_": false
