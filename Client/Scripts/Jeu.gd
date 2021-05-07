@@ -471,7 +471,7 @@ func _on_data_partie ():
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
 					for i in range(0, len(obj.data2)):
 						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
-						#cases[i].hypotheque = 0
+						cases[i].hypotheque = 0
 					print(obj.data2)
 				joueur.present = 0
 			else:

@@ -53,7 +53,7 @@ func add_message(text, username, index=8):
 	chat_log.bbcode_text += '[color=' + groups[index]['color'] + ']'
 	chat_log.bbcode_text += username
 	chat_log.bbcode_text += '[/color]'
-	print (text[1])
+	#print (text[1])
 	chat_log.bbcode_text += ': ' + text
 
 func set_player_name(player):
