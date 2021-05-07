@@ -535,10 +535,11 @@ func _on_start2_pressed():
 		$join_party/error/texte_erreur.text = "Code invalide ! Veuillez entrez un code valide (nombre entier non nul)."
 		$join_party/error.show()
 		return
-	if(nb_joueurs <= 1 or nb_joueurs > 8):
-		$join_party/error/texte_erreur.text = "Nombre de joueurs invalide ! Veuillez entrez un nombre de joueurs valide (supérieur ou égale à 2 et inférieur à 8)."
-		$join_party/error.show()
-		return
+	if($join_party/creer_partie.is_pressed()):
+		if(nb_joueurs <= 1 or nb_joueurs > 8):
+			$join_party/error/texte_erreur.text = "Nombre de joueurs invalide ! Veuillez entrez un nombre de joueurs valide (supérieur ou égale à 2 et inférieur à 8)."
+			$join_party/error.show()
+			return
 	structure.set_inscription_partie(code_partie, nb_joueurs)
 	print('envoi de la demande de partie')
 	envoyer_message(client_lobby, structure.to_bytes())
@@ -685,3 +686,11 @@ func _on_retour2_pressed():
 
 func _on_retour_err_join_pressed():
 	$join_party/error.hide()
+
+func _on_creer_partie_toggled(button_pressed):
+	if(button_pressed):
+		$join_party/nbjoueurs.show()
+		$join_party/text_nbjoueurs.show()
+	else:
+		$join_party/nbjoueurs.hide()
+		$join_party/text_nbjoueurs.hide()
