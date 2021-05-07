@@ -719,7 +719,6 @@ __meta__ = {
 }
 
 [node name="menu" type="Node2D" parent="."]
-visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 

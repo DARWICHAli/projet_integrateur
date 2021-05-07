@@ -13,6 +13,8 @@ var pseudo = ""
 var present = 1
 var pos_pion = 0
 
+var prop
+
 onready var chat = get_node("../chatbox")
 
 #============== Routines =================

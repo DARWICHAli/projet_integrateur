@@ -19,7 +19,7 @@ onready var vert = preload("res://GFX/cases_bon_sens/case_vert.png")
 onready var gare = preload("res://GFX/cases_bon_sens/gare.png")
 
 var type_button = 0
-var prop = 0
+#var prop = 0
 var ind = 0
 
 signal sig_stats(infobox,player)
@@ -34,10 +34,8 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 	case3.set_normal_texture(color)
 	case4.set_normal_texture(color)
 	
-	self.prop = nb_prop
+	get_tree().get_root().get_node("jeu").joueur.prop = nb_prop
 	self.ind = indice
-	
-	print("PROP NUM : " + str(prop))
 	
 	for i in range(4):
 		if (i > total-1):
@@ -171,7 +169,7 @@ func _on_vendre_pressed():
 	type_button = 1
 
 func _on_hypothequer_pressed():
-	change_text_conf("hypothequer ")
+	change_text_conf("hypothequer/dehypothequer ")
 	show_confirmation(1)
 	type_button = 2
 
@@ -208,16 +206,18 @@ func _on_exit2_pressed():
 	infos.hide()
 
 func _on_oui_pressed():
-	var case = get_tree().get_root().get_node("jeu").joueur.pos_pion
-	print("PROP : " + str(case))
+	#var case = get_tree().get_root().get_node("jeu").joueur.pos_pion
+	#print("PROP : " + str(case))
+	var prop = get_tree().get_root().get_node("jeu").joueur.prop
+	print("PROP : " + str(prop))
 	if type_button == 1:
-		get_tree().get_root().get_node("jeu").vendre(case)
+		get_tree().get_root().get_node("jeu").vendre(prop)
 	elif type_button == 2:
-		get_tree().get_root().get_node("jeu").hypothequer(case)
+		get_tree().get_root().get_node("jeu").hypothequer(prop)
 	elif type_button == 3:
-		get_tree().get_root().get_node("jeu").construire(case)
+		get_tree().get_root().get_node("jeu").construire(prop)
 	elif type_button == 4:
-		get_tree().get_root().get_node("jeu").destruction(case)
+		get_tree().get_root().get_node("jeu").destruction(prop)
 
 func _on_non_pressed():
 	pass # Replace with function body.
