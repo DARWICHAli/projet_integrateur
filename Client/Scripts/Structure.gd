@@ -195,10 +195,11 @@ func set_adresse_serveur_jeu (ip, port, nb_joueurs, id_joueur):
 	self.data2 = id_joueur
 	self.client = nb_joueurs
 
-func set_resultat_lancer_de (Resultat : int, Client : int):
+func set_resultat_lancer_de (de_un, de_deux, id_client):
 	self.type = PacketType.RESULTAT_LANCER_DE
-	self.data = Resultat
-	self.client = Client
+	self.data = de_un
+	self.data2 = de_deux
+	self.client = id_client
 
 func set_requete_inscription(mail, username, mdp, pays):
 	self.type = PacketType.INSCRIPTION

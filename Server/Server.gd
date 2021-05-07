@@ -462,7 +462,7 @@ func partie(serveur_jeu : Serveur_partie):
 					
 			if(goto_prison != 1):
 				serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, res)
-				structure.set_resultat_lancer_de(res, serveur_jeu.attente_joueur)
+				structure.set_resultat_lancer_de(de_un, de_deux, serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				print(serveur_jeu.attente_joueur)

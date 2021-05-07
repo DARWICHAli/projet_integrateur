@@ -50,7 +50,7 @@ func prop_pressed(color, indice, total, contraste, nb_prop):
 	else:
 		cases[indice].get_node("hyp").hide()
 	
-	panel.get_node("ColorRect/money").text = int(name[7])-1
+	get_node("../../panelPlayer/ColorRect/money").text = get_tree().get_root().get_node("jeu").joueur.argent[int(name[7])-1]
 	
 	panel.show()
 

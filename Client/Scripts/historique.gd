@@ -8,4 +8,3 @@ func add_hist(text):
 	self.bbcode_text = '\n\n'
 	self.bbcode_text += text + save
 	#var save = self.bb_code_text
-	

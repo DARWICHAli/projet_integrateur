@@ -5,7 +5,6 @@ class_name Jeu
 onready var hist = get_node("historique")
 
 var dep_cases = 0
-#var coin = 0 # 0 case dep, 1 prison, 2 park, 3 go_prison
 var debut = 0
 var cases = []
 var nb_joueurs
@@ -45,7 +44,6 @@ func _ready():
 	#print('ready')
 	ready_connection()
 
-
 # ============= Client ==================== #
 
 func ready_connection():
@@ -79,7 +77,6 @@ func _closed_lobby (was_clean = false):
 # Fonction d'ouverture de connexion
 func _connected_lobby (_proto = ""):
 	print("connecté au serveur lobby à l'adresse %s:%s" % [str(ip), str(port)])
-
 
 
 # Fonction de recu de paquet et connexion au nouveau si c'est une ip qu'il recoit
@@ -375,29 +372,30 @@ func _on_data_partie ():
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
-			$annonce.text = "Lancé de dé : %d pour %s" % [obj.data, pseudos[obj.client]]
+			$annonce.text = "Lancé de dé : %d (dé 1), %d (dé 2) pour %s" % [obj.data, obj.data2, pseudos[obj.client]]
 			hist.add_hist($annonce.text)
-			print('reçu résultat lancer dé : ' + str(int(obj.data)) + ' pour le client : ' + str(int(obj.client)))
+			print('reçu résultat lancer dé 1: ' + str(int(obj.data)) + 'résultat lancer dé 2 : '+ str(int(obj.data2)) +' pour le client : ' + str(int(obj.client)))
+			var res = int(obj.data) + int(obj.data2)
 			if(obj.client == joueur.id):
-				joueur.pos_pion += obj.data
+				joueur.pos_pion += res
 			print('VERIF NOUV POS : %d' % [joueur.pos_pion])
 			match int(obj.client):
 				0:
-					emit_signal("signal_resultat_lancer_de", int(obj.data))
+					emit_signal("signal_resultat_lancer_de", res)
 				1:
-					emit_signal("signal_resultat_lancer_de2", int(obj.data))
+					emit_signal("signal_resultat_lancer_de2", res)
 				2:
-					emit_signal("signal_resultat_lancer_de3", int(obj.data))
+					emit_signal("signal_resultat_lancer_de3", res)
 				3:
-					emit_signal("signal_resultat_lancer_de4", int(obj.data))
+					emit_signal("signal_resultat_lancer_de4", res)
 				4:
-					emit_signal("signal_resultat_lancer_de5", int(obj.data))
+					emit_signal("signal_resultat_lancer_de5", res)
 				5:
-					emit_signal("signal_resultat_lancer_de6", int(obj.data))
+					emit_signal("signal_resultat_lancer_de6", res)
 				6:
-					emit_signal("signal_resultat_lancer_de7", int(obj.data))
+					emit_signal("signal_resultat_lancer_de7", res)
 				7:
-					emit_signal("signal_resultat_lancer_de8", int(obj.data))
+					emit_signal("signal_resultat_lancer_de8", res)
 		Structure.PacketType.CACHE_JOUEUR:
 			print("Suppression du joueur %d." % obj.data)
 			supprimer_joueur(obj.data)
