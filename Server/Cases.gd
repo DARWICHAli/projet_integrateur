@@ -18,16 +18,19 @@ var prix_maison = 100
 var prix_hotel = 200
 var niveau_case = 0 # 0 = pas construit, 5 = hotel construit
 
-var loyer = [100,200,300,400,500,600]
+var loyer = [100,200,300,400,500,00]
 
 func set_depart(gains : int):
 	type = CasesTypes.DEPART
 	prix = gains
 
-func set_propriete(prix : int, i : int, sous_type):
+func set_propriete(prix, i, sous_type, loyer_tab, prix_m, prix_h):
 	type = CasesTypes.PROPRIETE
 	self.sous_type = sous_type
 	self.prix = prix
+	loyer = loyer_tab
+	prix_maison = prix_m
+	prix_hotel = prix_h
 
 func set_prison():
 	type = CasesTypes.PRISON
@@ -38,9 +41,9 @@ func set_aller_prison():
 func set_taxe(i):
 	type = CasesTypes.TAXE
 	if i == 4:
-		self.prix = 50
+		self.prix = 200
 	else:
-		self.prix = 150
+		self.prix = 100
 
 func set_comm():
 	type = CasesTypes.COMM
