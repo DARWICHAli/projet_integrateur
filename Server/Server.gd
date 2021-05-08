@@ -474,6 +474,11 @@ func partie(serveur_jeu : Serveur_partie):
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# RAFRAICHISSEMENT DE CURRENT_CASE
 			
+			if(current_case.indice == 20):
+				passages_park(serveur_jeu.pseudos[serveur_jeu.attente_joueur])
+				
+
+			
 			print("------------------")
 			print(current_case.indice)
 			print(current_case.type)
