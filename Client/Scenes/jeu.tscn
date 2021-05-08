@@ -1,4 +1,4 @@
-[gd_scene load_steps=86 format=2]
+[gd_scene load_steps=87 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -78,6 +78,7 @@
 [ext_resource path="res://GFX/Bouton/bouton_deconnexion_normal.png" type="Texture" id=76]
 [ext_resource path="res://GFX/Bouton/bouton_deconnexion_pressed.png" type="Texture" id=77]
 [ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=78]
+[ext_resource path="res://Sons/aller_prison.wav" type="AudioStream" id=79]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -429,6 +430,9 @@ stream = ExtResource( 71 )
 
 [node name="constructions" type="AudioStreamPlayer" parent="Plateau"]
 stream = ExtResource( 70 )
+
+[node name="aller_prison" type="AudioStreamPlayer" parent="Plateau"]
+stream = ExtResource( 79 )
 
 [node name="annonce" type="RichTextLabel" parent="."]
 margin_left = 897.364

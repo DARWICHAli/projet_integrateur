@@ -326,6 +326,7 @@ func _on_data_partie ():
 				get_node("Pion").goto_pos_prison()
 			else:
 				get_node("Pion"+str(obj.client+1)).goto_pos_prison()
+			get_node("Plateau/aller_prison").play()
 		Structure.PacketType.OUT_PRISON:
 			$annonce.text = pseudos[obj.client] + " sort de prison et paie %d ECTS !" % [obj.data]
 			hist.add_hist($annonce.text)
@@ -447,6 +448,7 @@ func _on_data_partie ():
 						get_node("Pion"+str(obj.client+1)).goto_pos_prison()
 						get_node("Pion"+str(obj.client+1)).dep_cases = 0
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
+					get_node("Plateau/aller_prison").play()
 					joueur.argent[obj.client] = str(obj.data)
 				-2:
 					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
