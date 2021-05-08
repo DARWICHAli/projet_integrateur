@@ -126,6 +126,7 @@ func pas_le_temps_de_niaiser(pseudo):
 	if(len(is_trophy) == 0):
 		var err = db.query("INSERT INTO TROPHEE_JOUEUR VALUES("+str(id)+",6);")
 
+
 # warning-ignore:unused_argument
 func _connected_lobby (id, proto):
 	var client_IP   = serveur_lobby.get_peer_address(id)
@@ -191,6 +192,8 @@ func _on_data_lobby (id_client : int):
 			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
 			if(len(array) == 0):
 				structure.set_requete_reponse_login(1)
+				
+				db.query("UPDATE UTILISATEUR U SET lastCo = CURRENT_TIMESTAMP WHERE U.username like "+array[0].username)
 			else:
 				structure.set_requete_reponse_login(array[0].username)
 				
