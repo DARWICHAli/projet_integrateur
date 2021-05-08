@@ -5,4 +5,4 @@ func _ready():
 
 func add_hist(text):
 	self.bbcode_text += text
-	self.bbcode_text = '\n\n'
+	self.bbcode_text += '\n\n'

@@ -580,7 +580,7 @@ func partie(serveur_jeu : Serveur_partie):
 							serveur_jeu.proprio_a_reclamer = true
 							status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
 							if(status == 0):
-								structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
+								structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.loyer[current_case.niveau_case])
 								for client in serveur_jeu.list_joueurs:
 									envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 								action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)
@@ -596,7 +596,7 @@ func partie(serveur_jeu : Serveur_partie):
 						serveur_jeu.proprio_a_reclamer = true
 						status = serveur_jeu.rente(current_case, serveur_jeu.attente_joueur, res)
 						if(status == 0):
-							structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.prix)
+							structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.loyer[current_case.niveau_case])
 							for client in serveur_jeu.list_joueurs:
 								envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 							action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)

@@ -152,7 +152,6 @@ func init_plateau():
 				plateau[i].set_propriete(100, i, Cases.PropTypes.VERT)
 			if i == 37 or i == 39:
 				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_FONCE)
-			# TODO1 Regrouper les propriétés par couleurs pour savoir si l'on peut construire
 
 func pos_prison(id):
 	position_joueur[id] = 10
@@ -182,25 +181,22 @@ func acheter(id):
 
 func rente(case, joueur, res_des):
 	# Gestion du cas des compagnies d'eau et electricite d'abord
-	var prix
+	var loyer
 	if case.hypotheque == 1:
 		print("Case hypothequée : rente impossible !")
 		return 8
 	if case.sous_type == Cases.PropTypes.COMPAGNIE:
 		if plateau[12].proprio != -1 and plateau[27].proprio != -1:
-			case.prix = res_des * 10
+			loyer = res_des * 10
 		elif plateau[12].proprio != -1 or plateau[27].proprio != -1:
-			case.prix = res_des * 4
-		print("********************")
-		print("********************")
-		print(case.prix)
-		print("********************")
-		print("********************")
-	argent_joueur[case.proprio] += case.prix
-	argent_joueur[joueur] -= case.prix
-	print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [case.proprio, case.prix, joueur])
-	if argent_joueur[joueur] < 0:
-		return -1
+			loyer = res_des * 4
+	else:
+		loyer = case.loyer[case.niveau_case]
+	argent_joueur[case.proprio] += loyer
+	argent_joueur[joueur] -= loyer
+	print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [case.proprio, loyer, joueur])
+#	if argent_joueur[joueur] < 0:
+#		return -1
 	return 0
 
 func taxe(id):
