@@ -420,7 +420,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
+			var de_un = 2#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
@@ -466,7 +466,7 @@ func partie(serveur_jeu : Serveur_partie):
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 				print(serveur_jeu.attente_joueur)
-					
+				
 			timer_reclamation = get_tree().create_timer(10.0)
 			serveur_jeu.reponse_proprio = false
 			serveur_jeu.proprio_a_reclamer = false
@@ -656,7 +656,7 @@ func hypotheque_res(id, id_case, serveur_jeu):
 		if (status == -1):
 			price = 1.1*case.prix
 		else:
-			price = 0.9*case.prix
+			price = 0.5*case.prix
 		structure.set_requete_maj_hypotheque(serveur_jeu.argent_joueur[id], id, case.indice, price, status)
 		for client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)

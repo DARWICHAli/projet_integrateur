@@ -527,11 +527,11 @@ func affiche_joueur(nb_joueurs):
 		if i==0:
 			get_node("Pion").show()
 			$"info_joueur/ScrollContainer/VBoxContainer/infobox1".show()
-			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "10000"
+			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "1500"
 		else:
 			get_node("Pion"+str(i+1)).show()
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)).show()
-			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "10000"
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "1500"
 
 func _on_lancer_des_pressed():
 	print('envoi requête dé')

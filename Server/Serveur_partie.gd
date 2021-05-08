@@ -69,20 +69,15 @@ var sortie_prison = []
 var temp_carte
 # Warning dernière chance faillite
 var warning = []
-# Tableau de ventes selon joueur
+# Tableau de ventes selon joueur (pour eviter la concurrence sur les variables)
 var ventes = []
 
 func deplacer_joueur(id_joueur : int, nbr_case : int):
-#	position_joueur[id_joueur] = position_joueur[id_joueur] + nbr_case
-#	if position_joueur[id_joueur] >= plateau.size(): # Tour +1 du joueur
-#		position_joueur[id_joueur] = position_joueur[id_joueur] % plateau.size()
-		#payer_joueur(id_joueur, plateau[0].get_prix())
 	var dep = position_joueur[id_joueur] + nbr_case
 	if dep >= plateau.size():
 		dep = dep % plateau.size()
 	if joueur_prison[id_joueur] == 0:
 		position_joueur[id_joueur] = dep
-
 
 func payer_joueur(id_joueur : int, prix : int):
 	argent_joueur[id_joueur] = argent_joueur[id_joueur] + prix
@@ -105,7 +100,7 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		self.argent_joueur.append(10000)
+		self.argent_joueur.append(1500)
 		self.joueur_prison.append(0)
 		self.nbr_essai_double.append(0)
 		self.sortie_prison.append(0)
@@ -117,7 +112,7 @@ func init_plateau():
 	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
-			plateau[i].set_depart(500)
+			plateau[i].set_depart(200)
 		elif i == 10:
 			plateau[i].set_prison()
 		elif i == 30:
@@ -133,25 +128,39 @@ func init_plateau():
 		else:
 			print(i)
 			if i == 1 or i == 3:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.BRUN)
+				plateau[1].set_propriete(60, i, Cases.PropTypes.BRUN, [2,10,30,90,160,250], 50, 50)
+				plateau[3].set_propriete(60, i, Cases.PropTypes.BRUN, [4,20,60,180,320,450], 50, 50)
 			if i == 5 or i == 15 or i == 25 or i == 35:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.GARE)
+				plateau[i].set_propriete(200, i, Cases.PropTypes.GARE, [25,50,100,200], 0, 0)
 			if i == 6 or i == 8 or i == 9:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_CIEL)
+				plateau[6].set_propriete(100, i, Cases.PropTypes.BLEU_CIEL, [6,30,90,270,400,550], 50, 50)
+				plateau[8].set_propriete(100, i, Cases.PropTypes.BLEU_CIEL, [6,30,90,270,400,550], 50, 50)
+				plateau[9].set_propriete(120, i, Cases.PropTypes.BLEU_CIEL, [8,40,100,300,450,600], 50, 50)
 			if i == 11 or i == 13 or i == 14:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.VIOLET)
+				plateau[11].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
+				plateau[12].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
+				plateau[14].set_propriete(160, i, Cases.PropTypes.VIOLET, [12,60,180,500,700,900], 100, 100)
 			if i == 12 or i == 27:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.COMPAGNIE)
+				plateau[i].set_propriete(150, i, Cases.PropTypes.COMPAGNIE, [], 0, 0)
 			if i == 16 or i == 18 or i == 19:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.ORANGE)
+				plateau[16].set_propriete(180, i, Cases.PropTypes.ORANGE, [14,70,200,550,750,950], 100, 100)
+				plateau[18].set_propriete(180, i, Cases.PropTypes.ORANGE, [14,70,200,550,750,950], 100, 100)
+				plateau[19].set_propriete(200, i, Cases.PropTypes.ORANGE, [16,80,220,600,800,1000], 100, 100)
 			if i == 21 or i == 23 or i == 24:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.ROUGE)
+				plateau[21].set_propriete(220, i, Cases.PropTypes.ROUGE, [18,90,250,700,875,1050], 150, 150)
+				plateau[23].set_propriete(220, i, Cases.PropTypes.ROUGE, [18,90,250,700,875,1050], 150, 150)
+				plateau[24].set_propriete(240, i, Cases.PropTypes.ROUGE, [20,100,300,750,925,1100], 150, 150)
 			if i == 26 or i == 28 or i == 29:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.JAUNE)
+				plateau[26].set_propriete(260, i, Cases.PropTypes.JAUNE, [22,110,330,800,975,1150], 150, 150)
+				plateau[28].set_propriete(260, i, Cases.PropTypes.JAUNE, [22,110,330,800,975,1150], 150, 150)
+				plateau[29].set_propriete(280, i, Cases.PropTypes.JAUNE, [24,120,360,850,1025,1200], 150, 150)
 			if i == 31 or i == 33 or i == 34:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.VERT)
+				plateau[31].set_propriete(300, i, Cases.PropTypes.VERT, [26,130,390,900,1100,1275], 200, 200)
+				plateau[33].set_propriete(300, i, Cases.PropTypes.VERT, [26,130,390,900,1100,1275], 200, 200)
+				plateau[34].set_propriete(320, i, Cases.PropTypes.VERT, [28,150,450,1000,1200,1400], 200, 200)
 			if i == 37 or i == 39:
-				plateau[i].set_propriete(100, i, Cases.PropTypes.BLEU_FONCE)
+				plateau[37].set_propriete(350, i, Cases.PropTypes.BLEU_FONCE, [35,175,500,1100,1300,1500], 200, 200)
+				plateau[39].set_propriete(400, i, Cases.PropTypes.BLEU_FONCE, [50,200,600,1400,1700,2000], 200, 200)
 
 func pos_prison(id):
 	position_joueur[id] = 10
@@ -173,30 +182,45 @@ func acheter(id):
 	for i in position_joueur:
 		print(i)
 	print(case.indice)
+	
 	argent_joueur[id] -= case.prix
 	case.proprio = id
+	
+	var temp_niveau = 0
+	if case.sous_type == Cases.PropTypes.GARE:
+		for case_iter in plateau:
+			if case_iter.sous_type == Cases.PropTypes.GARE and case_iter.proprio == id:
+				temp_niveau += 1
+		print("TEMP NIVEAU : %d" % [temp_niveau])
+		for case_iter in plateau:
+			if case_iter.sous_type == Cases.PropTypes.GARE and case_iter.proprio == id:
+				case_iter.niveau_case = temp_niveau
+	
+	print("NIVEAU GARE : %d" % [case.niveau_case])
+	
 	print("La propriete %d est achetee par le joueur %d" % [position_joueur[id], id])
 	print("VERIF PROPRIO : %d" % [case.proprio])
 	return exception
 
 func rente(case, joueur, res_des):
-	# Gestion du cas des compagnies d'eau et electricite d'abord
 	var loyer
 	if case.hypotheque == 1:
 		print("Case hypothequée : rente impossible !")
 		return 8
-	if case.sous_type == Cases.PropTypes.COMPAGNIE:
-		if plateau[12].proprio != -1 and plateau[27].proprio != -1:
-			loyer = res_des * 10
-		elif plateau[12].proprio != -1 or plateau[27].proprio != -1:
-			loyer = res_des * 4
-	else:
-		loyer = case.loyer[case.niveau_case]
+	if case.sous_type == Cases.PropTypes.COMPAGNIE:	
+		var temp = res_des * 4
+		var indice = case.indice
+		if indice == 12:
+			indice = 27
+		else:
+			indice = 12
+		if plateau[indice].proprio == case.proprio:
+			temp = res_des * 10
+		loyer = temp
+	loyer = case.loyer[case.niveau_case]
 	argent_joueur[case.proprio] += loyer
 	argent_joueur[joueur] -= loyer
 	print("Joueur %d encaisse la rente de %d ECTS de la part de joueur %d" % [case.proprio, loyer, joueur])
-#	if argent_joueur[joueur] < 0:
-#		return -1
 	return 0
 
 func taxe(id):
@@ -204,7 +228,6 @@ func taxe(id):
 	argent_joueur[id] -= case.prix
 
 func upgrade(id, case):
-	#var case = plateau[position_joueur[id]]
 	if (case.type != Cases.CasesTypes.PROPRIETE):
 		print("La case n'est pas de type proprieté")
 		return 1
@@ -268,6 +291,11 @@ func vendre(id, case):
 	if (exception != 0):
 		return exception
 
+	if case.sous_type == Cases.PropTypes.GARE:
+		for case_iter in plateau:
+			if case_iter.sous_type == Cases.PropTypes.GARE and case_iter.proprio == case.proprio:
+				case_iter.niveau_case = case_iter.niveau_case - 1
+			
 	ventes[id] = case.prix*0.8
 	for i in range(0, case.niveau_case):
 		if i == 1 or i == 2 or i == 3:
@@ -302,7 +330,7 @@ func hypothequer(id, case):
 		argent_joueur[id] = argent_joueur[id] - 1.1*case.prix
 		return -1
 	case.hypotheque = 1
-	argent_joueur[id] = argent_joueur[id] + 0.9*case.prix
+	argent_joueur[id] = argent_joueur[id] + 0.5*case.prix
 	return 0
 
 func remise_a_zero(id):
