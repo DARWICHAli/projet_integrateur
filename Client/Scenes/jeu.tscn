@@ -1,4 +1,4 @@
-[gd_scene load_steps=83 format=2]
+[gd_scene load_steps=86 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -52,6 +52,7 @@
 [ext_resource path="res://GFX/Bouton/bouton_des_normal.png" type="Texture" id=50]
 [ext_resource path="res://GFX/Bouton/bouton_des_pressed.png" type="Texture" id=51]
 [ext_resource path="res://Scripts/historique.gd" type="Script" id=52]
+[ext_resource path="res://Sons/erreur.wav" type="AudioStream" id=53]
 [ext_resource path="res://GFX/Bouton/bouton_abandonner_pressed.png" type="Texture" id=54]
 [ext_resource path="res://GFX/Bouton/bouton_fin_tour_normal.png" type="Texture" id=55]
 [ext_resource path="res://GFX/Bouton/bouton_fin_tour_pressed.png" type="Texture" id=56]
@@ -68,6 +69,8 @@
 [ext_resource path="res://Form.tscn" type="PackedScene" id=67]
 [ext_resource path="res://GFX/Bouton/bouton_connexion_pressed.png" type="Texture" id=68]
 [ext_resource path="res://GFX/Bouton/bouton_connexion_normal.png" type="Texture" id=69]
+[ext_resource path="res://Sons/construction.wav" type="AudioStream" id=70]
+[ext_resource path="res://Sons/money.wav" type="AudioStream" id=71]
 [ext_resource path="res://Scenes/info_joueur.tscn" type="PackedScene" id=72]
 [ext_resource path="res://Scenes/chat.tscn" type="PackedScene" id=73]
 [ext_resource path="res://GFX/Bouton/bar_boutons.png" type="Texture" id=74]
@@ -417,6 +420,15 @@ position = Vector2( 9, 0 )
 show_behind_parent = true
 position = Vector2( -1, 0 )
 texture = ExtResource( 25 )
+
+[node name="erreur" type="AudioStreamPlayer" parent="Plateau"]
+stream = ExtResource( 53 )
+
+[node name="argent" type="AudioStreamPlayer" parent="Plateau"]
+stream = ExtResource( 71 )
+
+[node name="constructions" type="AudioStreamPlayer" parent="Plateau"]
+stream = ExtResource( 70 )
 
 [node name="annonce" type="RichTextLabel" parent="."]
 margin_left = 897.364

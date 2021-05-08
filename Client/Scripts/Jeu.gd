@@ -161,9 +161,9 @@ func _on_data_partie ():
 	var data_bytes = recevoir_message(client_partie)
 	# change tous les Structure en structure
 	var obj = structure.from_bytes(data_bytes)
-
 	match obj.type:
 		Structure.PacketType.ERREUR:
+			get_node("Plateau/erreur").play()
 			match obj.data:
 				1:
 					$annonce.text = "La case n'est pas de type propriete."
@@ -233,7 +233,7 @@ func _on_data_partie ():
 				print("Joueur %d joue son tour !" % [obj.client])
 				var phrase 
 				if(pseudos[obj.client] != ""):
-					phrase= pseudos[obj.client] + " joue !" 
+					phrase = pseudos[obj.client] + " joue !" 
 				else:
 					phrase = "Le premier joueur joue !" 
 				get_node("fond_bouton/annonce_tour").text = phrase
@@ -244,6 +244,7 @@ func _on_data_partie ():
 		Structure.PacketType.MAJ_ACHAT:
 			$annonce.text = "ACHAT REUSSI ! La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3]
 			hist.add_hist($annonce.text)
+			get_node("Plateau/argent").play()
 			print("ACHAT REUSSI !")
 			print("La propriete %d est achetee par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
@@ -251,6 +252,7 @@ func _on_data_partie ():
 			joueur.argent[obj.client] = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).show()
 		Structure.PacketType.RENTE:
+			get_node("Plateau/argent").play()
 			$annonce.text = "RENTE ! Joueur %d encaise la rente de %d ECTS de la part de joueur %d" % [obj.data, obj.data2, obj.client]
 			hist.add_hist($annonce.text)
 			print("RENTE !")
@@ -269,6 +271,7 @@ func _on_data_partie ():
 				hist.add_hist($annonce.text)
 				print("Joueur %d construit un hotel pour %d ECTS sur le terrain %d"  % [obj.client, obj.data4, obj.data3])
 			cases[obj.data3].show_upgrade()
+			get_node("Plateau/constructions").play()
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data2])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data2)
 			joueur.argent[obj.client] = str(obj.data2)
@@ -279,6 +282,7 @@ func _on_data_partie ():
 			print("La propriete %d est vendue par le joueur %d pour %d ECTS" % [obj.data2, obj.client, obj.data3])
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			cases[obj.data2].hypotheque = 0
+			get_node("Plateau/argent").play()
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/prop"+ str(obj.data2)).hide()
@@ -295,6 +299,7 @@ func _on_data_partie ():
 				print("DE-HYPOTHEQUE !")
 				print("La propriete %d est de-hypothequee par le joueur %d et paye %d ECTS" % [obj.data2, obj.client, obj.data3])
 				cases[obj.data2].hypotheque = 0
+				get_node("Plateau/argent").play()
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
@@ -309,6 +314,7 @@ func _on_data_partie ():
 				hist.add_hist($annonce.text)
 				print("Un hôtel sur la propriété %d est détruit par le joueur %d et gagne %d ECTS" % [obj.data2, obj.client, obj.data3])
 			cases[obj.data2].show_downgrade()
+			get_node("Plateau/constructions").play()
 			print("Solde du joueur %d : %d ECTS" % [obj.client, obj.data])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
@@ -323,6 +329,7 @@ func _on_data_partie ():
 		Structure.PacketType.OUT_PRISON:
 			$annonce.text = pseudos[obj.client] + " sort de prison et paie %d ECTS !" % [obj.data]
 			hist.add_hist($annonce.text)
+			get_node("Plateau/argent").play()
 			print("Joueur %d sort de prison et paie %d ECTS !" % [obj.client, obj.data])
 			var money = str(int(get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text) - obj.data)
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = money
@@ -342,6 +349,7 @@ func _on_data_partie ():
 			$annonce.text = pseudos[obj.client] + " paye une taxe !"
 			hist.add_hist($annonce.text)
 			print("Joueur %d paye une taxe !" % [obj.client])
+			get_node("Plateau/argent").play()
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
 		Structure.PacketType.CHAT:
@@ -407,22 +415,26 @@ func _on_data_partie ():
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client +1) +"/jailbreak").show()
 				2:
 					print("Le joueur %d paie une amende de %d ECTS pour petite triche !" % [obj.client, obj.data2])
-					$annonce.text = pseudos[obj.client] + " paie une amende de "+str(obj.data2)+" ECTS pour petite triche !" 
+					$annonce.text = pseudos[obj.client] + " paie une amende de "+str(obj.data2)+" ECTS pour petite triche !"
+					get_node("Plateau/argent").play() 
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				3:
 					print("Le joueur %d reçoit %d ECTS, favorisé par un prof !" % [obj.client, obj.data2])
 					$annonce.text = "%s reçoit %d ECTS, favorisé par un prof !" % [pseudos[obj.client], obj.data2]
+					get_node("Plateau/argent").play()
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				4:
 					print("Le joueur %d paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [obj.client, obj.data2])
 					$annonce.text = "%s paie le restaurant pour tout l'amphitheatre, soit %d ECTS !" % [pseudos[obj.client], obj.data2]
+					get_node("Plateau/argent").play()
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				5:
 					print("Le joueur %d, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [obj.client, obj.data2])
 					$annonce.text = "%s, chef du groupe, reçoit une somme de %d ECTS pour participation avec le groupe de TD !" % [pseudos[obj.client], obj.data2]
+					get_node("Plateau/argent").play()
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				-1:
@@ -438,21 +450,25 @@ func _on_data_partie ():
 					joueur.argent[obj.client] = str(obj.data)
 				-2:
 					print("Le joueur %d va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [obj.client, obj.data2])
+					get_node("Plateau/argent").play()
 					$annonce.text = "%s va en conseil de discipline et paie %d ECTS pour l'ensemble des construction du plateau !" % [pseudos[obj.client], obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				-3:
 					print("Etant donné qu'il a fait un double, le joueur %d reçoit 20 fois la valeur de son double, soit %d ECTS !" % [obj.client, obj.data2])
+					get_node("Plateau/argent").play()
 					$annonce.text = "Etant donné qu'il a fait un double, %s reçoit 20 fois la valeur de son double, soit %d ECTS !" % [pseudos[obj.client], obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				-4:
 					print("Etant donné qu'il n'a pas fait de double, le joueur %d paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [obj.client, obj.data2])
+					get_node("Plateau/argent").play()
 					$annonce.text = "Etant donné qu'il n'a pas fait de double, %s paie 10 fois la valeur multipliée de ses dés, soit %d ECTS !" % [pseudos[obj.client], obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
 				-5:
 					print("OUPS ! Joueur %d est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [obj.client, obj.data2])
+					get_node("Plateau/argent").play()
 					$annonce.text = "OUPS ! %s est controllé par la CTS. Il paie %d ECTS pour défault de présentation de titre de transport !" % [pseudos[obj.client], obj.data2]
 					get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 					joueur.argent[obj.client] = str(obj.data)
