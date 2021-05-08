@@ -439,7 +439,6 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			if(serveur_jeu.joueur_prison[serveur_jeu.attente_joueur] == 1):
 			# si on est deja en prison
-				# TODO Choix de payer directement sans faire de double
 				serveur_jeu.pos_prison(serveur_jeu.attente_joueur)
 				print("POS : " + str(serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]].indice))
 				print("DE NUMERO 1: %d pour joueur %d" % [de_un, serveur_jeu.attente_joueur])
