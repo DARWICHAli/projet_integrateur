@@ -138,7 +138,7 @@ func init_plateau():
 				plateau[9].set_propriete(120, i, Cases.PropTypes.BLEU_CIEL, [8,40,100,300,450,600], 50, 50)
 			if i == 11 or i == 13 or i == 14:
 				plateau[11].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
-				plateau[12].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
+				plateau[13].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
 				plateau[14].set_propriete(160, i, Cases.PropTypes.VIOLET, [12,60,180,500,700,900], 100, 100)
 			if i == 12 or i == 27:
 				plateau[i].set_propriete(150, i, Cases.PropTypes.COMPAGNIE, [], 0, 0)
