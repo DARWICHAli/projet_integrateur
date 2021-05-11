@@ -1,4 +1,4 @@
-[gd_scene load_steps=87 format=2]
+[gd_scene load_steps=88 format=2]
 
 [ext_resource path="res://Scripts/AllerPrison.gd" type="Script" id=1]
 [ext_resource path="res://Scripts/Jeu.gd" type="Script" id=2]
@@ -79,6 +79,7 @@
 [ext_resource path="res://GFX/Bouton/bouton_deconnexion_pressed.png" type="Texture" id=77]
 [ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=78]
 [ext_resource path="res://Sons/aller_prison.wav" type="AudioStream" id=79]
+[ext_resource path="res://GFX/case_depart.png" type="Texture" id=80]
 
 [sub_resource type="DynamicFont" id=1]
 size = 50
@@ -141,9 +142,8 @@ rotation = 1.5708
 position = Vector2( 1480, 0 )
 
 [node name="Sprite" type="Sprite" parent="Plateau/cases/cote_gauche/Start"]
-position = Vector2( 0.514759, 0.894234 )
-scale = Vector2( 0.176984, 0.17638 )
-texture = ExtResource( 9 )
+rotation = -1.5708
+texture = ExtResource( 80 )
 
 [node name="marron_1" parent="Plateau/cases/cote_gauche" instance=ExtResource( 4 )]
 position = Vector2( 1273, 0 )
@@ -155,6 +155,7 @@ texture = ExtResource( 24 )
 
 [node name="commu_1" parent="Plateau/cases/cote_gauche" instance=ExtResource( 36 )]
 position = Vector2( 1116, -0.00390625 )
+rotation = 3.14159
 
 [node name="marron_2" parent="Plateau/cases/cote_gauche" instance=ExtResource( 4 )]
 position = Vector2( 957, 0 )
@@ -260,7 +261,7 @@ rotation = 3.14159
 texture = ExtResource( 20 )
 
 [node name="commu_2" parent="Plateau/cases/cote_haut" instance=ExtResource( 36 )]
-position = Vector2( 324, -0.000823975 )
+position = Vector2( 324, 2.37759 )
 
 [node name="orange_2" parent="Plateau/cases/cote_haut" instance=ExtResource( 4 )]
 position = Vector2( 167, 0 )
@@ -376,6 +377,7 @@ texture = ExtResource( 12 )
 
 [node name="commu_3" parent="Plateau/cases/cote_bas" instance=ExtResource( 36 )]
 position = Vector2( 1116, 0 )
+rotation = 3.14159
 
 [node name="vert_2" parent="Plateau/cases/cote_bas" instance=ExtResource( 4 )]
 position = Vector2( 957, 0 )
@@ -623,6 +625,7 @@ __meta__ = {
 position = Vector2( 2554.76, -14.2703 )
 
 [node name="join_party" type="Node2D" parent="."]
+visible = false
 
 [node name="background" type="TextureRect" parent="join_party"]
 margin_top = 9.51367
@@ -760,14 +763,17 @@ __meta__ = {
 }
 
 [node name="menu" type="Node2D" parent="."]
+visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
+visible = false
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
 visible = false
 position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
+visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )

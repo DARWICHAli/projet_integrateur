@@ -60,20 +60,19 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
 margin_right = 1250.0
+margin_bottom = 2736.0
 rect_min_size = Vector2( 1250, 0 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="infobox1" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1250.0
 margin_bottom = 544.0
 
 [node name="infobox2" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
 margin_top = 548.0
@@ -81,23 +80,25 @@ margin_right = 1250.0
 margin_bottom = 1092.0
 
 [node name="infobox3" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 1096.0
 margin_right = 1250.0
-margin_bottom = 544.0
+margin_bottom = 1640.0
 
 [node name="infobox4" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
 anchor_right = 0.0
 anchor_bottom = 0.0
+margin_top = 1644.0
 margin_right = 1250.0
-margin_bottom = 544.0
+margin_bottom = 2188.0
 
 [node name="infobox5" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
-visible = false
-margin_top = 548.0
-margin_bottom = 1092.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 2192.0
+margin_right = 1250.0
+margin_bottom = 2736.0
 
 [node name="infobox6" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
 visible = false
@@ -710,38 +711,38 @@ __meta__ = {
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox6" to="." method="_on_infobox6_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox7" to="." method="_on_infobox7_sig_stats"]
 [connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox8" to="." method="_on_infobox8_sig_stats"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case2_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case2_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case2_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case3_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case3_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case3_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case4_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case4_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case4_pressed"]
-[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case4_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/vendre" to="ScrollContainer/VBoxContainer/infobox1" method="_on_vendre_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/hypothequer" to="ScrollContainer/VBoxContainer/infobox1" method="_on_hypothequer_pressed"]
 [connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/construire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_construire_pressed"]
