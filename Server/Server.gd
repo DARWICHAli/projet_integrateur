@@ -25,14 +25,14 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = false
-#	db.open_db()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = false
+	db.open_db()
 
-#	stats("tthirtle2o")
-#	var pseudo = "aaa@bbb.com"
-#	print(stats(pseudo))
+	stats("tthirtle2o")
+	var pseudo = "aaa@bbb.com"
+	print(stats(pseudo))
 
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
@@ -493,24 +493,24 @@ func partie(serveur_jeu : Serveur_partie):
 			print(current_case.sous_type)
 			print("------------------")
 			
-#			if(current_case.type == Cases.CasesTypes.COMM or current_case.type == Cases.CasesTypes.CHANCE):
-#				var status
-#				if(current_case.type == Cases.CasesTypes.COMM):
-#					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
-#					if (status == -1):
-#						goto_prison = 1
-#				else:
-#					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
-#				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
-#				for client in serveur_jeu.list_joueurs:
-#					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-#				if(action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu) == 1):
-#					nb_double = 0
-#					goto_prison = 0
-#					supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
-#					joueur = serveur_jeu.attente_joueur
-#					serveur_jeu.next_player()
-#					break
+			if(current_case.type == Cases.CasesTypes.COMM or current_case.type == Cases.CasesTypes.CHANCE):
+				var status
+				if(current_case.type == Cases.CasesTypes.COMM):
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 0, de_un*de_deux)
+					if (status == -1):
+						goto_prison = 1
+				else:
+					status = serveur_jeu.tirer_carte(serveur_jeu.attente_joueur, 1, de_un*de_deux)
+				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
+				for client in serveur_jeu.list_joueurs:
+					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
+				if(action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu) == 1):
+					nb_double = 0
+					goto_prison = 0
+					supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
+					joueur = serveur_jeu.attente_joueur
+					serveur_jeu.next_player()
+					break
 				
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 				
@@ -588,14 +588,14 @@ func partie(serveur_jeu : Serveur_partie):
 						for client in serveur_jeu.list_joueurs:
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 						
-#						# Maj de l'achat de la case dans la BDD
-#						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
-#						var pseudo = serveur_jeu.pseudos[joueur]
-#						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
-#						var idU = id[0].idU
-#						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
-#						var nom_case = nomCase[0].nomCase
-#						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
+						# Maj de l'achat de la case dans la BDD
+						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
+						var pseudo = serveur_jeu.pseudos[joueur]
+						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
+						var idU = id[0].idU
+						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
+						var nom_case = nomCase[0].nomCase
+						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
@@ -655,12 +655,12 @@ func partie(serveur_jeu : Serveur_partie):
 			# Passage au prochain joueur
 			if(double == 0):
 				 #Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
-#				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-#					var pseudo    = serveur_jeu.pseudos[joueur]
-#					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
-#					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
-#					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
-#					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
+				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
+					var pseudo    = serveur_jeu.pseudos[joueur]
+					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
+					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
+					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
+					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
 
 				nb_double = 0
 				goto_prison = 0
@@ -671,11 +671,11 @@ func partie(serveur_jeu : Serveur_partie):
 	structure.set_requete_gagne()
 	envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 	# Maj de la statistique de victoires du joueur
-#	var pseudo = serveur_jeu.pseudos[joueur]
-#	var nbWins = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbWin"])
-#	db.query("UPDATE UTILISATEUR SET nbWin='"+str(nbWins[0].nbWin+1)+"' WHERE username like '"+pseudo+"';")
-#	var moneyWin = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyWin"])
-#	var error     = db.query("UPDATE UTILISATEUR SET moneyWin='"+str(moneyWin[0].moneyWin + serveur_jeu.argent_joueur[joueur])+"' WHERE username = '"+pseudo+"';")
+	var pseudo = serveur_jeu.pseudos[joueur]
+	var nbWins = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbWin"])
+	db.query("UPDATE UTILISATEUR SET nbWin='"+str(nbWins[0].nbWin+1)+"' WHERE username like '"+pseudo+"';")
+	var moneyWin = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyWin"])
+	var error     = db.query("UPDATE UTILISATEUR SET moneyWin='"+str(moneyWin[0].moneyWin + serveur_jeu.argent_joueur[joueur])+"' WHERE username = '"+pseudo+"';")
 					
 	emit_signal("fin_partie", serveur_jeu.code)
 
@@ -786,6 +786,5 @@ func action_faillite(id, cause, serveur_jeu):
 		structure.set_requete_perdre(id, cause, list_prop)
 		for iter_client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), iter_client)
-#		supprimer_joueur(serveur_jeu.list_joueurs[id], serveur_jeu)
 		return 1
 	return 0
