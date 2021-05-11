@@ -14,6 +14,8 @@ var code
 var nb_joueurs
 #tableau de stockage des joueurs 
 var list_joueurs=[]
+#tableau stockant à l'indice i un booléen indiquant si le joueur i a fait faillite
+var list_morts=[]
 # pseudo des joueurs
 var pseudos : Array = ["","","","","","","",""]
 # Booléen si le joueur à répondu
@@ -106,6 +108,7 @@ func init_partie():
 		self.sortie_prison.append(0)
 		self.warning.append(0)
 		self.ventes.append(0)
+		self.list_morts.append(0)
 	self.attente_joueur = 0
 
 func init_plateau():

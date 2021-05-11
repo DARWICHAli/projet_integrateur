@@ -256,7 +256,7 @@ func _close_request_jeu (id, code, reason):
 	print("SERVEUR PARTIE : Client %d disconnecting with code: %d, reason: %s" % [id, code, reason])
 	
 func _disconnected_jeu (id, was_clean = false, serveur_jeu = null):
-	if(serveur_jeu.list_joueurs.find(id) == -1):
+	if(serveur_jeu.list_joueurs.find(id) == -1 or serveur_jeu.list_morts[serveur_jeu.list_joueurs.find(id)] == 1):
 		return
 	supprimer_joueur(id, serveur_jeu)
 	print("SERVEUR PARTIE : Client %d disconnected, clean: %s" % [id, str(was_clean)])
@@ -399,7 +399,17 @@ func partie(serveur_jeu : Serveur_partie):
 		var double = 1
 		var nb_double = 0
 		var goto_prison = 0
-		if(serveur_jeu.list_joueurs.size() == 1):
+		var test_fin = 0
+		var j_save
+		for j in range(0, len(serveur_jeu.list_morts)):
+			if serveur_jeu.list_morts[j] == 0:
+				test_fin += 1
+				j_save = j
+		if test_fin == 1:
+			joueur = j_save
+			serveur_jeu.attente_joueur = j_save
+			structure.set_requete_maj_argent(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
+			envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 			break
 		while double:
 			print("\n\n")
@@ -482,8 +492,8 @@ func partie(serveur_jeu : Serveur_partie):
 			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 			# RAFRAICHISSEMENT DE CURRENT_CASE
 			
-#			if(current_case.indice == 20):
-#				passages_park(serveur_jeu.pseudos[serveur_jeu.attente_joueur])
+			if(current_case.indice == 20):
+				passages_park(serveur_jeu.pseudos[serveur_jeu.attente_joueur])
 				
 
 			
@@ -654,14 +664,6 @@ func partie(serveur_jeu : Serveur_partie):
 			
 			# Passage au prochain joueur
 			if(double == 0):
-				 #Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
-				if(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur] <= 0):
-					var pseudo    = serveur_jeu.pseudos[joueur]
-					var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
-					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
-					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
-					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
-
 				nb_double = 0
 				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
@@ -763,6 +765,7 @@ func supprimer_joueur(id, serveur_jeu):
 	var structure = Structure.new()
 	serveur_jeu.remise_a_zero(serveur_jeu.list_joueurs.find(id))
 	structure.set_requete_cache_joueur(serveur_jeu.list_joueurs.find(id))
+	serveur_jeu.list_morts[serveur_jeu.list_joueurs.find(id)] = 1
 	#serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
@@ -786,5 +789,11 @@ func action_faillite(id, cause, serveur_jeu):
 		structure.set_requete_perdre(id, cause, list_prop)
 		for iter_client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), iter_client)
+		#Fin de partie d'un joueur -> maj de sa statistique de défaites et d'argent perdu
+		var pseudo    = serveur_jeu.pseudos[id]
+		var nbLoses   = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["nbLose"])
+		var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
+		var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
+		error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
 		return 1
 	return 0
