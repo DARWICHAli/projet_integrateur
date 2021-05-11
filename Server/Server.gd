@@ -1,7 +1,7 @@
 extends Node
 
 const port = 5000
-const ip = "loaclhost"
+const ip = "localhost"
 
 # connection BDD
 const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
