@@ -607,6 +607,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="gagne" type="RichTextLabel" parent="."]
+margin_left = 2826.18
+margin_top = 917.593
+margin_right = 4103.18
+margin_bottom = 1035.59
+rect_pivot_offset = Vector2( 598.675, 132.471 )
+custom_fonts/normal_font = SubResource( 3 )
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="info_joueur" parent="." instance=ExtResource( 72 )]
 position = Vector2( 2554.76, -14.2703 )
 
