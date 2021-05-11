@@ -492,10 +492,6 @@ func _on_data_partie ():
 				else:
 					$annonce.text = "VOUS AVEZ PERDU ! %s vous a mis en faillite !" % [pseudos[obj.data]]
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
-					for i in range(0, len(obj.data2)):
-						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
-						cases[i].hypotheque = 0
-					print(obj.data2)
 				joueur.present = 0
 			else:
 				print("Le joueur %d a perdu !" % [obj.client])
@@ -503,9 +499,11 @@ func _on_data_partie ():
 					$annonce.text = "%s a perdu ! La banque l'a mis en faillite !" % [pseudos[obj.client]]
 					print("La banque l'a mis en faillite !")
 				else:
-					$annonce.text = "%s a perdu ! Le joueur %d l'a mis en faillite !" % [pseudos[obj.client], obj.data]
+					$annonce.text = "%s a perdu ! %s l'a mis en faillite !" % [pseudos[obj.client], pseudos[obj.data]]
 					print("Le joueur %d l'a mis en faillite !" % [obj.data])
-					
+					if(self.joueur.id == obj.data):
+						for i in range(0, len(obj.data2)):
+							get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
 					print(obj.data2)
 		Structure.PacketType.GAGNE:
 			$annonce.text = "VOUS AVEZ GAGNE ! FELICITATION !"
@@ -550,11 +548,11 @@ func affiche_joueur(nb_joueurs):
 		if i==0:
 			get_node("Pion").show()
 			$"info_joueur/ScrollContainer/VBoxContainer/infobox1".show()
-			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "1500"
+			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "60"
 		else:
 			get_node("Pion"+str(i+1)).show()
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)).show()
-			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "1500"
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "60"
 
 func _on_lancer_des_pressed():
 	print('envoi requête dé')

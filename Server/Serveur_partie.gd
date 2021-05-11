@@ -100,7 +100,7 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		self.argent_joueur.append(15)
+		self.argent_joueur.append(60)
 		self.joueur_prison.append(0)
 		self.nbr_essai_double.append(0)
 		self.sortie_prison.append(0)
@@ -112,7 +112,7 @@ func init_plateau():
 	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
-			plateau[i].set_depart(1500)
+			plateau[i].set_depart(500)
 		elif i == 10:
 			plateau[i].set_prison()
 		elif i == 30:
