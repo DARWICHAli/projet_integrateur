@@ -13,8 +13,8 @@ INSERT INTO PROPRIETE VALUES (10,"Prison");
 INSERT INTO PROPRIETE VALUES (11,"Faculté de Géographie");
 INSERT INTO PROPRIETE VALUES (12,"Électricité de Strasbourg");
 INSERT INTO PROPRIETE VALUES (13,"Faculté de Médecine");
-INSERT INTO PROPRIETE VALUES (14,"Faculté Physique et Ingénierie");
-INSERT INTO PROPRIETE VALUES (15"Arrêt Esplanade");
+INSERT INTO PROPRIETE VALUES (14,"Faculté Physique et d'Ingénierie");
+INSERT INTO PROPRIETE VALUES (15,"Arrêt Esplanade");
 INSERT INTO PROPRIETE VALUES (16,"Bibliothèque BNU");
 INSERT INTO PROPRIETE VALUES (17,"Caisse de Communauté");
 INSERT INTO PROPRIETE VALUES (18,"Observatoire");
@@ -41,3 +41,25 @@ INSERT INTO PROPRIETE VALUES (36,"Chance");
 INSERT INTO PROPRIETE VALUES (37,"Faculté de Gestion et d'Économie");
 INSERT INTO PROPRIETE VALUES (38,"Taxe de Luxe");
 INSERT INTO PROPRIETE VALUES (39,"UFR Maths info");
+
+
+INSERT INTO DIFFICULTE VALUES(1,"Facile");
+INSERT INTO DIFFICULTE VALUES(2,"Moyen");
+INSERT INTO DIFFICULTE VALUES(3,"Difficile");
+INSERT INTO DIFFICULTE VALUES(4,"Hardcore");
+INSERT INTO DIFFICULTE VALUES(5,"Légendaire");
+
+INSERT INTO TROPHEE VALUES (1,"Bagnard", "Est passé 100 fois en prison");
+INSERT INTO TROPHEE VALUES (2,"Travailleur du dimanche", "Est passé 100 fois sur le parking gratuit");
+INSERT INTO TROPHEE VALUES (3,"Pas l'temps de niaiser", "Encaisse une rente dès le premier tour de jeu");
+INSERT INTO TROPHEE VALUES (4,"Boursier","Faire un tour de plateau sans payer");
+INSERT INTO TROPHEE VALUES (5,"Touriste","Faire un tour de plateau sans rien payer ni dépenser");
+
+
+INSERT INTO DIFFICULTE_TROPHEE VALUES(1,1);
+INSERT INTO DIFFICULTE_TROPHEE VALUES(2,1);
+INSERT INTO DIFFICULTE_TROPHEE VALUES(3,3);
+INSERT INTO DIFFICULTE_TROPHEE VALUES(4,3);
+INSERT INTO DIFFICULTE_TROPHEE VALUES(5,4);
+
+
