@@ -381,9 +381,9 @@ func _on_data_partie ():
 			joueur.pseudo = pseudos[joueur.id]
 			joueur.chat.set_player_name(joueur)
 		Structure.PacketType.ARGENT_NOUV_TOUR:
-			$annonce.text = "%s vient de passer par la case départ ! Il reçoit 500 ECTS !" % [pseudos[obj.client]]
+			$annonce.text = "%s vient de passer par la case départ ! Il reçoit 200 ECTS !" % [pseudos[obj.client]]
 			hist.add_hist($annonce.text)
-			print("Joueur %d vient de passer par la case départ ! Il reçoit 500 ECTS !" % [obj.client])
+			print("Joueur %d vient de passer par la case départ ! Il reçoit 200 ECTS !" % [obj.client])
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:

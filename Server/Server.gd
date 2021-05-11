@@ -448,8 +448,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
-			var de_deux = 0#lancer_de()
+			var de_un = lancer_de()
+			var de_deux = lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
