@@ -27,12 +27,12 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = false
-#	db.open_db()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = false
+	db.open_db()
 
-	#stats("tthirtle2o")
+	stats("tthirtle2o")
 
 	print(serveur_lobby1)
 	serveur_lobby.set_private_key(key)
@@ -71,26 +71,26 @@ func _ready():
 #######
 #	Fonctions relatives à la base de données
 #######
-#func stats(pseudo):
-#	#var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
-#
-#	#var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["nbWin", "nbLose", "dateInscr"])
-#	var row_dict : Dictionary = {"dateInscr":" ", "nbLose":" ", "nbWin": " ", "bestCase":" ", "lastTrophy":" ","descTrophy":" "}
-#	if(len(array[0]) > 0):
-#		var date = array[0].dateInscr
-#		var win = array[0].nbWin
-#		var lose = array[0].nbLose
-#
-#		var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
-#
-#		if(len(array3[0]) > 0):
-#			var nc = array3[0].nc
-#
-#			var last_trophy = last_trophy(pseudo)
-#
-#			row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "bestCase":case_fav(pseudo), "lastTrophy":last_trophy[0],"descTrophy":last_trophy[1]}
-#
-#	return row_dict.duplicate()
+func stats(pseudo):
+	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
+
+	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["nbWin", "nbLose", "dateInscr"])
+	var row_dict : Dictionary = {"dateInscr":" ", "nbLose":" ", "nbWin": " ", "bestCase":" ", "lastTrophy":" ","descTrophy":" "}
+	if(len(array[0]) > 0):
+		var date = array[0].dateInscr
+		var win = array[0].nbWin
+		var lose = array[0].nbLose
+
+		var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
+
+		if(len(array3[0]) > 0):
+			var nc = array3[0].nc
+
+			var last_trophy = last_trophy(pseudo)
+
+			row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "bestCase":case_fav(pseudo), "lastTrophy":last_trophy[0],"descTrophy":last_trophy[1]}
+
+	return row_dict.duplicate()
 
 func case_fav(pseudo):
 	var result = "Aucune"
