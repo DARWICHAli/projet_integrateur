@@ -66,7 +66,7 @@
 [ext_resource path="res://GFX/pion4_normal.png" type="Texture" id=64]
 [ext_resource path="res://GFX/pion3_normal.png" type="Texture" id=65]
 [ext_resource path="res://GFX/pion6_normal.png" type="Texture" id=66]
-[ext_resource path="res://Form.tscn" type="PackedScene" id=67]
+[ext_resource path="res://Scenes/Form.tscn" type="PackedScene" id=67]
 [ext_resource path="res://GFX/Bouton/bouton_connexion_pressed.png" type="Texture" id=68]
 [ext_resource path="res://GFX/Bouton/bouton_connexion_normal.png" type="Texture" id=69]
 [ext_resource path="res://Sons/construction.wav" type="AudioStream" id=70]
@@ -816,6 +816,7 @@ texture_pressed = ExtResource( 77 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
 [connection signal="signal_resultat_lancer_de" from="." to="Pion" method="_on_jeu_signal_resultat_lancer_de"]
 [connection signal="signal_resultat_lancer_de2" from="." to="Pion2" method="_on_jeu_signal_resultat_lancer_de2"]
 [connection signal="signal_resultat_lancer_de3" from="." to="Pion3" method="_on_jeu_signal_resultat_lancer_de3"]
