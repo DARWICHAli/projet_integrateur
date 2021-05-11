@@ -10,6 +10,7 @@ var cases = []
 var nb_joueurs
 var ip = "localhost"
 var port = "5000"
+var port1 = "5001"
 var joueur
 
 var mon_nom = "Client 1"
@@ -47,7 +48,6 @@ func _ready():
 # ============= Client ==================== #
 
 func ready_connection():
-	client_lobby.set_trusted_ssl_certificate(cert)
 	# signaux client lobby
 	
 	client_lobby.connect("connection_closed", self, "_closed_lobby")
@@ -62,7 +62,12 @@ func ready_connection():
 	client_partie.connect("data_received", self, "_on_data_partie")
 
 	# Initiate connection to the given URL.
-	var err = client_lobby.connect_to_url('wss://' + str(ip) + ':' + str(port))
+	var err
+	if OS.get_name().match("HTML5"):
+		err = client_lobby.connect_to_url('ws://' + str(ip) + ':' + str(port1))
+	else:
+		client_lobby.set_trusted_ssl_certificate(cert)
+		err = client_lobby.connect_to_url('wss://' + str(ip) + ':' + str(port))
 	if err != OK:
 		print("la connexion au lobby a échoué")
 		set_process(false)
