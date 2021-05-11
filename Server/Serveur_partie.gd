@@ -115,7 +115,7 @@ func init_plateau():
 	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
-			plateau[i].set_depart(500)
+			plateau[i].set_depart(200)
 		elif i == 10:
 			plateau[i].set_prison()
 		elif i == 30:

@@ -1,12 +1,14 @@
 extends Node
 
 const port = 5000
+const port1 = 5001
 const ip = "localhost"
 
 # connection BDD
 const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
 # Our WebSocketServer instance
 var serveur_lobby = WebSocketServer.new()
+var serveur_lobby1 = WebSocketServer.new()
 # Pour le nombre random
 var rng = RandomNumberGenerator.new()
 # Permet d'attendre le thread créant le port
@@ -31,18 +33,20 @@ func _ready():
 	db.open_db()
 
 	# init serveur lobby
+	print(serveur_lobby1)
+
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
 	# Connect base signals to get notified of new client connections,
 	# disconnections, and disconnect requests.
-	serveur_lobby.connect("client_connected", self, "_connected_lobby")
+	serveur_lobby.connect("client_connected", self, "_connected_lobby", [serveur_lobby])
 	serveur_lobby.connect("client_disconnected", self, "_disconnected_lobby")
 	serveur_lobby.connect("client_close_request", self, "_close_request_lobby")
 	# This signal is emitted when not using the Multiplayer API every time a
 	# full packet is received.
 	# Alternatively, you could check get_peer(PEER_ID).get_available_packets()
 	# in a loop for each connected peer.
-	serveur_lobby.connect("data_received", self, "_on_data_lobby")
+	serveur_lobby.connect("data_received", self, "_on_data_lobby", [serveur_lobby])
 	# Start listening on the given port.
 	var err = serveur_lobby.listen(port)
 	if err != OK:
@@ -50,6 +54,18 @@ func _ready():
 		set_process(false)
 	else:
 		print("Serveur de lobby démarré avec port: " + String(port))
+		
+	serveur_lobby1.connect("client_connected", self, "_connected_lobby", [serveur_lobby1])
+	serveur_lobby1.connect("client_disconnected", self, "_disconnected_lobby")
+	serveur_lobby1.connect("client_close_request", self, "_close_request_lobby")
+	serveur_lobby1.connect("data_received", self, "_on_data_lobby", [serveur_lobby1])
+	err = serveur_lobby1.listen(port1)
+	if err != OK:
+		print("erreur de démarrage du serveur lobby1")
+		set_process(false)
+	else:
+		print("Serveur de lobby démarré avec port: " + String(port1))
+		
 	rng.randomize()
 
 #######
@@ -57,7 +73,7 @@ func _ready():
 #######
 func stats(pseudo):
 	var err = db.query("SELECT U.idU FROM UTILISATEUR U WHERE U.username LIKE '"+pseudo+"';") # À faire hors de la fonction
-	
+
 	var array = db.select_rows("UTILISATEUR","username  like '"+pseudo+"'", ["nbWin", "nbLose", "dateInscr"])
 	var row_dict : Dictionary = {"dateInscr":" ", "nbLose":" ", "nbWin": " ", "bestCase":" ", "lastTrophy":" ","descTrophy":" "}
 	if(len(array[0]) > 0):
@@ -66,14 +82,14 @@ func stats(pseudo):
 		var lose = array[0].nbLose
 
 		var array3 = db.select_rows("(SELECT id, nc, max(nb_ac) FROM (SELECT AC.idU AS id, AC.nomCase AS nc, (SELECT count(AC2.nomCase) FROM ACHETE_CASE AC2 WHERE AC2.nomCase LIKE AC.nomCase AND AC2.idU = AC.idU) AS nb_ac FROM ACHETE_CASE AC WHERE AC.idU = id GROUP BY AC.nomCase))","",["nc"])
-		
+
 		if(len(array3[0]) > 0):
 			var nc = array3[0].nc
-			
+
 			var last_trophy = last_trophy(pseudo)
-			
+
 			row_dict = {"dateInscr":date, "nbLose":lose, "nbWin": win, "bestCase":case_fav(pseudo), "lastTrophy":last_trophy[0],"descTrophy":last_trophy[1]}
-				
+
 	return row_dict.duplicate()
 
 func case_fav(pseudo):
@@ -125,9 +141,9 @@ func pas_le_temps_de_niaiser(pseudo):
 
 
 # warning-ignore:unused_argument
-func _connected_lobby (id, proto):
-	var client_IP   = serveur_lobby.get_peer_address(id)
-	var client_port = serveur_lobby.get_peer_port(id)
+func _connected_lobby (id, proto, serveur):
+	var client_IP   = serveur.get_peer_address(id)
+	var client_port = serveur.get_peer_port(id)
 	#tableau de stockage des clients qui se connecte sur le lobby 
 	if list_clients.has(id):
 		print("le client est déjà present")
@@ -154,8 +170,8 @@ func _disconnected_lobby (id, was_clean = false):
 		list_clients.erase(id)
 
 # Lancement d'un nouveau thread, puis envoie du nouveau ip et port
-func _on_data_lobby (id_client : int):
-	var paquet = recevoir_message(serveur_lobby, id_client)
+func _on_data_lobby (id_client : int, serveur):
+	var paquet = recevoir_message(serveur, id_client)
 
 	var obj = Structure.from_bytes(paquet)
 	var structure = Structure.new()
@@ -170,13 +186,13 @@ func _on_data_lobby (id_client : int):
 				serveurs_partie.back().code = obj.data
 				sem.wait()
 				structure.set_adresse_serveur_jeu(ip, serveurs_partie.back().port, serveurs_partie.back().nb_joueurs, 0)
-				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+				envoyer_message(serveur, structure.to_bytes(), id_client)
 			else:
 				var id_serveur_partie = trouver_partie(obj.data)
 				var temp = serveurs_partie[id_serveur_partie].list_joueurs.size()
 				print("Le client %d rejoint une partie" % temp)
 				structure.set_adresse_serveur_jeu(ip, serveurs_partie[id_serveur_partie].port, serveurs_partie[id_serveur_partie].nb_joueurs, serveurs_partie[id_serveur_partie].list_joueurs.size())
-				envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+				envoyer_message(serveur, structure.to_bytes(), id_client)
 		Structure.PacketType.INSCRIPTION:
 			var error = db.query("INSERT INTO UTILISATEUR (username,password,email,pays) VALUES"+obj.data)
 			print(error)
@@ -184,7 +200,7 @@ func _on_data_lobby (id_client : int):
 				structure.set_requete_erreur(1) # !=0 -> une erreur a eu lieu
 			else:
 				structure.set_requete_erreur(0) # 0 = aucune erreur
-			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+			envoyer_message(serveur, structure.to_bytes(), id_client)
 		Structure.PacketType.LOGIN:
 			var array = db.select_rows("UTILISATEUR","email  like '"+obj.data.mail+"'", ["username"])
 			if(len(array) == 0):
@@ -194,7 +210,7 @@ func _on_data_lobby (id_client : int):
 			else:
 				structure.set_requete_reponse_login(array[0].username)
 				
-			envoyer_message(serveur_lobby, structure.to_bytes(), id_client)
+			envoyer_message(serveur, structure.to_bytes(), id_client)
 
 		_:
 			print('autre type de paquet reçu')	
@@ -204,6 +220,7 @@ func _process(delta):
 	# Call this in _process or _physics_process.
 	# Data transfer, and signals emission will only happen when calling this function.
 	serveur_lobby.poll()
+	serveur_lobby1.poll()
 
 signal fin_partie(code)
 
@@ -218,7 +235,7 @@ func thread_function (args):
 	var find = false
 	var port_serveur_jeu
 	while !find:
-		port_serveur_jeu = rng.randi_range(5001, 65353)
+		port_serveur_jeu = rng.randi_range(5050, 65353)
 		var err = serveur_jeu.socket.listen(port_serveur_jeu)
 		if err != OK:
 			print("Unable to start server")
@@ -321,15 +338,15 @@ func _on_data_jeu(id_client, serveur_jeu):
 			print('requête vente')
 			vente_res(serveur_jeu.list_joueurs.find(id_client), obj.data, serveur_jeu)
 			#serveur_jeu.reponse_joueur = true
-		Structure.PacketType.STATS_CONSULT:
-			print("Demande de stats")
-			var stats = stats(obj.data)
-			if(stats == null):
-				stats 	= {"dateInscr":"Aucune ", "nbLose":0, "nbWin": 0, "bestCase":"Aucune ", "lastTrophy":"Aucun","descTrophy":"Aucune"}
-			print(stats)
-			structure.set_requete_reponse_stats(stats.duplicate())
-			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
-			serveur_jeu.reponse_joueur = true
+#		Structure.PacketType.STATS_CONSULT:
+#			print("Demande de stats")
+#			#var stats = stats(obj.data)
+#			#if(stats == null):
+#				#stats 	= {"dateInscr":"Aucune ", "nbLose":0, "nbWin": 0, "bestCase":"Aucune ", "lastTrophy":"Aucun","descTrophy":"Aucune"}
+#			print(stats)
+#			structure.set_requete_reponse_stats(stats.duplicate())
+#			envoyer_message(serveur_jeu.socket, structure.to_bytes(), id_client)
+#			serveur_jeu.reponse_joueur = true
 		Structure.PacketType.BDD:
 			print('requête BDD reçue')
 		Structure.PacketType.FIN_DEP_GO_PRISON:
@@ -431,8 +448,8 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 1#lancer_de()
-			var de_deux = 0#lancer_de()
+			var de_un = lancer_de()
+			var de_deux = lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
