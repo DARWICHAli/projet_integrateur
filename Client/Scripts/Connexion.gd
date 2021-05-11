@@ -2,6 +2,7 @@ extends Node2D
 
 
 signal retour_connexion
+signal retour_connexion_succes
 signal inscription_conn
 signal connection
 
@@ -10,7 +11,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_retour_pressed():
-	emit_signal("retour_connexion");
+	emit_signal("retour_connexion")
 
 
 func _on_inscription_pressed():
@@ -27,7 +28,7 @@ func _on_TextureButton_pressed():
 
 func _on_retour_success_pressed():
 	$success.hide()
-	emit_signal("retour_connexion")
+	emit_signal("retour_connexion_succes")
 
 
 

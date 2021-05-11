@@ -661,8 +661,6 @@ func _on_reclamer_pressed():
 
 func _on_connexion_retour_connexion():
 	$menu/connexion.hide()
-	$menu/background/sign_in.hide()
-	$menu/background/deconnexion.show()
 	$menu/background.show()
 	
 
@@ -749,3 +747,8 @@ func _on_creer_partie_toggled(button_pressed):
 	else:
 		$join_party/nbjoueurs.hide()
 		$join_party/text_nbjoueurs.hide()
+
+
+func _on_connexion_retour_connexion_succes():
+	$menu/background/sign_in.hide()
+	$menu/background/deconnexion.show()

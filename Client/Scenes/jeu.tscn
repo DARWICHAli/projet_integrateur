@@ -764,6 +764,7 @@ __meta__ = {
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 
 [node name="Form" parent="menu" instance=ExtResource( 67 )]
+visible = false
 position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
@@ -834,6 +835,7 @@ __meta__ = {
 [connection signal="connection" from="menu/connexion" to="." method="_on_connexion_connection"]
 [connection signal="inscription_conn" from="menu/connexion" to="." method="_on_connexion_inscription_conn"]
 [connection signal="retour_connexion" from="menu/connexion" to="." method="_on_connexion_retour_connexion"]
+[connection signal="retour_connexion_succes" from="menu/connexion" to="." method="_on_connexion_retour_connexion_succes"]
 [connection signal="exit_on_success" from="menu/Form" to="." method="_on_Form_exit_on_success"]
 [connection signal="inscription" from="menu/Form" to="." method="_on_Form_inscription"]
 [connection signal="retour_form" from="menu/Form" to="." method="_on_Form_retour_form"]
