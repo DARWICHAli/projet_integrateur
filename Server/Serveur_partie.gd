@@ -299,7 +299,7 @@ func vendre(id, case):
 			if case_iter.sous_type == Cases.PropTypes.GARE and case_iter.proprio == case.proprio:
 				case_iter.niveau_case = case_iter.niveau_case - 1
 			
-	ventes[id] = case.prix*0.8
+	ventes[id] = case.prix*0.5
 	for i in range(0, case.niveau_case):
 		if i == 1 or i == 2 or i == 3:
 			ventes[id] += 0.5*case.prix_maison
