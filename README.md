@@ -12,7 +12,7 @@ Projet intégrateur L3IS6 2021, équipe DF.
 
     4) Dans chaque client, aller dans Editeur > Paramètres de l'éditeur > Onglet Network > Debug et changer le champ "remote host"
 
-    ATTENTION : les valeurs de chaque "remote host" doit^être unique pour chaque client
+    ATTENTION : les valeurs de chaque "remote host" doit être unique pour chaque client
 
     5) Lancer chaque client à l'aide du bouton Play
 
