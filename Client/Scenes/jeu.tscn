@@ -763,7 +763,6 @@ __meta__ = {
 }
 
 [node name="menu" type="Node2D" parent="."]
-visible = false
 
 [node name="connexion" parent="menu" instance=ExtResource( 75 )]
 visible = false
@@ -773,7 +772,6 @@ visible = false
 position = Vector2( -3.56348, 14.2544 )
 
 [node name="background" type="TextureRect" parent="menu"]
-visible = false
 margin_right = 3840.0
 margin_bottom = 2165.0
 rect_scale = Vector2( 1, 1.12 )
