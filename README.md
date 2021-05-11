@@ -3,7 +3,7 @@
 Projet intégrateur L3IS6 2021, équipe DF.
 
 # Lancer en mode debug :
-
+```
     1) Cloner le dépot et installer Godot à l'adresse https://godotengine.org/download/
 
     2) Lancer le fichier project.godot dans le dossier Server et lancer le projet en sélectionant le bouton au logo Play dans la barre du dessus
@@ -17,6 +17,6 @@ Projet intégrateur L3IS6 2021, équipe DF.
     5) Lancer chaque client à l'aide du bouton Play
 
     6) Suivre la notice utilisateur pour jouer
-
+```
 # Lancer en mode normal :
     
