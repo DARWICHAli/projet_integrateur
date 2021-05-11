@@ -1,0 +1,423 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://GFX/info_joueur/info_box.png" type="Texture" id=1]
+[ext_resource path="res://GFX/info_joueur/prop_jaune.png" type="Texture" id=2]
+[ext_resource path="res://GFX/info_joueur/prop_brun.png" type="Texture" id=3]
+[ext_resource path="res://GFX/info_joueur/prop_vert.png" type="Texture" id=4]
+[ext_resource path="res://GFX/info_joueur/prop_rouge.png" type="Texture" id=5]
+[ext_resource path="res://GFX/info_joueur/prop_bleu.png" type="Texture" id=6]
+[ext_resource path="res://GFX/info_joueur/prop_rose.png" type="Texture" id=7]
+[ext_resource path="res://GFX/info_joueur/es.png" type="Texture" id=8]
+[ext_resource path="res://GFX/info_joueur/train.png" type="Texture" id=9]
+[ext_resource path="res://GFX/info_joueur/prop_cyan.png" type="Texture" id=10]
+[ext_resource path="res://GFX/info_joueur/water-tap.png" type="Texture" id=11]
+[ext_resource path="res://GFX/info_joueur/prop_orange.png" type="Texture" id=12]
+[ext_resource path="res://GFX/Fonts/RELLIALE.ttf" type="DynamicFontData" id=13]
+[ext_resource path="res://Scripts/infobox.gd" type="Script" id=14]
+[ext_resource path="res://GFX/info_joueur/jailbreak.png" type="Texture" id=15]
+
+[sub_resource type="DynamicFont" id=1]
+size = 100
+font_data = ExtResource( 13 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 100
+font_data = ExtResource( 13 )
+
+[node name="infobox1" type="Container"]
+anchor_right = 0.325521
+anchor_bottom = 0.250463
+rect_min_size = Vector2( 1234, 544 )
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="info_joueur" type="TextureButton" parent="."]
+margin_right = 1779.0
+margin_bottom = 773.0
+rect_scale = Vector2( 0.7, 0.7 )
+texture_normal = ExtResource( 1 )
+
+[node name="montant" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 703.139
+margin_top = 86.1185
+margin_right = 1162.14
+margin_bottom = 209.119
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.0941176, 0.0196078, 0.0196078, 1 )
+text = "200000"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nom_joueur" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 90.0
+margin_top = 77.0
+margin_right = 462.0
+margin_bottom = 200.0
+rect_scale = Vector2( 0.7, 0.7 )
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "joueur1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LinkButton" type="LinkButton" parent="."]
+margin_left = 90.0
+margin_top = 77.0
+margin_right = 502.0
+margin_bottom = 167.0
+rect_clip_content = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nom_joueur2" type="Label" parent="LinkButton"]
+modulate = Color( 0, 0, 0, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 2.51987
+margin_bottom = 2.51987
+rect_scale = Vector2( 0.7, 0.7 )
+rect_clip_content = true
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+autowrap = true
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prop1" type="TextureButton" parent="."]
+visible = false
+margin_left = 35.0
+margin_top = 260.0
+margin_right = 111.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 3 )
+
+[node name="prop3" type="TextureButton" parent="."]
+visible = false
+margin_left = 35.0
+margin_top = 327.0
+margin_right = 111.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 3 )
+
+[node name="prop5" type="TextureButton" parent="."]
+visible = false
+margin_left = 588.0
+margin_top = 308.695
+margin_right = 664.0
+margin_bottom = 384.695
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+
+[node name="prop6" type="TextureButton" parent="."]
+visible = false
+margin_left = 100.0
+margin_top = 260.0
+margin_right = 176.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+
+[node name="prop8" type="TextureButton" parent="."]
+visible = false
+margin_left = 100.0
+margin_top = 327.0
+margin_right = 176.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+
+[node name="prop9" type="TextureButton" parent="."]
+visible = false
+margin_left = 100.0
+margin_top = 395.0
+margin_right = 176.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 10 )
+
+[node name="prop11" type="TextureButton" parent="."]
+visible = false
+margin_left = 166.0
+margin_top = 260.0
+margin_right = 242.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+
+[node name="prop12" type="TextureButton" parent="."]
+visible = false
+margin_left = 768.0
+margin_top = 264.0
+margin_right = 1100.0
+margin_bottom = 585.0
+rect_scale = Vector2( 0.15, 0.15 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 8 )
+
+[node name="prop13" type="TextureButton" parent="."]
+visible = false
+margin_left = 166.0
+margin_top = 327.0
+margin_right = 242.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+
+[node name="prop14" type="TextureButton" parent="."]
+visible = false
+margin_left = 166.0
+margin_top = 395.0
+margin_right = 242.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 7 )
+
+[node name="prop15" type="TextureButton" parent="."]
+visible = false
+margin_left = 639.027
+margin_top = 259.0
+margin_right = 1151.03
+margin_bottom = 771.0
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+
+[node name="prop16" type="TextureButton" parent="."]
+visible = false
+margin_left = 233.0
+margin_top = 260.0
+margin_right = 309.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 12 )
+
+[node name="prop18" type="TextureButton" parent="."]
+visible = false
+margin_left = 233.0
+margin_top = 327.0
+margin_right = 309.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 12 )
+
+[node name="prop19" type="TextureButton" parent="."]
+visible = false
+margin_left = 233.0
+margin_top = 395.0
+margin_right = 309.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 12 )
+
+[node name="prop21" type="TextureButton" parent="."]
+visible = false
+margin_left = 300.0
+margin_top = 260.0
+margin_right = 376.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+
+[node name="prop23" type="TextureButton" parent="."]
+visible = false
+margin_left = 300.0
+margin_top = 327.0
+margin_right = 376.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+
+[node name="prop24" type="TextureButton" parent="."]
+visible = false
+margin_left = 300.0
+margin_top = 395.0
+margin_right = 376.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 5 )
+
+[node name="prop25" type="TextureButton" parent="."]
+visible = false
+margin_left = 689.0
+margin_top = 310.65
+margin_right = 1201.0
+margin_bottom = 822.65
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+
+[node name="prop26" type="TextureButton" parent="."]
+visible = false
+margin_left = 365.0
+margin_top = 260.0
+margin_right = 441.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 2 )
+
+[node name="prop27" type="TextureButton" parent="."]
+visible = false
+margin_left = 767.533
+margin_top = 330.865
+margin_right = 843.533
+margin_bottom = 406.865
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 11 )
+
+[node name="prop28" type="TextureButton" parent="."]
+visible = false
+margin_left = 365.0
+margin_top = 327.0
+margin_right = 441.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 2 )
+
+[node name="prop29" type="TextureButton" parent="."]
+visible = false
+margin_left = 365.0
+margin_top = 395.0
+margin_right = 441.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 2 )
+
+[node name="prop31" type="TextureButton" parent="."]
+visible = false
+margin_left = 430.0
+margin_top = 260.0
+margin_right = 506.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 4 )
+
+[node name="prop33" type="TextureButton" parent="."]
+visible = false
+margin_left = 430.0
+margin_top = 327.0
+margin_right = 506.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 4 )
+
+[node name="prop34" type="TextureButton" parent="."]
+visible = false
+margin_left = 430.0
+margin_top = 395.0
+margin_right = 506.0
+margin_bottom = 471.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 4 )
+
+[node name="prop35" type="TextureButton" parent="."]
+visible = false
+margin_left = 637.838
+margin_top = 360.596
+margin_right = 1149.84
+margin_bottom = 872.596
+rect_scale = Vector2( 0.1, 0.1 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+
+[node name="prop37" type="TextureButton" parent="."]
+visible = false
+margin_left = 496.0
+margin_top = 260.0
+margin_right = 572.0
+margin_bottom = 336.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 6 )
+
+[node name="prop39" type="TextureButton" parent="."]
+visible = false
+margin_left = 496.0
+margin_top = 327.0
+margin_right = 572.0
+margin_bottom = 403.0
+rect_scale = Vector2( 0.75, 0.75 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 6 )
+
+[node name="Button" type="Button" parent="."]
+margin_right = 12.0
+margin_bottom = 20.0
+
+[node name="jailbreak" type="TextureButton" parent="."]
+visible = false
+margin_left = 927.0
+margin_top = 234.0
+margin_right = 1137.0
+margin_bottom = 507.0
+rect_min_size = Vector2( 210, 273 )
+rect_scale = Vector2( 0.7, 0.7 )
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 15 )
+[connection signal="pressed" from="info_joueur" to="." method="_on_info_joueur_pressed"]
+[connection signal="pressed" from="LinkButton" to="." method="_on_LinkButton_pressed"]
+[connection signal="pressed" from="prop1" to="." method="_on_prop1_pressed"]
+[connection signal="pressed" from="prop3" to="." method="_on_prop3_pressed"]
+[connection signal="pressed" from="prop5" to="." method="_on_prop5_pressed"]
+[connection signal="pressed" from="prop6" to="." method="_on_prop6_pressed"]
+[connection signal="pressed" from="prop8" to="." method="_on_prop8_pressed"]
+[connection signal="pressed" from="prop9" to="." method="_on_prop9_pressed"]
+[connection signal="pressed" from="prop11" to="." method="_on_prop11_pressed"]
+[connection signal="pressed" from="prop12" to="." method="_on_prop12_pressed"]
+[connection signal="pressed" from="prop13" to="." method="_on_prop13_pressed"]
+[connection signal="pressed" from="prop14" to="." method="_on_prop14_pressed"]
+[connection signal="pressed" from="prop15" to="." method="_on_prop15_pressed"]
+[connection signal="pressed" from="prop16" to="." method="_on_prop16_pressed"]
+[connection signal="pressed" from="prop18" to="." method="_on_prop18_pressed"]
+[connection signal="pressed" from="prop19" to="." method="_on_prop19_pressed"]
+[connection signal="pressed" from="prop21" to="." method="_on_prop21_pressed"]
+[connection signal="pressed" from="prop23" to="." method="_on_prop23_pressed"]
+[connection signal="pressed" from="prop24" to="." method="_on_prop24_pressed"]
+[connection signal="pressed" from="prop25" to="." method="_on_prop25_pressed"]
+[connection signal="pressed" from="prop26" to="." method="_on_prop26_pressed"]
+[connection signal="pressed" from="prop27" to="." method="_on_prop27_pressed"]
+[connection signal="pressed" from="prop28" to="." method="_on_prop28_pressed"]
+[connection signal="pressed" from="prop29" to="." method="_on_prop29_pressed"]
+[connection signal="pressed" from="prop31" to="." method="_on_prop31_pressed"]
+[connection signal="pressed" from="prop33" to="." method="_on_prop33_pressed"]
+[connection signal="pressed" from="prop34" to="." method="_on_prop34_pressed"]
+[connection signal="pressed" from="prop35" to="." method="_on_prop35_pressed"]
+[connection signal="pressed" from="prop37" to="." method="_on_prop37_pressed"]
+[connection signal="pressed" from="prop39" to="." method="_on_prop39_pressed"]
+[connection signal="pressed" from="jailbreak" to="." method="_on_jailbreak_pressed"]

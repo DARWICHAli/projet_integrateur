@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/aller_prison.wav-fa849957cf59d4432b9a2af52589478d.sample"
+
+[deps]
+
+source_file="res://Sons/aller_prison.wav"
+dest_files=[ "res://.import/aller_prison.wav-fa849957cf59d4432b9a2af52589478d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

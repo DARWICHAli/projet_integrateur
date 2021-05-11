@@ -1,0 +1,757 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://Scenes/infobox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/info_joueur.gd" type="Script" id=2]
+[ext_resource path="res://GFX/close.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://GFX/hotel.png" type="Texture" id=5]
+[ext_resource path="res://GFX/dollar.png" type="Texture" id=6]
+[ext_resource path="res://Fonts/new_dynamicfont.tres" type="DynamicFont" id=7]
+[ext_resource path="res://GFX/home.png" type="Texture" id=8]
+[ext_resource path="res://GFX/case_bleu.png" type="Texture" id=9]
+[ext_resource path="res://Fonts/RELLIALE.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_normal.png" type="Texture" id=11]
+[ext_resource path="res://GFX/Bouton/bouton_hypotheque_pressed.png" type="Texture" id=12]
+[ext_resource path="res://GFX/Bouton/bouton_construire_normal.png" type="Texture" id=13]
+[ext_resource path="res://GFX/Bouton/bouton_construire_pressed.png" type="Texture" id=14]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_pressed.png" type="Texture" id=15]
+[ext_resource path="res://GFX/Bouton/bouton_vendre_normal.png" type="Texture" id=16]
+[ext_resource path="res://GFX/Bouton/bouton_détruire_normal.png" type="Texture" id=17]
+[ext_resource path="res://GFX/Bouton/bouton_détruire_pressed.png" type="Texture" id=18]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_normal.png" type="Texture" id=19]
+[ext_resource path="res://GFX/Bouton/bouton_abandonner_pressed.png" type="Texture" id=20]
+[ext_resource path="res://GFX/Bouton/bouton_confirmer_pressed.png" type="Texture" id=21]
+[ext_resource path="res://GFX/Bouton/bouton_confirmer_normal.png" type="Texture" id=22]
+
+[sub_resource type="DynamicFont" id=1]
+size = 60
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 35
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 32
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 40
+font_data = ExtResource( 10 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 39
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 10 )
+
+[node name="info_joueur" type="Node2D"]
+position = Vector2( 2550, 0 )
+script = ExtResource( 2 )
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_left = -2.37842
+margin_top = 2.37842
+margin_right = 1289.62
+margin_bottom = 2162.38
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 1250.0
+rect_min_size = Vector2( 1250, 0 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="infobox1" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1250.0
+margin_bottom = 544.0
+
+[node name="infobox2" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 548.0
+margin_right = 1250.0
+margin_bottom = 1092.0
+
+[node name="infobox3" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1096.0
+margin_right = 1250.0
+margin_bottom = 1640.0
+
+[node name="infobox4" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 1644.0
+margin_right = 1250.0
+margin_bottom = 2188.0
+
+[node name="infobox5" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 2192.0
+margin_right = 1250.0
+margin_bottom = 2736.0
+
+[node name="infobox6" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 1250.0
+margin_bottom = 544.0
+
+[node name="infobox7" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 548.0
+margin_bottom = 1092.0
+
+[node name="infobox8" parent="ScrollContainer/VBoxContainer" instance=ExtResource( 1 )]
+visible = false
+margin_top = 548.0
+margin_bottom = 1092.0
+
+[node name="panelPlayer" type="Control" parent="ScrollContainer"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelPlayer"]
+margin_top = 1.88776
+margin_right = 1292.0
+margin_bottom = 2163.89
+rect_min_size = Vector2( 1292, 2162 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="playertag" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 71.0
+margin_top = 50.0
+margin_right = 393.0
+margin_bottom = 155.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Player"
+text = "Player"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="money" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 790.0
+margin_top = 50.0
+margin_right = 1174.0
+margin_bottom = 109.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+text = "200 000"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dollar" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect"]
+position = Vector2( 727, 80 )
+scale = Vector2( 0.19323, 0.1735 )
+texture = ExtResource( 6 )
+
+[node name="case" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 124.825
+margin_top = 320.0
+margin_right = 287.825
+margin_bottom = 583.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case2" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 421.828
+margin_top = 320.0
+margin_right = 584.828
+margin_bottom = 583.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case2"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case3" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 735.456
+margin_top = 322.828
+margin_right = 898.456
+margin_bottom = 585.828
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case3"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case4" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 1001.0
+margin_top = 320.0
+margin_right = 1164.0
+margin_bottom = 583.0
+mouse_default_cursor_shape = 2
+texture_normal = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hyp" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/case4"]
+visible = false
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 20.0
+margin_top = 110.0
+margin_right = 140.0
+margin_bottom = 163.0
+custom_fonts/font = ExtResource( 7 )
+text = "hyp $"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="upgrade" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="home1" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 170, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home2" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 320, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home3" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 470, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="home4" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 620, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 8 )
+
+[node name="hotel" type="Sprite" parent="ScrollContainer/panelPlayer/ColorRect/upgrade"]
+visible = false
+position = Vector2( 770, 800 )
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 5 )
+
+[node name="loyers" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 354.0
+margin_top = 986.0
+margin_right = 1014.0
+margin_bottom = 1663.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nom_propriete" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 660.0
+margin_bottom = 64.0
+custom_fonts/normal_font = ExtResource( 7 )
+text = "nom propriete"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="loyer" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 88.2183
+margin_right = 660.0
+margin_bottom = 143.218
+custom_fonts/normal_font = SubResource( 2 )
+text = "loyer :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 150.0
+margin_right = 650.0
+margin_bottom = 205.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 1 maison :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 210.0
+margin_right = 650.0
+margin_bottom = 265.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 2 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 270.0
+margin_right = 650.0
+margin_bottom = 325.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 3 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4maison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 330.0
+margin_right = 650.0
+margin_bottom = 385.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 4 maisons :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hotel" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 50.0
+margin_top = 390.0
+margin_right = 650.0
+margin_bottom = 445.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "avec 1 hotel :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prixparmaison" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 480.0
+margin_right = 660.0
+margin_bottom = 535.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Prix par maison :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="prixparhotel" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_top = 550.0
+margin_right = 660.0
+margin_bottom = 605.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Prix pour un hotel :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="valeur_hypo" type="RichTextLabel" parent="ScrollContainer/panelPlayer/ColorRect/loyers"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = -2.0
+margin_top = 618.0
+margin_right = 658.0
+margin_bottom = 673.0
+custom_fonts/normal_font = SubResource( 2 )
+text = "Valeur hypothecaire : "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="boutons" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 4.0
+margin_top = 1667.0
+margin_right = 1294.0
+margin_bottom = 2156.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="vendre" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 106.0
+margin_top = 380.0
+margin_right = 296.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 16 )
+texture_pressed = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="hypothequer" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 402.0
+margin_top = 380.0
+margin_right = 592.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 11 )
+texture_pressed = ExtResource( 12 )
+
+[node name="construire" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 698.0
+margin_top = 380.0
+margin_right = 888.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 13 )
+texture_pressed = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="detruire" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/boutons"]
+margin_left = 994.0
+margin_top = 380.0
+margin_right = 1184.0
+margin_bottom = 440.0
+texture_normal = ExtResource( 17 )
+texture_pressed = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="confirmation" type="Control" parent="ScrollContainer/panelPlayer/ColorRect"]
+visible = false
+margin_left = 223.0
+margin_top = 1751.0
+margin_right = 1050.0
+margin_bottom = 2012.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+modulate = Color( 0, 0, 0, 1 )
+margin_right = 841.0
+margin_bottom = 88.0
+custom_fonts/font = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="oui" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+margin_left = 125.0
+margin_top = 150.0
+margin_right = 315.0
+margin_bottom = 210.0
+texture_normal = ExtResource( 22 )
+texture_pressed = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="non" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect/confirmation"]
+margin_left = 550.0
+margin_top = 150.0
+margin_right = 740.0
+margin_bottom = 210.0
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 20 )
+
+[node name="exit" type="TextureButton" parent="ScrollContainer/panelPlayer/ColorRect"]
+margin_left = 1203.0
+margin_top = 5.11224
+margin_right = 1715.0
+margin_bottom = 517.112
+rect_scale = Vector2( 0.15, 0.15 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 3 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="panelInfos" type="Control" parent="ScrollContainer"]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="ScrollContainer/panelInfos"]
+margin_left = 8.47583
+margin_top = 1.88776
+margin_right = 1300.48
+margin_bottom = 2163.89
+rect_min_size = Vector2( 1292, 2162 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="playertag" type="RichTextLabel" parent="ScrollContainer/panelInfos/ColorRect"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 71.0
+margin_top = 50.0
+margin_right = 393.0
+margin_bottom = 155.0
+rect_clip_content = false
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/normal_font = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Player"
+text = "Player"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="exit2" type="TextureButton" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_left = 1203.0
+margin_top = 5.11224
+margin_right = 1715.0
+margin_bottom = 517.112
+rect_scale = Vector2( 0.15, 0.15 )
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture_normal = ExtResource( 3 )
+stretch_mode = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nb_victoires" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_victoires"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 250.0
+margin_right = 508.0
+margin_bottom = 319.0
+custom_fonts/font = SubResource( 4 )
+text = "Nombre de victoires :"
+
+[node name="nb_victoires" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_victoires"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 560.0
+margin_top = 250.0
+margin_right = 763.0
+margin_bottom = 319.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="nb_defaites" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_defaites"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 400.0
+margin_right = 489.0
+margin_bottom = 469.0
+custom_fonts/font = SubResource( 4 )
+text = "Nombre de defaites :"
+
+[node name="nb_defaites" type="Label" parent="ScrollContainer/panelInfos/ColorRect/nb_defaites"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 550.0
+margin_top = 400.0
+margin_right = 753.0
+margin_bottom = 469.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case_pref" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/case_pref"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 550.0
+margin_right = 370.0
+margin_bottom = 619.0
+custom_fonts/font = SubResource( 4 )
+text = "Case preferee :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="case_pref" type="Label" parent="ScrollContainer/panelInfos/ColorRect/case_pref"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 430.0
+margin_top = 550.0
+margin_right = 633.0
+margin_bottom = 619.0
+custom_fonts/font = SubResource( 4 )
+text = "0"
+
+[node name="dernier_trophe" type="Control" parent="ScrollContainer/panelInfos/ColorRect"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="titre" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 80.0
+margin_top = 695.762
+margin_right = 408.0
+margin_bottom = 764.762
+custom_fonts/font = SubResource( 4 )
+text = "Dernier trophée remporté :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="dernier_trophee" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 693.0
+margin_top = 687.0
+margin_right = 1163.0
+margin_bottom = 739.0
+rect_pivot_offset = Vector2( 57.2048, 109.301 )
+custom_fonts/font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="description" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+margin_left = 102.859
+margin_top = 835.568
+margin_right = 1111.86
+margin_bottom = 984.568
+custom_fonts/font = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="desc" type="Label" parent="ScrollContainer/panelInfos/ColorRect/dernier_trophe"]
+modulate = Color( 0, 0, 0, 1 )
+self_modulate = Color( 0, 0, 0, 1 )
+margin_left = 105.476
+margin_top = 770.903
+margin_right = 624.476
+margin_bottom = 835.903
+custom_fonts/font = SubResource( 5 )
+text = "Description :"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox1" to="." method="_on_infobox1_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox2" to="." method="_on_infobox2_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox3" to="." method="_on_infobox3_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox4" to="." method="_on_infobox4_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox5" to="." method="_on_infobox5_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox6" to="." method="_on_infobox6_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox7" to="." method="_on_infobox7_sig_stats"]
+[connection signal="sig_stats" from="ScrollContainer/VBoxContainer/infobox8" to="." method="_on_infobox8_sig_stats"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case2" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case2_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case3" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case3_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox2" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox7" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox4" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox1" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox5" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox6" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox8" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/case4" to="ScrollContainer/VBoxContainer/infobox3" method="_on_case4_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/vendre" to="ScrollContainer/VBoxContainer/infobox1" method="_on_vendre_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/hypothequer" to="ScrollContainer/VBoxContainer/infobox1" method="_on_hypothequer_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/construire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_construire_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/boutons/detruire" to="ScrollContainer/VBoxContainer/infobox1" method="_on_detruire_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/confirmation/oui" to="ScrollContainer/VBoxContainer/infobox1" method="_on_oui_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/confirmation/non" to="ScrollContainer/VBoxContainer/infobox1" method="_on_non_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelPlayer/ColorRect/exit" to="ScrollContainer/VBoxContainer/infobox1" method="_on_exit_pressed"]
+[connection signal="pressed" from="ScrollContainer/panelInfos/ColorRect/exit2" to="ScrollContainer/VBoxContainer/infobox1" method="_on_exit2_pressed"]
