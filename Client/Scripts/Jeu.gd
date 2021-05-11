@@ -8,7 +8,7 @@ var dep_cases = 0
 var debut = 0
 var cases = []
 var nb_joueurs
-var ip = "86.71.222.230"
+var ip = "localhost"
 var port = "5000"
 var joueur
 
@@ -47,7 +47,7 @@ func _ready():
 # ============= Client ==================== #
 
 func ready_connection():
-#	client_lobby.set_trusted_ssl_certificate(cert)
+	client_lobby.set_trusted_ssl_certificate(cert)
 	# signaux client lobby
 	
 	client_lobby.connect("connection_closed", self, "_closed_lobby")
@@ -62,7 +62,7 @@ func ready_connection():
 	client_partie.connect("data_received", self, "_on_data_partie")
 
 	# Initiate connection to the given URL.
-	var err = client_lobby.connect_to_url('ws://' + str(ip) + ':' + str(port))
+	var err = client_lobby.connect_to_url('wss://' + str(ip) + ':' + str(port))
 	if err != OK:
 		print("la connexion au lobby a échoué")
 		set_process(false)
@@ -226,6 +226,7 @@ func _on_data_partie ():
 					print("Erreur inconnue !")
 					hist.add_hist($annonce.text)
 		Structure.PacketType.MAJ_TOUR:
+			print("MON ID : %d" % [self.joueur.id])
 			if(self.joueur.id == obj.client):
 				print("A VOTRE TOUR DE JOUER !")
 				get_node("fond_bouton/annonce_tour").text = "A VOTRE TOUR !"
@@ -381,7 +382,11 @@ func _on_data_partie ():
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(obj.client+1)+"/montant").text = str(obj.data)
 			joueur.argent[obj.client] = str(obj.data)
 		Structure.PacketType.RESULTAT_LANCER_DE:
-			$annonce.text = "Lancé de dé : %d (dé 1), %d (dé 2) pour %s" % [obj.data, obj.data2, pseudos[obj.client]]
+			if(obj.data == obj.data2):
+				print("DOUBLE !")
+				$annonce.text = "DOUBLE ! Lancé de dé : %d (dé 1), %d (dé 2) pour %s" % [obj.data, obj.data2, pseudos[obj.client]]
+			else:
+				$annonce.text = "Lancé de dé : %d (dé 1), %d (dé 2) pour %s" % [obj.data, obj.data2, pseudos[obj.client]]
 			hist.add_hist($annonce.text)
 			print('reçu résultat lancer dé 1: ' + str(int(obj.data)) + 'résultat lancer dé 2 : '+ str(int(obj.data2)) +' pour le client : ' + str(int(obj.client)))
 			var res = int(obj.data) + int(obj.data2)
@@ -482,10 +487,10 @@ func _on_data_partie ():
 			if(self.joueur.id == obj.client):
 				print("VOUS AVEZ PERDU !")
 				if(obj.data == -1):
-					$gagne.text = "VOUS AVEZ PERDU ! La banque vous a mis en faillite !"
+					$annonce.text = "VOUS AVEZ PERDU ! La banque vous a mis en faillite !"
 					print("La banque vous a mis en faillite !")
 				else:
-					$gagne.text = "VOUS AVEZ PERDU ! %s vous a mis en faillite !" % [pseudos[obj.data]]
+					$annonce.text = "VOUS AVEZ PERDU ! %s vous a mis en faillite !" % [pseudos[obj.data]]
 					print("Le joueur %d vous a mis en faillite !" % [obj.data])
 					for i in range(0, len(obj.data2)):
 						get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+str(obj.data+1)+"/prop"+ str(obj.data2[i])).show()
@@ -545,11 +550,11 @@ func affiche_joueur(nb_joueurs):
 		if i==0:
 			get_node("Pion").show()
 			$"info_joueur/ScrollContainer/VBoxContainer/infobox1".show()
-			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "1500"
+			$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "15"
 		else:
 			get_node("Pion"+str(i+1)).show()
 			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)).show()
-			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "1500"
+			get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(i+1)+"/montant").text = "15"
 
 func _on_lancer_des_pressed():
 	print('envoi requête dé')
@@ -701,10 +706,12 @@ func supprimer_joueur(n_pion):
 	if n_pion==0:
 		get_node("Pion/Sprite").hide()
 		$"info_joueur/ScrollContainer/VBoxContainer/infobox1/montant".text = "-1"
+		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox1").hide()
 	else:
 		print(n_pion)
 		get_node("Pion"+str(n_pion+1)+"/Sprite").hide()
 		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)+"/montant").text = "-1"
+		get_node("info_joueur/ScrollContainer/VBoxContainer/infobox"+ str(n_pion+1)).hide()
 
 func carte_sortie_prison():
 	print('envoi requête carte sortie prison')

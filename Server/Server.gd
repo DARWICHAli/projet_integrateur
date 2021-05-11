@@ -1,7 +1,7 @@
 extends Node
 
 const port = 5000
-const ip = "localhost"
+const ip = "loaclhost"
 
 # connection BDD
 const SQLite = preload("res://addons/godot-sqlite/bin/gdsqlite.gdns")
@@ -25,15 +25,15 @@ var db # db connection
 
 func _ready():
 	#Communication avec la base de données
-#	db = SQLite.new();
-#	db.path="./database.db"
-#	db.verbose_mode = false
-#	db.open_db()
+	db = SQLite.new();
+	db.path="./database.db"
+	db.verbose_mode = false
+	db.open_db()
 
-#	stats("tthirtle2o")
-#	var pseudo = "aaa@bbb.com"
-#	print(stats(pseudo))
-	
+	stats("tthirtle2o")
+	var pseudo = "aaa@bbb.com"
+	print(stats(pseudo))
+
 	serveur_lobby.set_private_key(key)
 	serveur_lobby.set_ssl_certificate(cert)
 	# Connect base signals to get notified of new client connections,
@@ -394,6 +394,7 @@ func partie(serveur_jeu : Serveur_partie):
 	
 	var timer
 	var timer_reclamation
+	print(serveur_jeu.list_joueurs)
 	while joueur != serveur_jeu.attente_joueur:
 		var double = 1
 		var nb_double = 0
@@ -423,14 +424,14 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.socket.poll()
 			
 			# Réponse du dé
-			var de_un = 30#lancer_de()
+			var de_un = 4#lancer_de()
 			var de_deux = 0#lancer_de()
 			var res = de_un + de_deux
 			
 			if de_un != de_deux:
 				double = 0
 			else:
-				nb_double += 1	
+				nb_double += 1
 			if nb_double == 3:
 				goto_prison = 1
 			
@@ -460,7 +461,12 @@ func partie(serveur_jeu : Serveur_partie):
 					structure.set_requete_out_prison(serveur_jeu.attente_joueur, serveur_jeu.prix_prison)
 					for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-					action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
+					if(action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu) == 1):
+						nb_double = 0
+						goto_prison = 0
+						joueur = serveur_jeu.attente_joueur
+						serveur_jeu.next_player()
+						break
 					
 			if(goto_prison != 1):
 				serveur_jeu.deplacer_joueur(serveur_jeu.attente_joueur, res)
@@ -498,18 +504,30 @@ func partie(serveur_jeu : Serveur_partie):
 				structure.set_requete_tirer_carte(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, serveur_jeu.temp_carte, status)
 				for client in serveur_jeu.list_joueurs:
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
+				if(action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu) == 1):
+					nb_double = 0
+					goto_prison = 0
+					supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
+					joueur = serveur_jeu.attente_joueur
+					serveur_jeu.next_player()
+					break
 				
-				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 				
 			if(current_case.type == Cases.CasesTypes.TAXE):
 				serveur_jeu.taxe(serveur_jeu.attente_joueur)
 				structure.set_requete_taxe(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur)
 				for client in serveur_jeu.list_joueurs: # Brodacast sur tous les joueurs
 					envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-				action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu)
+				if(action_faillite(serveur_jeu.attente_joueur, -1, serveur_jeu) == 1):
+					nb_double = 0
+					goto_prison = 0
+					supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
+					joueur = serveur_jeu.attente_joueur
+					serveur_jeu.next_player()
+					break
 				
-				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 				
 			# ALLER EN PRISON POUR TRIPLE DOUBLE OU CARTE ALLER PRISON
 			if(goto_prison == 1):
@@ -526,7 +544,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.next_player()
 				continue
 				
-				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 				
 			# ALLER EN PRISON POUR CASE GO_PRISON
 			if(current_case.type == Cases.CasesTypes.ALLER_PRISON):
@@ -549,7 +567,7 @@ func partie(serveur_jeu : Serveur_partie):
 				serveur_jeu.next_player()
 				continue
 				
-				current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
+			current_case = serveur_jeu.plateau[serveur_jeu.position_joueur[serveur_jeu.attente_joueur]]
 				
 			print("Attente d'action quelconque ou fin de tour...")
 				
@@ -557,6 +575,7 @@ func partie(serveur_jeu : Serveur_partie):
 			serveur_jeu.reponse_joueur = false
 			serveur_jeu.packet_attendu = Structure.PacketType.ACTION
 			var status
+			var faillite = 0
 			serveur_jeu.attente_proprio = current_case.proprio
 			timer = get_tree().create_timer(15.0)
 				
@@ -570,13 +589,13 @@ func partie(serveur_jeu : Serveur_partie):
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 						
 						# Maj de l'achat de la case dans la BDD
-#						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
-#						var pseudo = serveur_jeu.pseudos[joueur]
-#						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
-#						var idU = id[0].idU
-#						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
-#						var nom_case = nomCase[0].nomCase
-#						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
+						var indice = serveur_jeu.position_joueur[serveur_jeu.attente_joueur]
+						var pseudo = serveur_jeu.pseudos[joueur]
+						var id = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["idU"])
+						var idU = id[0].idU
+						var nomCase = db.select_rows("PROPRIETE P","P.idC ="+str(indice),["nomCase"])
+						var nom_case = nomCase[0].nomCase
+						db.query("INSERT INTO ACHETE_CASE (idU,nomCase) VALUES('"+str(idU)+"','"+nom_case+"');")
 					else:
 						structure.set_requete_erreur(status)
 						envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])							
@@ -590,11 +609,21 @@ func partie(serveur_jeu : Serveur_partie):
 								structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.loyer[current_case.niveau_case])
 								for client in serveur_jeu.list_joueurs:
 									envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-								action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)
+								if(action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu) == 1):
+									faillite = 1
+									break
 							else:
 								structure.set_requete_erreur(status)
 								envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 			serveur_jeu.packet_recu = -1
+			
+			if (faillite == 1):
+				nb_double = 0
+				goto_prison = 0
+				supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
+				joueur = serveur_jeu.attente_joueur
+				serveur_jeu.next_player()
+				break
 			
 			while (current_case.proprio != -1 and current_case.proprio != serveur_jeu.attente_joueur and serveur_jeu.reponse_proprio == false and timer_reclamation.get_time_left() > 0):
 				serveur_jeu.socket.poll()
@@ -606,12 +635,22 @@ func partie(serveur_jeu : Serveur_partie):
 							structure.set_requete_rente(serveur_jeu.argent_joueur[serveur_jeu.attente_joueur], serveur_jeu.attente_joueur, current_case.proprio, current_case.loyer[current_case.niveau_case])
 							for client in serveur_jeu.list_joueurs:
 								envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
-							action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu)
+							if(action_faillite(serveur_jeu.attente_joueur, current_case.proprio, serveur_jeu) == 1):
+								faillite = 1
+								break
 						else:
 							structure.set_requete_erreur(status)
 							envoyer_message(serveur_jeu.socket, structure.to_bytes(), serveur_jeu.list_joueurs[serveur_jeu.attente_joueur])
 			print("Test de propiete : %d" % serveur_jeu.plateau[0].proprio)
 			print("Solde du joueur %d (en cours de jeu) : %d ECTS" % [serveur_jeu.attente_joueur, serveur_jeu.argent_joueur[serveur_jeu.attente_joueur]])
+			
+			if (faillite == 1):
+				nb_double = 0
+				goto_prison = 0
+				supprimer_joueur(serveur_jeu.list_joueurs[serveur_jeu.attente_joueur], serveur_jeu)
+				joueur = serveur_jeu.attente_joueur
+				serveur_jeu.next_player()
+				break
 			
 			# Passage au prochain joueur
 			if(double == 0):
@@ -622,7 +661,7 @@ func partie(serveur_jeu : Serveur_partie):
 					var error     = db.query("UPDATE UTILISATEUR SET nbLose='"+str(nbLoses[0].nbLose+1)+"' WHERE username like '"+pseudo+"';")
 					var moneyLose = db.select_rows("UTILISATEUR U","U.username ='"+pseudo+"'",["moneyLose"])
 					error     = db.query("UPDATE UTILISATEUR SET moneyLose='"+str(moneyLose[0].moneyLose + 10000)+"' WHERE username = '"+pseudo+"';")
-				
+
 				nb_double = 0
 				goto_prison = 0
 				joueur = serveur_jeu.attente_joueur
@@ -724,7 +763,7 @@ func supprimer_joueur(id, serveur_jeu):
 	var structure = Structure.new()
 	serveur_jeu.remise_a_zero(serveur_jeu.list_joueurs.find(id))
 	structure.set_requete_cache_joueur(serveur_jeu.list_joueurs.find(id))
-	serveur_jeu.list_joueurs.erase(id)
+	#serveur_jeu.list_joueurs.erase(id)
 	for client in serveur_jeu.list_joueurs: # Broadcast sur tous les joueurs
 		envoyer_message(serveur_jeu.socket, structure.to_bytes(), client)
 
@@ -747,4 +786,6 @@ func action_faillite(id, cause, serveur_jeu):
 		structure.set_requete_perdre(id, cause, list_prop)
 		for iter_client in serveur_jeu.list_joueurs:
 			envoyer_message(serveur_jeu.socket, structure.to_bytes(), iter_client)
-		supprimer_joueur(serveur_jeu.list_joueurs[id], serveur_jeu)
+#		supprimer_joueur(serveur_jeu.list_joueurs[id], serveur_jeu)
+		return 1
+	return 0

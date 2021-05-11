@@ -100,7 +100,7 @@ func init_partie():
 	init_plateau()
 	for i in list_joueurs:
 		self.position_joueur.append(0)
-		self.argent_joueur.append(1500)
+		self.argent_joueur.append(15)
 		self.joueur_prison.append(0)
 		self.nbr_essai_double.append(0)
 		self.sortie_prison.append(0)
@@ -112,7 +112,7 @@ func init_plateau():
 	for i in range(40):
 		plateau[i].indice = i
 		if i == 0:
-			plateau[i].set_depart(200)
+			plateau[i].set_depart(500)
 		elif i == 10:
 			plateau[i].set_prison()
 		elif i == 30:
@@ -138,7 +138,7 @@ func init_plateau():
 				plateau[9].set_propriete(120, i, Cases.PropTypes.BLEU_CIEL, [8,40,100,300,450,600], 50, 50)
 			if i == 11 or i == 13 or i == 14:
 				plateau[11].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
-				plateau[12].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
+				plateau[13].set_propriete(140, i, Cases.PropTypes.VIOLET, [10,50,150,450,625,750], 100, 100)
 				plateau[14].set_propriete(160, i, Cases.PropTypes.VIOLET, [12,60,180,500,700,900], 100, 100)
 			if i == 12 or i == 27:
 				plateau[i].set_propriete(150, i, Cases.PropTypes.COMPAGNIE, [], 0, 0)
@@ -325,10 +325,11 @@ func hypothequer(id, case):
 		print("Vous ne pouvez pas hypothequer une case avec construction")
 		return 10
 	if case.hypotheque == 1:
-		print("Case de-hypothequer !")
-		case.hypotheque = 0
-		argent_joueur[id] = argent_joueur[id] - 1.1*case.prix
-		return -1
+		if(argent_joueur[id] >= 1.1*case.prix):
+			print("Case de-hypothequer !")
+			case.hypotheque = 0
+			argent_joueur[id] = argent_joueur[id] - 1.1*case.prix
+			return -1
 	case.hypotheque = 1
 	argent_joueur[id] = argent_joueur[id] + 0.5*case.prix
 	return 0
