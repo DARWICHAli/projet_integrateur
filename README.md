@@ -19,5 +19,4 @@ NOM DU PROJET : UNISTRAPOLY
 
     6) Suivre la notice utilisateur pour jouer
 ```
-# Lancer en mode normal :
-    
+# Il est également possible d'exporter le projet sur Godot selon la version de votre OS.    
