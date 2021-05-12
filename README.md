@@ -15,8 +15,11 @@ NOM DU PROJET : UNISTRAPOLY
 
     ATTENTION : les valeurs de chaque "remote host" doit être unique pour chaque client
 
+    (L'étape 4 n'est necessaire qu'en Debug)
+
     5) Lancer chaque client à l'aide du bouton Play
 
     6) Suivre la notice utilisateur pour jouer
 ```
-# Il est également possible d'exporter le projet sur Godot selon la version de votre OS.    
+# Il est également possible d'exporter le projet sur Godot selon la version de votre OS.
+# Il est préférable de lancer le Serveur sur un autre OS que Windows du type Unix par exemple.  
